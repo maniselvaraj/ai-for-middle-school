@@ -293,6 +293,51 @@
     }
     .nav-dot.active { background: var(--primary); }
 
+
+    /* ---- Code Block ---- */
+    .code-block {
+      background: #1e1e2e;
+      color: #cdd6f4;
+      border-radius: 12px;
+      padding: 20px 24px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.95em;
+      line-height: 1.8;
+      overflow-x: auto;
+      margin: 16px 0;
+      position: relative;
+    }
+    .code-block .line-num {
+      color: #585b70;
+      margin-right: 16px;
+      user-select: none;
+    }
+    .code-block .keyword { color: #cba6f7; }
+    .code-block .string { color: #a6e3a1; }
+    .code-block .comment { color: #6c7086; font-style: italic; }
+    .code-block .func { color: #89b4fa; }
+    .code-block .var { color: #f9e2af; }
+    .code-block .op { color: #89dceb; }
+    .code-label {
+      display: inline-block;
+      background: var(--primary);
+      color: white;
+      font-size: 0.75em;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 8px 8px 0 0;
+      margin-bottom: -4px;
+    }
+
+    /* ---- Copyright ---- */
+    .copyright {
+      text-align: center;
+      font-size: 0.7em;
+      color: #bbb;
+      margin-top: 16px;
+      padding-top: 8px;
+    }
+
     /* ---- Responsive ---- */
     @media (max-width: 700px) {
       .slide-inner { padding: 28px 20px; }
@@ -311,7 +356,7 @@
 <!-- ==================== SLIDE 1: Title ==================== -->
 <div class="slide active" id="slide-1">
   <div class="slide-inner">
-    <span class="slide-number">1 / 10</span>
+    <span class="slide-number">1 / 12</span>
     <div class="big-icon">&#x1F4BB;</div>
     <h1>How Computers Work</h1>
     <p class="subtitle">A Peek Inside the Machine</p>
@@ -321,9 +366,7 @@
     <p style="text-align:center; color:#999; margin-top:8px; font-size:0.95em;">
       Big Question: How do computers "think"?
     </p>
-    <div class="teacher-note">
-      Start by asking: "What do you think a computer is? What are some computers you use every day?" (Phones, tablets, laptops, game consoles, smart TVs, smart watches.) Get them thinking broadly.
-    </div>
+    <div class="copyright">Bodhi AI Classes LLC</div>
     <div class="nav">
       <button class="nav-btn" disabled>&#8592; Back</button>
       <div class="nav-dots" id="dots-1"></div>
@@ -335,7 +378,7 @@
 <!-- ==================== SLIDE 2: What IS a Computer? ==================== -->
 <div class="slide" id="slide-2">
   <div class="slide-inner">
-    <span class="slide-number">2 / 10</span>
+    <span class="slide-number">2 / 12</span>
     <h2>What IS a Computer?</h2>
     <p>Computers are everywhere. Can you spot them all?</p>
 
@@ -365,10 +408,7 @@
     <p style="margin-top:16px;">
       At their core, <strong>all computers do the same thing</strong>: they take in information, process it, and give back results. That's it. From a calculator to a self-driving car.
     </p>
-
-    <div class="teacher-note">
-      Ask: "Can you think of something that has a computer inside it that might surprise people?" (Microwaves, traffic lights, refrigerators, elevators.)
-    </div>
+    <div class="copyright">Bodhi AI Classes LLC</div>
     <div class="nav">
       <button class="nav-btn" onclick="goTo(1)">&#8592; Back</button>
       <div class="nav-dots" id="dots-2"></div>
@@ -380,7 +420,7 @@
 <!-- ==================== SLIDE 3: The 4 Parts ==================== -->
 <div class="slide" id="slide-3">
   <div class="slide-inner">
-    <span class="slide-number">3 / 10</span>
+    <span class="slide-number">3 / 12</span>
     <h2>The 4 Parts of Every Computer</h2>
     <p>Every computer&mdash;from your phone to a supercomputer&mdash;has these four parts working together:</p>
 
@@ -416,10 +456,7 @@
       <span class="flow-arrow">&#10132;</span>
       <div class="flow-box" style="background:linear-gradient(135deg,#84fab0,#56c8b6);">Output</div>
     </div>
-
-    <div class="teacher-note">
-      This is the core mental model. Everything that follows builds on this flow. Make sure every student can say it: Input &rarr; Memory &rarr; Processor &rarr; Output.
-    </div>
+    <div class="copyright">Bodhi AI Classes LLC</div>
     <div class="nav">
       <button class="nav-btn" onclick="goTo(2)">&#8592; Back</button>
       <div class="nav-dots" id="dots-3"></div>
@@ -431,7 +468,7 @@
 <!-- ==================== SLIDE 4: Input ==================== -->
 <div class="slide" id="slide-4">
   <div class="slide-inner">
-    <span class="slide-number">4 / 10</span>
+    <span class="slide-number">4 / 12</span>
     <h2>Input &mdash; Giving Instructions</h2>
     <p>Input is how we <strong>talk to</strong> the computer. Here are some ways we do it:</p>
 
@@ -472,10 +509,7 @@
     <div class="hidden-content" id="input-fun">
       <p><strong>Your phone's accelerometer</strong> is also an input device! When you tilt your phone to steer in a racing game, the computer inside is reading the angle of the tilt. That's input!</p>
     </div>
-
-    <div class="teacher-note">
-      Ask: "When you play a video game, how many different kinds of input are you giving at the same time?" (Controller buttons, joystick, voice chat, maybe even a camera for VR.)
-    </div>
+    <div class="copyright">Bodhi AI Classes LLC</div>
     <div class="nav">
       <button class="nav-btn" onclick="goTo(3)">&#8592; Back</button>
       <div class="nav-dots" id="dots-4"></div>
@@ -487,7 +521,7 @@
 <!-- ==================== SLIDE 5: Memory ==================== -->
 <div class="slide" id="slide-5">
   <div class="slide-inner">
-    <span class="slide-number">5 / 10</span>
+    <span class="slide-number">5 / 12</span>
     <h2>Memory &mdash; The Digital Filing Cabinet</h2>
     <p>A computer needs to <strong>remember</strong> things. It has two kinds of memory:</p>
 
@@ -515,10 +549,7 @@
       <p>A typical phone has about <strong>6 GB of RAM</strong> (short-term) and <strong>128 GB of storage</strong> (long-term).</p>
       <p style="margin-top:8px;">For comparison, 128 GB could hold about <strong>32,000 songs</strong> or <strong>40 hours of HD video</strong>!</p>
     </div>
-
-    <div class="teacher-note">
-      Analogy: RAM is like your desk &mdash; it's where you spread out the stuff you're working on right now. Storage is like your closet &mdash; everything is packed away but you can grab it when you need it.
-    </div>
+    <div class="copyright">Bodhi AI Classes LLC</div>
     <div class="nav">
       <button class="nav-btn" onclick="goTo(4)">&#8592; Back</button>
       <div class="nav-dots" id="dots-5"></div>
@@ -530,7 +561,7 @@
 <!-- ==================== SLIDE 6: Processor ==================== -->
 <div class="slide" id="slide-6">
   <div class="slide-inner">
-    <span class="slide-number">6 / 10</span>
+    <span class="slide-number">6 / 12</span>
     <h2>The Processor (CPU) &mdash; The Brain</h2>
     <p>The CPU is where the real "thinking" happens. It reads instructions and does calculations <em>incredibly</em> fast.</p>
 
@@ -556,10 +587,7 @@
     <p style="text-align:center; margin-top:16px;">
       The CPU follows a simple cycle, billions of times per second: <strong>Fetch</strong> an instruction &rarr; <strong>Decode</strong> it &rarr; <strong>Execute</strong> it &rarr; Repeat.
     </p>
-
-    <div class="teacher-note">
-      The CPU can only do simple things (add, compare, move data) &mdash; but it does them SO fast that complex things emerge. This is a good foreshadowing for AI: simple rules + speed = seemingly intelligent behavior.
-    </div>
+    <div class="copyright">Bodhi AI Classes LLC</div>
     <div class="nav">
       <button class="nav-btn" onclick="goTo(5)">&#8592; Back</button>
       <div class="nav-dots" id="dots-6"></div>
@@ -571,7 +599,7 @@
 <!-- ==================== SLIDE 7: Output ==================== -->
 <div class="slide" id="slide-7">
   <div class="slide-inner">
-    <span class="slide-number">7 / 10</span>
+    <span class="slide-number">7 / 12</span>
     <h2>Output &mdash; Showing the Results</h2>
     <p>After the CPU does its work, the computer needs to <strong>show us the results</strong>. That's output!</p>
 
@@ -602,10 +630,7 @@
     <div class="hidden-content" id="output-fun">
       <p>When you play a video game, your screen refreshes <strong>60 times per second</strong> (or more!). Each frame is a brand new image the computer calculated and drew. That's 60 outputs per second just for what you see &mdash; plus sound, controller vibration, and more!</p>
     </div>
-
-    <div class="teacher-note">
-      Ask: "What's the output when you ask Siri a question?" (Voice through the speaker AND text on the screen &mdash; two outputs at once!)
-    </div>
+    <div class="copyright">Bodhi AI Classes LLC</div>
     <div class="nav">
       <button class="nav-btn" onclick="goTo(6)">&#8592; Back</button>
       <div class="nav-dots" id="dots-7"></div>
@@ -617,7 +642,7 @@
 <!-- ==================== SLIDE 8: Kitchen Analogy ==================== -->
 <div class="slide" id="slide-8">
   <div class="slide-inner">
-    <span class="slide-number">8 / 10</span>
+    <span class="slide-number">8 / 12</span>
     <h2>Putting It All Together: The Kitchen Analogy</h2>
     <p>Think of a computer like a kitchen:</p>
 
@@ -652,10 +677,7 @@
     <p style="margin-top:20px; text-align:center; font-size:1.1em; font-weight:600; color:var(--primary);">
       Every app, every game, every website &mdash; it's all just this loop, over and over, really fast.
     </p>
-
-    <div class="teacher-note">
-      This is a great slide to pause on. Ask each student to come up with their own analogy: "A computer is like a _____ because _____."
-    </div>
+    <div class="copyright">Bodhi AI Classes LLC</div>
     <div class="nav">
       <button class="nav-btn" onclick="goTo(7)">&#8592; Back</button>
       <div class="nav-dots" id="dots-8"></div>
@@ -664,10 +686,107 @@
   </div>
 </div>
 
-<!-- ==================== SLIDE 9: Quick Quiz ==================== -->
+
+<!-- ==================== SLIDE 9: How a Python Program Works ==================== -->
 <div class="slide" id="slide-9">
   <div class="slide-inner">
-    <span class="slide-number">9 / 10</span>
+    <span class="slide-number">9 / 12</span>
+    <h2>How a Program Actually Looks</h2>
+    <p>We said a computer follows instructions like a recipe. But what does a <em>real</em> recipe for a computer look like? Here's one written in a language called <strong>Python</strong>:</p>
+
+    <div style="margin-top:20px;">
+      <span class="code-label">Python</span>
+      <div class="code-block">
+        <span class="line-num">1</span> <span class="var">name</span> <span class="op">=</span> <span class="func">input</span>(<span class="string">"What is your name? "</span>)<br>
+        <span class="line-num">2</span> <span class="var">age</span> <span class="op">=</span> <span class="func">int</span>(<span class="func">input</span>(<span class="string">"How old are you? "</span>))<br>
+        <span class="line-num">3</span><br>
+        <span class="line-num">4</span> <span class="keyword">if</span> <span class="var">age</span> <span class="op">>=</span> <span class="var">13</span>:<br>
+        <span class="line-num">5</span> &nbsp;&nbsp;&nbsp;&nbsp;<span class="func">print</span>(<span class="string">"Welcome, "</span> <span class="op">+</span> <span class="var">name</span> <span class="op">+</span> <span class="string">"! You're a teenager!"</span>)<br>
+        <span class="line-num">6</span> <span class="keyword">else</span>:<br>
+        <span class="line-num">7</span> &nbsp;&nbsp;&nbsp;&nbsp;<span class="func">print</span>(<span class="string">"Hi "</span> <span class="op">+</span> <span class="var">name</span> <span class="op">+</span> <span class="string">"! Almost a teen!"</span>)
+      </div>
+    </div>
+
+    <p style="margin-top:16px;">Don't worry &mdash; you do NOT need to memorize this! Just notice:</p>
+    <ul>
+      <li>It reads almost like English</li>
+      <li>It has <strong>input</strong> (asking your name and age)</li>
+      <li>It has <strong>processing</strong> (checking if age &ge; 13)</li>
+      <li>It has <strong>output</strong> (printing a message)</li>
+    </ul>
+    <p style="margin-top:12px; font-weight:600; color:var(--primary);">It's the same Input &rarr; Process &rarr; Output pattern!</p>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(8)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-9"></div>
+      <button class="nav-btn" onclick="goTo(10)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 10: Mapping Code to Computer Parts ==================== -->
+<div class="slide" id="slide-10">
+  <div class="slide-inner">
+    <span class="slide-number">10 / 12</span>
+    <h2>Mapping Code to the 4 Parts</h2>
+    <p>Let's connect our Python program back to the 4 parts of a computer:</p>
+
+    <div style="margin-top:20px;">
+      <div class="analogy-row" style="border-left-color:#56c8b6;">
+        <div class="analogy-icon">&#x2328;&#xFE0F;</div>
+        <div class="analogy-text">
+          <strong>Input</strong><br>
+          <code style="background:#f0f0ff;padding:4px 8px;border-radius:6px;font-size:0.9em;">name = input("What is your name? ")</code><br>
+          <span style="color:#888;">The keyboard is the input device. The program waits for you to type.</span>
+        </div>
+      </div>
+
+      <div class="analogy-row" style="border-left-color:#e8a87c;">
+        <div class="analogy-icon">&#x1F9E0;</div>
+        <div class="analogy-text">
+          <strong>Memory</strong><br>
+          <code style="background:#f0f0ff;padding:4px 8px;border-radius:6px;font-size:0.9em;">name = ...</code> and <code style="background:#f0f0ff;padding:4px 8px;border-radius:6px;font-size:0.9em;">age = ...</code><br>
+          <span style="color:#888;">The computer stores your name and age in RAM &mdash; like sticky notes it can read later.</span>
+        </div>
+      </div>
+
+      <div class="analogy-row" style="border-left-color:#c385e0;">
+        <div class="analogy-icon">&#x26A1;</div>
+        <div class="analogy-text">
+          <strong>Processor (CPU)</strong><br>
+          <code style="background:#f0f0ff;padding:4px 8px;border-radius:6px;font-size:0.9em;">if age >= 13:</code><br>
+          <span style="color:#888;">The CPU compares the number to 13 and decides which path to take. This is the "thinking."</span>
+        </div>
+      </div>
+
+      <div class="analogy-row" style="border-left-color:#56c8b6;">
+        <div class="analogy-icon">&#x1F4FA;</div>
+        <div class="analogy-text">
+          <strong>Output</strong><br>
+          <code style="background:#f0f0ff;padding:4px 8px;border-radius:6px;font-size:0.9em;">print("Welcome, " + name + "!")</code><br>
+          <span style="color:#888;">The result appears on your screen. That's the output!</span>
+        </div>
+      </div>
+    </div>
+
+    <p style="margin-top:20px; text-align:center; font-size:1.1em; font-weight:600; color:var(--primary);">
+      Every program &mdash; from a 7-line script to Minecraft &mdash; is built from these same building blocks.
+    </p>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(9)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-10"></div>
+      <button class="nav-btn" onclick="goTo(11)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 11: Quick Quiz ==================== -->
+<div class="slide" id="slide-11">
+  <div class="slide-inner">
+    <span class="slide-number">11 / 12</span>
     <h2>Quick Quiz!</h2>
     <p>Let's see what you remember:</p>
 
@@ -694,57 +813,52 @@
       <button class="quiz-option" onclick="checkAnswer(this, true)">5 billion</button>
       <div class="quiz-feedback" id="q3-feedback"></div>
     </div>
-
-    <div class="teacher-note">
-      Keep it light and fun &mdash; this isn't a test! Celebrate every answer. If they get one wrong, that's a chance to revisit the concept.
-    </div>
+    <div class="copyright">Bodhi AI Classes LLC</div>
     <div class="nav">
-      <button class="nav-btn" onclick="goTo(8)">&#8592; Back</button>
-      <div class="nav-dots" id="dots-9"></div>
-      <button class="nav-btn" onclick="goTo(10)">Next &#8594;</button>
+      <button class="nav-btn" onclick="goTo(10)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-11"></div>
+      <button class="nav-btn" onclick="goTo(12)">Next &#8594;</button>
     </div>
   </div>
 </div>
 
-<!-- ==================== SLIDE 10: Next Up ==================== -->
-<div class="slide" id="slide-10">
+<!-- ==================== SLIDE 12: Appendix ==================== -->
+<div class="slide" id="slide-12">
   <div class="slide-inner">
-    <span class="slide-number">10 / 10</span>
-    <div class="big-icon">&#x1F680;</div>
-    <h2 style="text-align:center;">Now Let's Teach a Computer!</h2>
-    <p style="text-align:center; font-size:1.15em; margin-top:16px;">
-      We know how computers work: <strong>Input &rarr; Memory &rarr; Processor &rarr; Output</strong>.
-    </p>
-    <p style="text-align:center; font-size:1.15em; margin-top:12px;">
-      But what if the computer could <em>learn on its own</em> instead of following exact instructions?
-    </p>
-    <p style="text-align:center; font-size:1.15em; margin-top:12px;">
-      That's what we'll explore next! Let's play with
-      <a href="https://teachablemachine.withgoogle.com/" target="_blank" style="color:var(--primary); font-weight:700;">Teachable Machine</a>
-      and train a computer to recognize our faces, drawings, and poses!
+    <span class="slide-number">12 / 12</span>
+    <div class="big-icon">&#x1F4DA;</div>
+    <h2 style="text-align:center;">Appendix</h2>
+    <p style="text-align:center; font-size:1.1em; color:#666; margin-top:16px;">
+      Extra resources and references for this lesson
     </p>
 
-    <div class="flow" style="margin-top:32px;">
-      <div class="flow-box" style="background:var(--accent); color:var(--dark);">You teach it</div>
-      <span class="flow-arrow">&#10132;</span>
-      <div class="flow-box">It learns patterns</div>
-      <span class="flow-arrow">&#10132;</span>
-      <div class="flow-box" style="background:var(--secondary);">It makes predictions</div>
+    <div style="margin-top:24px;">
+      <ul>
+        <li><strong>Key Vocabulary:</strong> Input, Output, Memory (RAM &amp; Storage), Processor (CPU), Program, Instructions</li>
+        <li><strong>The Computer Cycle:</strong> Input &rarr; Memory &rarr; Processor &rarr; Output &mdash; every computer runs this loop</li>
+        <li><strong>The Kitchen Analogy:</strong> Ingredients (Input) &rarr; Pantry (Memory) &rarr; Chef (CPU) &rarr; Meal (Output)</li>
+        <li><strong>CPU Speed:</strong> A modern processor can do ~5 billion operations per second</li>
+        <li><strong>RAM vs Storage:</strong> RAM = fast, temporary (your desk). Storage = slower, permanent (your closet)</li>
+      </ul>
     </div>
 
-    <div class="teacher-note">
-      Transition to the Teachable Machine activity. Let students take the lead &mdash; train it with their own faces/poses/drawings. Ask: "How quickly can you teach it? How easily can you trick it?"
-    </div>
+    <p style="margin-top:24px; font-weight:600; color:var(--primary);">Explore More:</p>
+    <ul>
+      <li><a href="https://teachablemachine.withgoogle.com/" target="_blank" style="color:var(--primary);">Teachable Machine</a> &mdash; Train a model right in your browser</li>
+      <li><a href="https://www.khanacademy.org/computing/computers-and-internet" target="_blank" style="color:var(--primary);">Khan Academy: Computers &amp; Internet</a> &mdash; Deeper dive into how computers work</li>
+    </ul>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
     <div class="nav">
-      <button class="nav-btn" onclick="goTo(9)">&#8592; Back</button>
-      <div class="nav-dots" id="dots-10"></div>
+      <button class="nav-btn" onclick="goTo(11)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-12"></div>
       <button class="nav-btn" disabled>Next &#8594;</button>
     </div>
   </div>
 </div>
 
 <script>
-  const TOTAL_SLIDES = 10;
+  const TOTAL_SLIDES = 12;
   let currentSlide = 1;
 
   function goTo(n) {
