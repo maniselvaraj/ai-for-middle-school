@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How Computers Work - Week 1</title>
+  <style>
+    :root {
+      --primary: #6C63FF;
+      --secondary: #FF6584;
+      --accent: #43E97B;
+      --dark: #2D3436;
+      --light: #F8F9FA;
+      --card-bg: #FFFFFF;
+      --shadow: 0 8px 30px rgba(0,0,0,0.12);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: var(--dark);
+    }
+
+    /* ---- Slide System ---- */
+    .slide {
+      display: none;
+      min-height: 100vh;
+      padding: 40px 20px;
+      animation: fadeIn 0.5s ease;
+    }
+    .slide.active { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    .slide-inner {
+      background: var(--card-bg);
+      border-radius: 24px;
+      padding: 48px;
+      max-width: 900px;
+      width: 100%;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide-number {
+      position: absolute;
+      top: 16px;
+      right: 24px;
+      font-size: 14px;
+      color: #aaa;
+      font-weight: 600;
+    }
+
+    h1 {
+      font-size: 2.4em;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+
+    h2 {
+      font-size: 1.8em;
+      color: var(--primary);
+      margin-bottom: 16px;
+    }
+
+    .subtitle {
+      font-size: 1.2em;
+      color: #888;
+      margin-bottom: 32px;
+    }
+
+    p, li {
+      font-size: 1.15em;
+      line-height: 1.7;
+      color: #444;
+    }
+
+    ul { list-style: none; padding: 0; }
+    ul li { padding: 8px 0; padding-left: 28px; position: relative; }
+    ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 16px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+
+    /* ---- Visual Components ---- */
+    .big-icon {
+      font-size: 80px;
+      text-align: center;
+      margin: 24px 0;
+      animation: bounce 2s ease infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin: 24px 0;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin: 24px 0;
+    }
+
+    .card {
+      background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: default;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.15); }
+
+    .card .card-icon { font-size: 48px; margin-bottom: 12px; }
+    .card h3 { color: var(--primary); margin-bottom: 8px; font-size: 1.2em; }
+    .card p { font-size: 0.95em; color: #555; }
+
+    .card.input-card { background: linear-gradient(135deg, #a8edea, #fed6e3); }
+    .card.memory-card { background: linear-gradient(135deg, #ffecd2, #fcb69f); }
+    .card.cpu-card { background: linear-gradient(135deg, #a18cd1, #fbc2eb); }
+    .card.output-card { background: linear-gradient(135deg, #84fab0, #8fd3f4); }
+
+    /* ---- Flow Diagram ---- */
+    .flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: 32px 0;
+      flex-wrap: wrap;
+    }
+    .flow-box {
+      background: var(--primary);
+      color: white;
+      padding: 16px 28px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1.1em;
+      text-align: center;
+      min-width: 120px;
+    }
+    .flow-arrow {
+      font-size: 28px;
+      color: var(--secondary);
+      font-weight: bold;
+    }
+
+    /* ---- Kitchen Analogy ---- */
+    .analogy-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 12px 0;
+      padding: 16px;
+      background: #f8f9fa;
+      border-radius: 12px;
+      border-left: 4px solid var(--primary);
+    }
+    .analogy-icon { font-size: 36px; flex-shrink: 0; }
+    .analogy-text { flex: 1; }
+    .analogy-text strong { color: var(--primary); }
+    .analogy-equals {
+      font-size: 24px;
+      font-weight: bold;
+      color: var(--secondary);
+      flex-shrink: 0;
+    }
+
+    /* ---- Interactive Bits ---- */
+    .reveal-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 12px;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin: 8px 4px;
+    }
+    .reveal-btn:hover { background: #5a52d5; transform: scale(1.05); }
+
+    .hidden-content {
+      display: none;
+      margin-top: 16px;
+      padding: 20px;
+      background: #f0f0ff;
+      border-radius: 12px;
+      animation: fadeIn 0.4s ease;
+    }
+    .hidden-content.show { display: block; }
+
+    /* ---- Speed Demo ---- */
+    .speed-comparison {
+      display: flex;
+      gap: 24px;
+      margin: 24px 0;
+      align-items: stretch;
+    }
+    .speed-box {
+      flex: 1;
+      padding: 24px;
+      border-radius: 16px;
+      text-align: center;
+    }
+    .speed-box.human { background: linear-gradient(135deg, #ffecd2, #fcb69f); }
+    .speed-box.cpu { background: linear-gradient(135deg, #a18cd1, #fbc2eb); }
+    .speed-box .speed-icon { font-size: 48px; margin-bottom: 12px; }
+    .speed-box .speed-num { font-size: 2em; font-weight: 800; color: var(--dark); }
+    .speed-box .speed-label { font-size: 0.9em; color: #666; margin-top: 8px; }
+
+    /* ---- Quiz ---- */
+    .quiz-option {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 16px 20px;
+      margin: 8px 0;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      background: white;
+      font-size: 1.05em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .quiz-option:hover { border-color: var(--primary); background: #f0f0ff; }
+    .quiz-option.correct { border-color: var(--accent); background: #e8fbe8; }
+    .quiz-option.wrong { border-color: var(--secondary); background: #ffe8e8; }
+    .quiz-feedback {
+      margin-top: 12px;
+      padding: 16px;
+      border-radius: 12px;
+      font-weight: 600;
+      display: none;
+    }
+
+    /* ---- Navigation ---- */
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 2px solid #eee;
+    }
+    .nav-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 14px 32px;
+      border-radius: 12px;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .nav-btn:hover { background: #5a52d5; transform: scale(1.05); }
+    .nav-btn:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+    .nav-dots {
+      display: flex;
+      gap: 8px;
+    }
+    .nav-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.4);
+      border: 2px solid var(--primary);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .nav-dot.active { background: var(--primary); }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 700px) {
+      .slide-inner { padding: 28px 20px; }
+      h1 { font-size: 1.8em; }
+      h2 { font-size: 1.4em; }
+      .grid-2, .grid-4 { grid-template-columns: 1fr; }
+      .flow { flex-direction: column; }
+      .flow-arrow { transform: rotate(90deg); }
+      .speed-comparison { flex-direction: column; }
+      .analogy-row { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ==================== SLIDE 1: Title ==================== -->
+<div class="slide active" id="slide-1">
+  <div class="slide-inner">
+    <span class="slide-number">1 / 10</span>
+    <div class="big-icon">&#x1F4BB;</div>
+    <h1>How Computers Work</h1>
+    <p class="subtitle">A Peek Inside the Machine</p>
+    <p style="font-size:1.1em; text-align:center; color:#666; margin-top:16px;">
+      Week 1: The Magical Mind of the Machine
+    </p>
+    <p style="text-align:center; color:#999; margin-top:8px; font-size:0.95em;">
+      Big Question: How do computers "think"?
+    </p>
+    <div class="teacher-note">
+      Start by asking: "What do you think a computer is? What are some computers you use every day?" (Phones, tablets, laptops, game consoles, smart TVs, smart watches.) Get them thinking broadly.
+    </div>
+    <div class="nav">
+      <button class="nav-btn" disabled>&#8592; Back</button>
+      <div class="nav-dots" id="dots-1"></div>
+      <button class="nav-btn" onclick="goTo(2)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 2: What IS a Computer? ==================== -->
+<div class="slide" id="slide-2">
+  <div class="slide-inner">
+    <span class="slide-number">2 / 10</span>
+    <h2>What IS a Computer?</h2>
+    <p>Computers are everywhere. Can you spot them all?</p>
+
+    <div class="grid-4" style="margin-top:24px;">
+      <div class="card">
+        <div class="card-icon">&#x1F4F1;</div>
+        <h3>Phone</h3>
+        <p>A computer in your pocket</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#x1F3AE;</div>
+        <h3>Game Console</h3>
+        <p>A computer built for play</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#x1F4BB;</div>
+        <h3>Laptop</h3>
+        <p>A computer you carry</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#x1F697;</div>
+        <h3>Car</h3>
+        <p>Dozens of computers inside!</p>
+      </div>
+    </div>
+
+    <p style="margin-top:16px;">
+      At their core, <strong>all computers do the same thing</strong>: they take in information, process it, and give back results. That's it. From a calculator to a self-driving car.
+    </p>
+
+    <div class="teacher-note">
+      Ask: "Can you think of something that has a computer inside it that might surprise people?" (Microwaves, traffic lights, refrigerators, elevators.)
+    </div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(1)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-2"></div>
+      <button class="nav-btn" onclick="goTo(3)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 3: The 4 Parts ==================== -->
+<div class="slide" id="slide-3">
+  <div class="slide-inner">
+    <span class="slide-number">3 / 10</span>
+    <h2>The 4 Parts of Every Computer</h2>
+    <p>Every computer&mdash;from your phone to a supercomputer&mdash;has these four parts working together:</p>
+
+    <div class="grid-4" style="margin-top: 24px;">
+      <div class="card input-card">
+        <div class="card-icon">&#x2328;&#xFE0F;</div>
+        <h3>Input</h3>
+        <p>How we <strong>tell</strong> the computer what to do</p>
+      </div>
+      <div class="card memory-card">
+        <div class="card-icon">&#x1F9E0;</div>
+        <h3>Memory</h3>
+        <p>Where the computer <strong>stores</strong> information</p>
+      </div>
+      <div class="card cpu-card">
+        <div class="card-icon">&#x26A1;</div>
+        <h3>Processor (CPU)</h3>
+        <p>The "brain" that does the <strong>thinking</strong></p>
+      </div>
+      <div class="card output-card">
+        <div class="card-icon">&#x1F4FA;</div>
+        <h3>Output</h3>
+        <p>How the computer <strong>shows</strong> us the results</p>
+      </div>
+    </div>
+
+    <div class="flow">
+      <div class="flow-box" style="background:linear-gradient(135deg,#a8edea,#56c8b6);">Input</div>
+      <span class="flow-arrow">&#10132;</span>
+      <div class="flow-box" style="background:linear-gradient(135deg,#ffecd2,#e8a87c);">Memory</div>
+      <span class="flow-arrow">&#10132;</span>
+      <div class="flow-box" style="background:linear-gradient(135deg,#a18cd1,#c385e0);">Processor</div>
+      <span class="flow-arrow">&#10132;</span>
+      <div class="flow-box" style="background:linear-gradient(135deg,#84fab0,#56c8b6);">Output</div>
+    </div>
+
+    <div class="teacher-note">
+      This is the core mental model. Everything that follows builds on this flow. Make sure every student can say it: Input &rarr; Memory &rarr; Processor &rarr; Output.
+    </div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(2)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-3"></div>
+      <button class="nav-btn" onclick="goTo(4)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 4: Input ==================== -->
+<div class="slide" id="slide-4">
+  <div class="slide-inner">
+    <span class="slide-number">4 / 10</span>
+    <h2>Input &mdash; Giving Instructions</h2>
+    <p>Input is how we <strong>talk to</strong> the computer. Here are some ways we do it:</p>
+
+    <div class="grid-4" style="margin-top:20px;">
+      <div class="card">
+        <div class="card-icon">&#x2328;&#xFE0F;</div>
+        <h3>Keyboard</h3>
+        <p>Type words and commands</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#x1F5B1;&#xFE0F;</div>
+        <h3>Mouse / Trackpad</h3>
+        <p>Point and click</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#x1F446;</div>
+        <h3>Touchscreen</h3>
+        <p>Tap, swipe, pinch</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#x1F3A4;</div>
+        <h3>Microphone</h3>
+        <p>"Hey Siri!" &mdash; voice input</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#x1F4F7;</div>
+        <h3>Camera</h3>
+        <p>Face ID, QR codes, photos</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#x1F3AE;</div>
+        <h3>Game Controller</h3>
+        <p>Buttons, joysticks, triggers</p>
+      </div>
+    </div>
+
+    <button class="reveal-btn" onclick="toggleReveal('input-fun')">Fun Fact</button>
+    <div class="hidden-content" id="input-fun">
+      <p><strong>Your phone's accelerometer</strong> is also an input device! When you tilt your phone to steer in a racing game, the computer inside is reading the angle of the tilt. That's input!</p>
+    </div>
+
+    <div class="teacher-note">
+      Ask: "When you play a video game, how many different kinds of input are you giving at the same time?" (Controller buttons, joystick, voice chat, maybe even a camera for VR.)
+    </div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(3)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-4"></div>
+      <button class="nav-btn" onclick="goTo(5)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 5: Memory ==================== -->
+<div class="slide" id="slide-5">
+  <div class="slide-inner">
+    <span class="slide-number">5 / 10</span>
+    <h2>Memory &mdash; The Digital Filing Cabinet</h2>
+    <p>A computer needs to <strong>remember</strong> things. It has two kinds of memory:</p>
+
+    <div class="grid-2" style="margin-top: 24px;">
+      <div class="card" style="background:linear-gradient(135deg,#ffecd2,#fcb69f);">
+        <div class="card-icon">&#x1F4AD;</div>
+        <h3>Short-Term Memory (RAM)</h3>
+        <p>What the computer is thinking about <em>right now</em>. Fast, but forgets everything when you turn it off.</p>
+        <p style="margin-top:12px; font-size:0.85em; color:#888;">
+          Like the thoughts in your head during a test.
+        </p>
+      </div>
+      <div class="card" style="background:linear-gradient(135deg,#a8edea,#fed6e3);">
+        <div class="card-icon">&#x1F4BE;</div>
+        <h3>Long-Term Memory (Storage)</h3>
+        <p>Where files, photos, apps, and games are saved <em>permanently</em>. Slower, but keeps everything even when off.</p>
+        <p style="margin-top:12px; font-size:0.85em; color:#888;">
+          Like everything you've learned in school over the years.
+        </p>
+      </div>
+    </div>
+
+    <button class="reveal-btn" onclick="toggleReveal('memory-fun')">How Much Memory?</button>
+    <div class="hidden-content" id="memory-fun">
+      <p>A typical phone has about <strong>6 GB of RAM</strong> (short-term) and <strong>128 GB of storage</strong> (long-term).</p>
+      <p style="margin-top:8px;">For comparison, 128 GB could hold about <strong>32,000 songs</strong> or <strong>40 hours of HD video</strong>!</p>
+    </div>
+
+    <div class="teacher-note">
+      Analogy: RAM is like your desk &mdash; it's where you spread out the stuff you're working on right now. Storage is like your closet &mdash; everything is packed away but you can grab it when you need it.
+    </div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(4)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-5"></div>
+      <button class="nav-btn" onclick="goTo(6)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 6: Processor ==================== -->
+<div class="slide" id="slide-6">
+  <div class="slide-inner">
+    <span class="slide-number">6 / 10</span>
+    <h2>The Processor (CPU) &mdash; The Brain</h2>
+    <p>The CPU is where the real "thinking" happens. It reads instructions and does calculations <em>incredibly</em> fast.</p>
+
+    <div class="big-icon" style="animation-duration:1s;">&#x26A1;</div>
+
+    <p style="text-align:center; font-size:1.2em; font-weight:600; color: var(--primary);">
+      How fast? Let's compare:
+    </p>
+
+    <div class="speed-comparison">
+      <div class="speed-box human">
+        <div class="speed-icon">&#x1F9D1;</div>
+        <div class="speed-num">1</div>
+        <div class="speed-label">math problem per second<br>(for most of us!)</div>
+      </div>
+      <div class="speed-box cpu">
+        <div class="speed-icon">&#x1F4BB;</div>
+        <div class="speed-num">5,000,000,000</div>
+        <div class="speed-label">operations per second<br>(that's 5 BILLION!)</div>
+      </div>
+    </div>
+
+    <p style="text-align:center; margin-top:16px;">
+      The CPU follows a simple cycle, billions of times per second: <strong>Fetch</strong> an instruction &rarr; <strong>Decode</strong> it &rarr; <strong>Execute</strong> it &rarr; Repeat.
+    </p>
+
+    <div class="teacher-note">
+      The CPU can only do simple things (add, compare, move data) &mdash; but it does them SO fast that complex things emerge. This is a good foreshadowing for AI: simple rules + speed = seemingly intelligent behavior.
+    </div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(5)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-6"></div>
+      <button class="nav-btn" onclick="goTo(7)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 7: Output ==================== -->
+<div class="slide" id="slide-7">
+  <div class="slide-inner">
+    <span class="slide-number">7 / 10</span>
+    <h2>Output &mdash; Showing the Results</h2>
+    <p>After the CPU does its work, the computer needs to <strong>show us the results</strong>. That's output!</p>
+
+    <div class="grid-4" style="margin-top:20px;">
+      <div class="card">
+        <div class="card-icon">&#x1F4FA;</div>
+        <h3>Screen / Display</h3>
+        <p>Everything you see &mdash; websites, games, videos</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#x1F50A;</div>
+        <h3>Speakers</h3>
+        <p>Music, sound effects, voice assistants talking back</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#x1F5A8;&#xFE0F;</div>
+        <h3>Printer</h3>
+        <p>Turning digital into paper</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#x1F916;</div>
+        <h3>Motors / Robots</h3>
+        <p>Physical movement controlled by code</p>
+      </div>
+    </div>
+
+    <button class="reveal-btn" onclick="toggleReveal('output-fun')">Think About It</button>
+    <div class="hidden-content" id="output-fun">
+      <p>When you play a video game, your screen refreshes <strong>60 times per second</strong> (or more!). Each frame is a brand new image the computer calculated and drew. That's 60 outputs per second just for what you see &mdash; plus sound, controller vibration, and more!</p>
+    </div>
+
+    <div class="teacher-note">
+      Ask: "What's the output when you ask Siri a question?" (Voice through the speaker AND text on the screen &mdash; two outputs at once!)
+    </div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(6)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-7"></div>
+      <button class="nav-btn" onclick="goTo(8)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 8: Kitchen Analogy ==================== -->
+<div class="slide" id="slide-8">
+  <div class="slide-inner">
+    <span class="slide-number">8 / 10</span>
+    <h2>Putting It All Together: The Kitchen Analogy</h2>
+    <p>Think of a computer like a kitchen:</p>
+
+    <div class="analogy-row">
+      <div class="analogy-icon">&#x1F955;</div>
+      <div class="analogy-text"><strong>Input</strong> = Ingredients<br>The raw stuff you give the kitchen to work with</div>
+      <div class="analogy-equals">=</div>
+      <div class="analogy-icon">&#x2328;&#xFE0F;</div>
+    </div>
+
+    <div class="analogy-row">
+      <div class="analogy-icon">&#x1F9CA;</div>
+      <div class="analogy-text"><strong>Memory</strong> = Pantry + Fridge<br>Where you store ingredients and recipes</div>
+      <div class="analogy-equals">=</div>
+      <div class="analogy-icon">&#x1F4BE;</div>
+    </div>
+
+    <div class="analogy-row">
+      <div class="analogy-icon">&#x1F468;&#x200D;&#x1F373;</div>
+      <div class="analogy-text"><strong>Processor (CPU)</strong> = The Chef<br>Reads the recipe, does the cooking, makes decisions</div>
+      <div class="analogy-equals">=</div>
+      <div class="analogy-icon">&#x26A1;</div>
+    </div>
+
+    <div class="analogy-row">
+      <div class="analogy-icon">&#x1F35D;</div>
+      <div class="analogy-text"><strong>Output</strong> = The Meal<br>The delicious result you get to enjoy!</div>
+      <div class="analogy-equals">=</div>
+      <div class="analogy-icon">&#x1F4FA;</div>
+    </div>
+
+    <p style="margin-top:20px; text-align:center; font-size:1.1em; font-weight:600; color:var(--primary);">
+      Every app, every game, every website &mdash; it's all just this loop, over and over, really fast.
+    </p>
+
+    <div class="teacher-note">
+      This is a great slide to pause on. Ask each student to come up with their own analogy: "A computer is like a _____ because _____."
+    </div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(7)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-8"></div>
+      <button class="nav-btn" onclick="goTo(9)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 9: Quick Quiz ==================== -->
+<div class="slide" id="slide-9">
+  <div class="slide-inner">
+    <span class="slide-number">9 / 10</span>
+    <h2>Quick Quiz!</h2>
+    <p>Let's see what you remember:</p>
+
+    <div style="margin-top:24px;">
+      <p style="font-weight:700; font-size:1.15em; margin-bottom:12px;">1. When you tap a letter on your phone's keyboard, that's an example of:</p>
+      <button class="quiz-option" onclick="checkAnswer(this, false)">Output</button>
+      <button class="quiz-option" onclick="checkAnswer(this, true)">Input</button>
+      <button class="quiz-option" onclick="checkAnswer(this, false)">Memory</button>
+      <div class="quiz-feedback" id="q1-feedback"></div>
+    </div>
+
+    <div style="margin-top:32px;">
+      <p style="font-weight:700; font-size:1.15em; margin-bottom:12px;">2. RAM is like:</p>
+      <button class="quiz-option" onclick="checkAnswer(this, false)">A permanent filing cabinet</button>
+      <button class="quiz-option" onclick="checkAnswer(this, true)">The thoughts in your head right now</button>
+      <button class="quiz-option" onclick="checkAnswer(this, false)">The screen on your phone</button>
+      <div class="quiz-feedback" id="q2-feedback"></div>
+    </div>
+
+    <div style="margin-top:32px;">
+      <p style="font-weight:700; font-size:1.15em; margin-bottom:12px;">3. A modern CPU can do about how many operations per second?</p>
+      <button class="quiz-option" onclick="checkAnswer(this, false)">1 thousand</button>
+      <button class="quiz-option" onclick="checkAnswer(this, false)">1 million</button>
+      <button class="quiz-option" onclick="checkAnswer(this, true)">5 billion</button>
+      <div class="quiz-feedback" id="q3-feedback"></div>
+    </div>
+
+    <div class="teacher-note">
+      Keep it light and fun &mdash; this isn't a test! Celebrate every answer. If they get one wrong, that's a chance to revisit the concept.
+    </div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(8)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-9"></div>
+      <button class="nav-btn" onclick="goTo(10)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 10: Next Up ==================== -->
+<div class="slide" id="slide-10">
+  <div class="slide-inner">
+    <span class="slide-number">10 / 10</span>
+    <div class="big-icon">&#x1F680;</div>
+    <h2 style="text-align:center;">Now Let's Teach a Computer!</h2>
+    <p style="text-align:center; font-size:1.15em; margin-top:16px;">
+      We know how computers work: <strong>Input &rarr; Memory &rarr; Processor &rarr; Output</strong>.
+    </p>
+    <p style="text-align:center; font-size:1.15em; margin-top:12px;">
+      But what if the computer could <em>learn on its own</em> instead of following exact instructions?
+    </p>
+    <p style="text-align:center; font-size:1.15em; margin-top:12px;">
+      That's what we'll explore next! Let's play with
+      <a href="https://teachablemachine.withgoogle.com/" target="_blank" style="color:var(--primary); font-weight:700;">Teachable Machine</a>
+      and train a computer to recognize our faces, drawings, and poses!
+    </p>
+
+    <div class="flow" style="margin-top:32px;">
+      <div class="flow-box" style="background:var(--accent); color:var(--dark);">You teach it</div>
+      <span class="flow-arrow">&#10132;</span>
+      <div class="flow-box">It learns patterns</div>
+      <span class="flow-arrow">&#10132;</span>
+      <div class="flow-box" style="background:var(--secondary);">It makes predictions</div>
+    </div>
+
+    <div class="teacher-note">
+      Transition to the Teachable Machine activity. Let students take the lead &mdash; train it with their own faces/poses/drawings. Ask: "How quickly can you teach it? How easily can you trick it?"
+    </div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(9)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-10"></div>
+      <button class="nav-btn" disabled>Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const TOTAL_SLIDES = 10;
+  let currentSlide = 1;
+
+  function goTo(n) {
+    if (n < 1 || n > TOTAL_SLIDES) return;
+    document.getElementById('slide-' + currentSlide).classList.remove('active');
+    currentSlide = n;
+    document.getElementById('slide-' + currentSlide).classList.add('active');
+    updateDots();
+    window.scrollTo(0, 0);
+  }
+
+  function updateDots() {
+    for (let s = 1; s <= TOTAL_SLIDES; s++) {
+      const container = document.getElementById('dots-' + s);
+      if (!container) continue;
+      container.innerHTML = '';
+      for (let d = 1; d <= TOTAL_SLIDES; d++) {
+        const dot = document.createElement('span');
+        dot.className = 'nav-dot' + (d === currentSlide ? ' active' : '');
+        dot.onclick = () => goTo(d);
+        container.appendChild(dot);
+      }
+    }
+  }
+
+  function toggleReveal(id) {
+    const el = document.getElementById(id);
+    el.classList.toggle('show');
+  }
+
+  function checkAnswer(btn, correct) {
+    const siblings = btn.parentElement.querySelectorAll('.quiz-option');
+    const feedback = btn.parentElement.querySelector('.quiz-feedback');
+
+    siblings.forEach(s => { s.disabled = true; s.style.pointerEvents = 'none'; });
+
+    if (correct) {
+      btn.classList.add('correct');
+      feedback.style.display = 'block';
+      feedback.style.background = '#e8fbe8';
+      feedback.style.color = '#2d7a2d';
+      feedback.textContent = 'Correct! Nice work!';
+    } else {
+      btn.classList.add('wrong');
+      siblings.forEach(s => { if (checkIsCorrect(s)) s.classList.add('correct'); });
+      feedback.style.display = 'block';
+      feedback.style.background = '#ffe8e8';
+      feedback.style.color = '#a33';
+      feedback.textContent = 'Not quite — check the highlighted answer!';
+    }
+  }
+
+  function checkIsCorrect(btn) {
+    return btn.getAttribute('onclick') && btn.getAttribute('onclick').includes('true');
+  }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); goTo(currentSlide + 1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); goTo(currentSlide - 1); }
+  });
+
+  // Initialize dots
+  updateDots();
+</script>
+</body>
+</html>
