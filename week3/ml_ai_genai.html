@@ -478,7 +478,7 @@
 <!-- ==================== SLIDE 1: Title ==================== -->
 <div class="slide active" id="slide-1">
   <div class="slide-inner">
-    <span class="slide-number">1 / 15</span>
+    <span class="slide-number">1 / 12</span>
     <div class="big-icon">&#x1F916;</div>
     <h1>ML, AI, and Gen AI</h1>
     <p class="subtitle">Teaching machines with math you already know</p>
@@ -500,7 +500,7 @@
 <!-- ==================== SLIDE 2: Warm-Up ==================== -->
 <div class="slide" id="slide-2">
   <div class="slide-inner">
-    <span class="slide-number">2 / 15</span>
+    <span class="slide-number">2 / 12</span>
     <h2>Warm-Up: What Do You Think AI Is?</h2>
     <p>Before we define anything, let's hear what you think:</p>
 
@@ -556,7 +556,7 @@
 <!-- ==================== SLIDE 3: The Nested Circles ==================== -->
 <div class="slide" id="slide-3">
   <div class="slide-inner">
-    <span class="slide-number">3 / 15</span>
+    <span class="slide-number">3 / 12</span>
     <h2>AI vs. ML vs. Gen AI</h2>
     <p>They're related &mdash; like Russian nesting dolls. Click each circle to learn more!</p>
 
@@ -604,7 +604,7 @@
 <!-- ==================== SLIDE 4: AI Examples ==================== -->
 <div class="slide" id="slide-4">
   <div class="slide-inner">
-    <span class="slide-number">4 / 15</span>
+    <span class="slide-number">4 / 12</span>
     <h2>AI Is Everywhere</h2>
     <p>You've been using AI your whole life! But what <em>is</em> AI? Here's the big idea:</p>
 
@@ -693,7 +693,7 @@
 <!-- ==================== SLIDE 5: You Already Know ML ==================== -->
 <div class="slide" id="slide-5">
   <div class="slide-inner">
-    <span class="slide-number">5 / 15</span>
+    <span class="slide-number">5 / 12</span>
     <h2>You Already Know ML!</h2>
     <p>Remember this from algebra class?</p>
 
@@ -736,7 +736,7 @@
 <!-- ==================== SLIDE 6: The Data ==================== -->
 <div class="slide" id="slide-6">
   <div class="slide-inner">
-    <span class="slide-number">6 / 15</span>
+    <span class="slide-number">6 / 12</span>
     <h2>Let's Do ML: The Data</h2>
     <p>Here's data from students who tracked how many hours they studied and their test scores:</p>
 
@@ -771,7 +771,7 @@
 <!-- ==================== SLIDE 7: Interactive Graph ==================== -->
 <div class="slide" id="slide-7">
   <div class="slide-inner">
-    <span class="slide-number">7 / 15</span>
+    <span class="slide-number">7 / 12</span>
     <h2>Plot It &amp; Find the Line!</h2>
     <p>Here's our data on a graph. Click "Draw Best-Fit Line" to see ML in action!</p>
 
@@ -795,12 +795,205 @@
   </div>
 </div>
 
-<!-- ==================== SLIDE 8: Training, Testing, Inference ==================== -->
+<!-- ==================== SLIDE 8: How Does ML Learn? ==================== -->
 <div class="slide" id="slide-8">
   <div class="slide-inner">
-    <span class="slide-number">8 / 15</span>
+    <span class="slide-number">8 / 12</span>
+    <h2>How Does ML "Learn"?</h2>
+    <p>The computer doesn't magically know the answer. It learns the same way <em>you</em> learn a new skill — by trying, seeing what went wrong, and adjusting.</p>
+
+    <div class="flow" style="margin:24px 0; flex-wrap:wrap; gap:8px;">
+      <div class="flow-box" style="background:var(--ai-color);">&#x1F3B2; Make a guess</div>
+      <div class="flow-arrow">&#x27A1;&#xFE0F;</div>
+      <div class="flow-box" style="background:var(--ml-color);">&#x274C; See how far off you were</div>
+      <div class="flow-arrow">&#x27A1;&#xFE0F;</div>
+      <div class="flow-box" style="background:var(--dl-color);">&#x1F527; Adjust your aim</div>
+      <div class="flow-arrow">&#x27A1;&#xFE0F;</div>
+      <div class="flow-box" style="background:var(--genai-color);">&#x1F501; Repeat 1,000s of times</div>
+    </div>
+
+    <div class="grid-2" style="margin-top:8px;">
+      <div class="card" style="border-top:4px solid var(--ml-color);">
+        <div class="card-icon">&#x1F3C0;</div>
+        <h3>Like Shooting a Basketball</h3>
+        <p>When you shoot, you don't calculate equations. You just take a shot. If it hits the front rim — too short! — your brain adjusts to throw harder next time. ML works the exact same way: guess, see what went wrong, and adjust.</p>
+      </div>
+      <div class="card" style="border-top:4px solid var(--dl-color);">
+        <div class="card-icon">&#x1F4C8;</div>
+        <h3>Practice Makes Perfect</h3>
+        <p>Every time the computer guesses and adjusts, that's one practice shot. After thousands of practice shots, it barely misses. When we say an AI model is <strong>"trained"</strong>, it just means it has practiced a lot and stopped making big mistakes.</p>
+      </div>
+    </div>
+
+    <div class="callout key" style="margin-top:16px;">
+      <p><strong>The big idea:</strong> ML doesn't follow instructions — it <em>practices from examples</em>. The more examples it sees, the better it gets. Just like you.</p>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(7)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-8"></div>
+      <button class="nav-btn" onclick="goTo(9)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 9: Beyond Lines ==================== -->
+<div class="slide" id="slide-9">
+  <div class="slide-inner">
+    <span class="slide-number">9 / 12</span>
+    <h2>From Lines to Intelligence</h2>
+    <p>Our line is the simplest ML model. But real AI uses the same idea &mdash; scaled up massively!</p>
+
+    <div class="grid-2" style="margin-top:24px;">
+      <div class="card" style="border-top:4px solid var(--ml-color);">
+        <div class="card-icon">&#x1F4CF;</div>
+        <h3>What We Did</h3>
+        <p>1 input (hours) &#x2192; 1 output (score)<br>2 parameters (m, b)<br>6 data points</p>
+      </div>
+      <div class="card" style="border-top:4px solid var(--genai-color);">
+        <div class="card-icon">&#x1F9E0;</div>
+        <h3>What ChatGPT or Claude or Gemini Does</h3>
+        <p>Millions of inputs &#x2192; next word<br><strong>175 billion</strong> parameters<br>Trillions of words of text</p>
+      </div>
+    </div>
+
+    <div class="callout key" style="margin-top:20px;">
+      <p><strong>Same idea, different scale.</strong> We found the best m and b for a line. ChatGPT or Claude or Gemini found the best values for billions of parameters &mdash; but the process is the same: show data, find patterns, make predictions.</p>
+    </div>
+
+    <div style="text-align:center; margin-top:16px;">
+      <p style="font-size:1.1em; color:#666;">&#x1F4A1; "Machine Learning is finding patterns in data. AI is the umbrella. Gen AI is when those patterns are good enough to create something new."</p>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(8)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-9"></div>
+      <button class="nav-btn" onclick="goTo(10)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 12: Quiz ==================== -->
+<div class="slide" id="slide-10">
+  <div class="slide-inner">
+    <span class="slide-number">10 / 12</span>
+    <h2>Quick Quiz!</h2>
+
+    <div style="margin-bottom:28px;">
+      <p><strong>Q1: Which is the correct nesting? (Biggest to smallest)</strong></p>
+      <button class="quiz-option" onclick="checkQuiz(this, false)">A) ML &gt; AI &gt; Gen AI</button>
+      <button class="quiz-option" onclick="checkQuiz(this, true)">B) AI &gt; ML &gt; Gen AI</button>
+      <button class="quiz-option" onclick="checkQuiz(this, false)">C) Gen AI &gt; ML &gt; AI</button>
+      <button class="quiz-option" onclick="checkQuiz(this, false)">D) AI &gt; Gen AI &gt; ML</button>
+      <div class="quiz-feedback" id="q1-feedback"></div>
+    </div>
+
+    <div style="margin-bottom:28px;">
+      <p><strong>Q2: In ML, "training" means:</strong></p>
+      <button class="quiz-option" onclick="checkQuiz(this, false)">A) Making predictions on new data</button>
+      <button class="quiz-option" onclick="checkQuiz(this, false)">B) Checking if the model works</button>
+      <button class="quiz-option" onclick="checkQuiz(this, true)">C) Finding the best pattern in the data</button>
+      <button class="quiz-option" onclick="checkQuiz(this, false)">D) Writing code for a robot</button>
+      <div class="quiz-feedback" id="q2-feedback"></div>
+    </div>
+
+    <div>
+      <p><strong>Q3: In y = mx + b, ML's job is to find the best:</strong></p>
+      <button class="quiz-option" onclick="checkQuiz(this, false)">A) x and y</button>
+      <button class="quiz-option" onclick="checkQuiz(this, true)">B) m and b</button>
+      <button class="quiz-option" onclick="checkQuiz(this, false)">C) Data and graphs</button>
+      <button class="quiz-option" onclick="checkQuiz(this, false)">D) URL and server</button>
+      <div class="quiz-feedback" id="q3-feedback"></div>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(9)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-10"></div>
+      <button class="nav-btn" onclick="goTo(11)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 13: Wrap-Up ==================== -->
+<div class="slide" id="slide-11">
+  <div class="slide-inner">
+    <span class="slide-number">11 / 12</span>
+    <div class="big-icon" style="font-size:60px;">&#x1F389;</div>
+    <h2>Wrap-Up</h2>
+
+    <div class="flow" style="margin:20px 0;">
+      <div class="flow-box" style="background:var(--ai-color);">&#x1F916; AI</div>
+      <div class="flow-arrow">&#x2283;</div>
+      <div class="flow-box" style="background:var(--ml-color);">&#x1F9E0; ML</div>
+      <div class="flow-arrow">&#x2283;</div>
+      <div class="flow-box" style="background:var(--genai-color);">&#x2728; Gen AI</div>
+    </div>
+
+    <div class="callout key">
+      <p style="font-size:1.1em; text-align:center;"><strong>"ML is finding patterns. AI is the big umbrella. Gen AI is when the patterns are good enough to create something new."</strong></p>
+    </div>
+
+    <div style="margin-top:20px;">
+      <h3 style="color:var(--primary);">What we learned today:</h3>
+      <ul>
+        <li><strong>AI</strong> = any machine that seems smart</li>
+        <li><strong>ML</strong> = machines that learn from data</li>
+        <li><strong>Gen AI</strong> = ML that creates new content</li>
+        <li><strong>Linear regression</strong> (y = mx + b) is the simplest ML model</li>
+        <li><strong>Training</strong> = finding the line. <strong>Testing</strong> = checking it. <strong>Inference</strong> = using it.</li>
+      </ul>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(10)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-11"></div>
+      <button class="nav-btn" onclick="goTo(12)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 14: Homework ==================== -->
+<div class="slide" id="slide-12">
+  <div class="slide-inner">
+    <span class="slide-number">12 / 12</span>
+    <h2>Homework</h2>
+
+    <div class="grid-2" style="margin-top:24px;">
+      <div class="card" style="border-top:4px solid var(--primary);">
+        <div class="card-icon">&#x1F4AC;</div>
+        <h3>Prompt Experiment</h3>
+        <p>Ask ChatGPT or Claude or Gemini:<br><br><em>"Explain machine learning like I'm in 7th grade."</em><br><br>Then ask:<br><br><em>"Now explain it like I'm a scientist."</em><br><br>Compare the two answers. Which prompt got a better response for you?</p>
+      </div>
+      <div class="card" style="border-top:4px solid var(--secondary);">
+        <div class="card-icon">&#x1F914;</div>
+        <h3>Think About It</h3>
+        <p>Same AI. Same knowledge. Different prompt. Different output.<br><br><strong>How does the AI "know" how to adjust?</strong><br><br>We'll explore this mystery in the weeks ahead!</p>
+      </div>
+    </div>
+
+    <div class="callout success" style="margin-top:20px;">
+      <p><strong>Next Week Preview:</strong> We go deeper &mdash; into <strong>Neural Networks &amp; the Brain</strong>. How do machines learn like we do? What happens when you make a neural network REALLY big? &#x1F9E0;</p>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(11)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-12"></div>
+      <button class="nav-btn" onclick="goToAppendix(1)" style="background:var(--ml-color);">Bonus &#x1F4D6; &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== APPENDIX ==================== -->
+<div class="slide" id="appendix-1">
+  <div class="slide-inner">
+    <span class="slide-number" style="background:var(--ml-color);">Appendix 1 / 3</span>
     <h2>The 3 Steps of Machine Learning</h2>
-    <p>What we just did on the graph follows a pattern every ML model uses:</p>
+    <p>What we did on the graph follows a pattern every ML model uses:</p>
 
     <div class="pipeline">
       <div class="pipeline-stage training" onclick="toggleInfo('train-detail')">
@@ -823,13 +1016,13 @@
     </div>
 
     <div class="hidden-content" id="train-detail">
-      <p><strong>Training = Finding the best line.</strong> We gave the model our data (hours studied + test scores) and it found the values of <strong>m</strong> and <strong>b</strong> that make <code>y = mx + b</code> fit the data as closely as possible. Like studying for a test &mdash; the model is "studying" the data!</p>
+      <p><strong>Training = Finding the best line.</strong> We gave the model our data (hours studied + test scores) and it found the values of <strong>m</strong> and <strong>b</strong> that make <code>y = mx + b</code> fit the data as closely as possible.</p>
     </div>
     <div class="hidden-content" id="test-detail">
-      <p><strong>Testing = Checking with new data.</strong> We hold back some data the model hasn't seen. If the model predicts those scores accurately, we know it learned the real pattern &mdash; not just memorized the answers. Like taking a test on material you studied!</p>
+      <p><strong>Testing = Checking with new data.</strong> We hold back some data the model hasn't seen. If the model predicts those scores accurately, we know it learned the real pattern — not just memorized the answers.</p>
     </div>
     <div class="hidden-content" id="infer-detail">
-      <p><strong>Inference = Using it for real.</strong> Now the trained model can predict scores for <em>any</em> number of study hours. "If I study 7 hours, what score will I get?" That's inference &mdash; using what the model learned to make predictions on brand new inputs!</p>
+      <p><strong>Inference = Using it for real.</strong> Now the trained model can predict scores for <em>any</em> number of study hours. "If I study 7 hours, what score will I get?" That's inference!</p>
     </div>
 
     <div class="callout key" style="margin-top:8px;">
@@ -838,17 +1031,21 @@
 
     <div class="copyright">Bodhi AI Classes LLC</div>
     <div class="nav">
-      <button class="nav-btn" onclick="goTo(7)">&#8592; Back</button>
-      <div class="nav-dots" id="dots-8"></div>
-      <button class="nav-btn" onclick="goTo(9)">Next &#8594;</button>
+      <button class="nav-btn" onclick="goTo(12)">&#8592; Main Deck</button>
+      <div style="display:flex; gap:8px; align-items:center;">
+        <span style="font-size:0.85em; color:#888;">Appendix</span>
+        <span style="width:10px; height:10px; border-radius:50%; background:var(--ml-color); display:inline-block;"></span>
+        <span style="width:10px; height:10px; border-radius:50%; background:#ddd; display:inline-block; cursor:pointer;" onclick="goToAppendix(2)"></span>
+        <span style="width:10px; height:10px; border-radius:50%; background:#ddd; display:inline-block; cursor:pointer;" onclick="goToAppendix(3)"></span>
+      </div>
+      <button class="nav-btn" onclick="goToAppendix(2)">Next &#8594;</button>
     </div>
   </div>
 </div>
 
-<!-- ==================== SLIDE 9: Study Analogy ==================== -->
-<div class="slide" id="slide-9">
+<div class="slide" id="appendix-2">
   <div class="slide-inner">
-    <span class="slide-number">9 / 15</span>
+    <span class="slide-number" style="background:var(--ml-color);">Appendix 2 / 3</span>
     <h2>ML Is Like Studying for a Test</h2>
     <p>The ML process maps perfectly to your own experience:</p>
 
@@ -868,22 +1065,26 @@
     </div>
 
     <div class="callout warning">
-      <p><strong>What if you only memorized?</strong> You'd ace the practice test but fail the real one. ML has the same problem! It's called <strong>"overfitting"</strong> &mdash; when a model memorizes the data instead of learning the pattern.</p>
+      <p><strong>What if you only memorized?</strong> You'd ace the practice test but fail the real one. ML has the same problem — it's called <strong>"overfitting"</strong>: when a model memorizes the data instead of learning the pattern.</p>
     </div>
 
     <div class="copyright">Bodhi AI Classes LLC</div>
     <div class="nav">
-      <button class="nav-btn" onclick="goTo(8)">&#8592; Back</button>
-      <div class="nav-dots" id="dots-9"></div>
-      <button class="nav-btn" onclick="goTo(10)">Next &#8594;</button>
+      <button class="nav-btn" onclick="goToAppendix(1)">&#8592; Back</button>
+      <div style="display:flex; gap:8px; align-items:center;">
+        <span style="font-size:0.85em; color:#888;">Appendix</span>
+        <span style="width:10px; height:10px; border-radius:50%; background:#ddd; display:inline-block; cursor:pointer;" onclick="goToAppendix(1)"></span>
+        <span style="width:10px; height:10px; border-radius:50%; background:var(--ml-color); display:inline-block;"></span>
+        <span style="width:10px; height:10px; border-radius:50%; background:#ddd; display:inline-block; cursor:pointer;" onclick="goToAppendix(3)"></span>
+      </div>
+      <button class="nav-btn" onclick="goToAppendix(3)">Next &#8594;</button>
     </div>
   </div>
 </div>
 
-<!-- ==================== SLIDE 10: What ML Is Really Doing ==================== -->
-<div class="slide" id="slide-10">
+<div class="slide" id="appendix-3">
   <div class="slide-inner">
-    <span class="slide-number">10 / 15</span>
+    <span class="slide-number" style="background:var(--ml-color);">Appendix 3 / 3</span>
     <h2>What ML Is Really Doing</h2>
     <p>Training a model is just finding the best <strong>m</strong> and <strong>b</strong>:</p>
 
@@ -919,168 +1120,25 @@
 
     <div class="copyright">Bodhi AI Classes LLC</div>
     <div class="nav">
-      <button class="nav-btn" onclick="goTo(9)">&#8592; Back</button>
-      <div class="nav-dots" id="dots-10"></div>
-      <button class="nav-btn" onclick="goTo(11)">Next &#8594;</button>
-    </div>
-  </div>
-</div>
-
-<!-- ==================== SLIDE 11: Beyond Lines ==================== -->
-<div class="slide" id="slide-11">
-  <div class="slide-inner">
-    <span class="slide-number">11 / 15</span>
-    <h2>From Lines to Intelligence</h2>
-    <p>Our line is the simplest ML model. But real AI uses the same idea &mdash; scaled up massively!</p>
-
-    <div class="grid-2" style="margin-top:24px;">
-      <div class="card" style="border-top:4px solid var(--ml-color);">
-        <div class="card-icon">&#x1F4CF;</div>
-        <h3>What We Did</h3>
-        <p>1 input (hours) &#x2192; 1 output (score)<br>2 parameters (m, b)<br>6 data points</p>
+      <button class="nav-btn" onclick="goToAppendix(2)">&#8592; Back</button>
+      <div style="display:flex; gap:8px; align-items:center;">
+        <span style="font-size:0.85em; color:#888;">Appendix</span>
+        <span style="width:10px; height:10px; border-radius:50%; background:#ddd; display:inline-block; cursor:pointer;" onclick="goToAppendix(1)"></span>
+        <span style="width:10px; height:10px; border-radius:50%; background:#ddd; display:inline-block; cursor:pointer;" onclick="goToAppendix(2)"></span>
+        <span style="width:10px; height:10px; border-radius:50%; background:var(--ml-color); display:inline-block;"></span>
       </div>
-      <div class="card" style="border-top:4px solid var(--genai-color);">
-        <div class="card-icon">&#x1F9E0;</div>
-        <h3>What ChatGPT or Claude or Gemini Does</h3>
-        <p>Millions of inputs &#x2192; next word<br><strong>175 billion</strong> parameters<br>Trillions of words of text</p>
-      </div>
-    </div>
-
-    <div class="callout key" style="margin-top:20px;">
-      <p><strong>Same idea, different scale.</strong> We found the best m and b for a line. ChatGPT or Claude or Gemini found the best values for billions of parameters &mdash; but the process is the same: show data, find patterns, make predictions.</p>
-    </div>
-
-    <div style="text-align:center; margin-top:16px;">
-      <p style="font-size:1.1em; color:#666;">&#x1F4A1; "Machine Learning is finding patterns in data. AI is the umbrella. Gen AI is when those patterns are good enough to create something new."</p>
-    </div>
-
-    <div class="copyright">Bodhi AI Classes LLC</div>
-    <div class="nav">
-      <button class="nav-btn" onclick="goTo(10)">&#8592; Back</button>
-      <div class="nav-dots" id="dots-11"></div>
-      <button class="nav-btn" onclick="goTo(12)">Next &#8594;</button>
-    </div>
-  </div>
-</div>
-
-<!-- ==================== SLIDE 12: Quiz ==================== -->
-<div class="slide" id="slide-12">
-  <div class="slide-inner">
-    <span class="slide-number">12 / 14</span>
-    <h2>Quick Quiz!</h2>
-
-    <div style="margin-bottom:28px;">
-      <p><strong>Q1: Which is the correct nesting? (Biggest to smallest)</strong></p>
-      <button class="quiz-option" onclick="checkQuiz(this, false)">A) ML &gt; AI &gt; Gen AI</button>
-      <button class="quiz-option" onclick="checkQuiz(this, true)">B) AI &gt; ML &gt; Gen AI</button>
-      <button class="quiz-option" onclick="checkQuiz(this, false)">C) Gen AI &gt; ML &gt; AI</button>
-      <button class="quiz-option" onclick="checkQuiz(this, false)">D) AI &gt; Gen AI &gt; ML</button>
-      <div class="quiz-feedback" id="q1-feedback"></div>
-    </div>
-
-    <div style="margin-bottom:28px;">
-      <p><strong>Q2: In ML, "training" means:</strong></p>
-      <button class="quiz-option" onclick="checkQuiz(this, false)">A) Making predictions on new data</button>
-      <button class="quiz-option" onclick="checkQuiz(this, false)">B) Checking if the model works</button>
-      <button class="quiz-option" onclick="checkQuiz(this, true)">C) Finding the best pattern in the data</button>
-      <button class="quiz-option" onclick="checkQuiz(this, false)">D) Writing code for a robot</button>
-      <div class="quiz-feedback" id="q2-feedback"></div>
-    </div>
-
-    <div>
-      <p><strong>Q3: In y = mx + b, ML's job is to find the best:</strong></p>
-      <button class="quiz-option" onclick="checkQuiz(this, false)">A) x and y</button>
-      <button class="quiz-option" onclick="checkQuiz(this, true)">B) m and b</button>
-      <button class="quiz-option" onclick="checkQuiz(this, false)">C) Data and graphs</button>
-      <button class="quiz-option" onclick="checkQuiz(this, false)">D) URL and server</button>
-      <div class="quiz-feedback" id="q3-feedback"></div>
-    </div>
-
-    <div class="copyright">Bodhi AI Classes LLC</div>
-    <div class="nav">
-      <button class="nav-btn" onclick="goTo(11)">&#8592; Back</button>
-      <div class="nav-dots" id="dots-12"></div>
-      <button class="nav-btn" onclick="goTo(13)">Next &#8594;</button>
-    </div>
-  </div>
-</div>
-
-<!-- ==================== SLIDE 13: Wrap-Up ==================== -->
-<div class="slide" id="slide-13">
-  <div class="slide-inner">
-    <span class="slide-number">13 / 14</span>
-    <div class="big-icon" style="font-size:60px;">&#x1F389;</div>
-    <h2>Wrap-Up</h2>
-
-    <div class="flow" style="margin:20px 0;">
-      <div class="flow-box" style="background:var(--ai-color);">&#x1F916; AI</div>
-      <div class="flow-arrow">&#x2283;</div>
-      <div class="flow-box" style="background:var(--ml-color);">&#x1F9E0; ML</div>
-      <div class="flow-arrow">&#x2283;</div>
-      <div class="flow-box" style="background:var(--genai-color);">&#x2728; Gen AI</div>
-    </div>
-
-    <div class="callout key">
-      <p style="font-size:1.1em; text-align:center;"><strong>"ML is finding patterns. AI is the big umbrella. Gen AI is when the patterns are good enough to create something new."</strong></p>
-    </div>
-
-    <div style="margin-top:20px;">
-      <h3 style="color:var(--primary);">What we learned today:</h3>
-      <ul>
-        <li><strong>AI</strong> = any machine that seems smart</li>
-        <li><strong>ML</strong> = machines that learn from data</li>
-        <li><strong>Gen AI</strong> = ML that creates new content</li>
-        <li><strong>Linear regression</strong> (y = mx + b) is the simplest ML model</li>
-        <li><strong>Training</strong> = finding the line. <strong>Testing</strong> = checking it. <strong>Inference</strong> = using it.</li>
-      </ul>
-    </div>
-
-    <div class="copyright">Bodhi AI Classes LLC</div>
-    <div class="nav">
-      <button class="nav-btn" onclick="goTo(12)">&#8592; Back</button>
-      <div class="nav-dots" id="dots-13"></div>
-      <button class="nav-btn" onclick="goTo(14)">Next &#8594;</button>
-    </div>
-  </div>
-</div>
-
-<!-- ==================== SLIDE 14: Homework ==================== -->
-<div class="slide" id="slide-14">
-  <div class="slide-inner">
-    <span class="slide-number">14 / 14</span>
-    <h2>Homework</h2>
-
-    <div class="grid-2" style="margin-top:24px;">
-      <div class="card" style="border-top:4px solid var(--primary);">
-        <div class="card-icon">&#x1F4AC;</div>
-        <h3>Prompt Experiment</h3>
-        <p>Ask ChatGPT or Claude or Gemini:<br><br><em>"Explain machine learning like I'm in 7th grade."</em><br><br>Then ask:<br><br><em>"Now explain it like I'm a scientist."</em><br><br>Compare the two answers. Which prompt got a better response for you?</p>
-      </div>
-      <div class="card" style="border-top:4px solid var(--secondary);">
-        <div class="card-icon">&#x1F914;</div>
-        <h3>Think About It</h3>
-        <p>Same AI. Same knowledge. Different prompt. Different output.<br><br><strong>How does the AI "know" how to adjust?</strong><br><br>We'll explore this mystery in the weeks ahead!</p>
-      </div>
-    </div>
-
-    <div class="callout success" style="margin-top:20px;">
-      <p><strong>Next Week Preview:</strong> We go deeper &mdash; into <strong>Neural Networks &amp; the Brain</strong>. How do machines learn like we do? What happens when you make a neural network REALLY big? &#x1F9E0;</p>
-    </div>
-
-    <div class="copyright">Bodhi AI Classes LLC</div>
-    <div class="nav">
-      <button class="nav-btn" onclick="goTo(13)">&#8592; Back</button>
-      <div class="nav-dots" id="dots-14"></div>
-      <button class="nav-btn" disabled>Next &#8594;</button>
+      <button class="nav-btn" onclick="goTo(12)" style="background:var(--primary);">&#x1F3E0; Back to Deck</button>
     </div>
   </div>
 </div>
 
 <script>
-  const TOTAL = 14;
+  const TOTAL = 12;
   let currentSlide = 1;
+  let currentAppendix = 0; // 0 = not in appendix
+  const APPENDIX_TOTAL = 3;
 
-  // Build nav dots
+  // Build nav dots for main slides
   for (let s = 1; s <= TOTAL; s++) {
     const dotsContainer = document.getElementById('dots-' + s);
     if (!dotsContainer) continue;
@@ -1093,19 +1151,38 @@
   }
 
   function goTo(n) {
-    document.getElementById('slide-' + currentSlide).classList.remove('active');
+    if (currentAppendix > 0) {
+      document.getElementById('appendix-' + currentAppendix).classList.remove('active');
+      currentAppendix = 0;
+    } else {
+      document.getElementById('slide-' + currentSlide).classList.remove('active');
+    }
     currentSlide = n;
-    const slide = document.getElementById('slide-' + currentSlide);
-    slide.classList.add('active');
+    document.getElementById('slide-' + n).classList.add('active');
     window.scrollTo(0, 0);
-    // Draw scatter plot when navigating to slide 7
     if (n === 7) setTimeout(drawScatter, 100);
+  }
+
+  function goToAppendix(n) {
+    if (currentAppendix > 0) {
+      document.getElementById('appendix-' + currentAppendix).classList.remove('active');
+    } else {
+      document.getElementById('slide-' + currentSlide).classList.remove('active');
+    }
+    currentAppendix = n;
+    document.getElementById('appendix-' + n).classList.add('active');
+    window.scrollTo(0, 0);
   }
 
   // Keyboard navigation
   document.addEventListener('keydown', e => {
-    if (e.key === 'ArrowRight' && currentSlide < TOTAL) goTo(currentSlide + 1);
-    if (e.key === 'ArrowLeft' && currentSlide > 1) goTo(currentSlide - 1);
+    if (currentAppendix > 0) {
+      if (e.key === 'ArrowRight' && currentAppendix < APPENDIX_TOTAL) goToAppendix(currentAppendix + 1);
+      if (e.key === 'ArrowLeft' && currentAppendix > 1) goToAppendix(currentAppendix - 1);
+    } else {
+      if (e.key === 'ArrowRight' && currentSlide < TOTAL) goTo(currentSlide + 1);
+      if (e.key === 'ArrowLeft' && currentSlide > 1) goTo(currentSlide - 1);
+    }
   });
 
   // ---- Toggle Info Boxes ----
