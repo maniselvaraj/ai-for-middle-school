@@ -383,7 +383,7 @@
 <!-- ==================== SLIDE 1: Title ==================== -->
 <div class="slide active" id="slide-1">
   <div class="slide-inner">
-    <span class="slide-number">1 / 10</span>
+    <span class="slide-number">1 / 11</span>
     <div class="big-icon">&#x1F4AC;</div>
     <h1>LLMs &amp; the Art of Talking to AI</h1>
     <p class="subtitle">How AI understands you &mdash; and how to talk to it like a pro</p>
@@ -408,7 +408,7 @@
 <!-- ==================== SLIDE 2: Homework Debrief ==================== -->
 <div class="slide" id="slide-2">
   <div class="slide-inner">
-    <span class="slide-number">2 / 10</span>
+    <span class="slide-number">2 / 11</span>
     <h2>Homework Debrief: Two Prompts, Two Answers</h2>
     <p>Last week you asked ChatGPT or Claude or Gemini to explain ML two ways. Let's compare!</p>
 
@@ -450,7 +450,7 @@
 <!-- ==================== SLIDE 3: Decoding LLM & GPT ==================== -->
 <div class="slide" id="slide-3">
   <div class="slide-inner">
-    <span class="slide-number">3 / 10</span>
+    <span class="slide-number">3 / 11</span>
     <h2>Decoding the Alphabet Soup: LLM &amp; GPT</h2>
     <p>You say "ChatGPT" and "LLM" every day &mdash; but what do these letters actually mean? Click each one!</p>
 
@@ -528,7 +528,7 @@
 <!-- ==================== SLIDE 4: Two Superpowers ==================== -->
 <div class="slide" id="slide-4">
   <div class="slide-inner">
-    <span class="slide-number">4 / 10</span>
+    <span class="slide-number">4 / 11</span>
     <h2>Two Superpowers: Understanding vs. Generating</h2>
     <p>AI language models come in two flavors &mdash; just like your brain has two skills when someone talks to you.</p>
 
@@ -582,7 +582,7 @@
 <!-- ==================== SLIDE 5: How an LLM Answers ==================== -->
 <div class="slide" id="slide-5">
   <div class="slide-inner">
-    <span class="slide-number">5 / 10</span>
+    <span class="slide-number">5 / 11</span>
     <h2>How an LLM Answers "What Is Your Name?"</h2>
     <p>Let's walk through exactly what happens inside the AI, step by step. Click each step!</p>
 
@@ -645,7 +645,7 @@
 <!-- ==================== SLIDE 6: What Is a Prompt? ==================== -->
 <div class="slide" id="slide-6">
   <div class="slide-inner">
-    <span class="slide-number">6 / 10</span>
+    <span class="slide-number">6 / 11</span>
     <h2>What Is a Prompt? &#x1F4AC;</h2>
     <p>A <strong>prompt</strong> is any text you send to an AI to get a response. But here's the thing &mdash; every AI conversation actually has <strong>two parts</strong>, not one. Let's break them down.</p>
 
@@ -711,7 +711,7 @@
 <!-- ==================== SLIDE 7: Why "You Are a..." Changes Everything ==================== -->
 <div class="slide" id="slide-7">
   <div class="slide-inner">
-    <span class="slide-number">7 / 10</span>
+    <span class="slide-number">7 / 11</span>
     <h2>Why "You Are a..." Changes Everything</h2>
     <p>Watch what happens when we ask the <strong>same question</strong> but change just the first line of the prompt:</p>
 
@@ -762,7 +762,7 @@
 <!-- ==================== SLIDE 8: Prompt Playground ==================== -->
 <div class="slide" id="slide-8">
   <div class="slide-inner">
-    <span class="slide-number">8 / 10</span>
+    <span class="slide-number">8 / 11</span>
     <h2>Prompt Playground: Try These!</h2>
     <p>Open ChatGPT, Claude, or Gemini and try each of these prompts. Notice how the role changes the answer!</p>
 
@@ -826,7 +826,7 @@
 <!-- ==================== SLIDE 9: Quiz ==================== -->
 <div class="slide" id="slide-9">
   <div class="slide-inner">
-    <span class="slide-number">9 / 10</span>
+    <span class="slide-number">9 / 11</span>
     <h2>Quiz Time!</h2>
 
     <div style="margin-bottom:28px;">
@@ -874,10 +874,122 @@
   </div>
 </div>
 
-<!-- ==================== SLIDE 10: Wrap-Up & Homework ==================== -->
+<!-- ==================== SLIDE 10: Vibe Coding ==================== -->
 <div class="slide" id="slide-10">
   <div class="slide-inner">
-    <span class="slide-number">10 / 10</span>
+    <span class="slide-number">10 / 11</span>
+    <h2>Vibe Coding &#x1F3AE; Let's Build a Game!</h2>
+
+    <div class="callout key" style="margin-top:0;">
+      <p>&#x1F4A1; <strong>Vibe coding</strong> = describing what you want to build in plain English and letting AI write all the code for you. You don't need to know how to code &mdash; you just need to know how to <em>prompt</em>!</p>
+    </div>
+
+    <p style="margin-top:16px; font-weight:600; color:var(--primary);">Today we're going to vibe code a Tic-Tac-Toe game in 5 steps:</p>
+
+    <div style="margin-top:16px;">
+
+      <div class="step">
+        <div class="step-num" style="background:var(--primary);">1</div>
+        <div class="step-content">
+          <h4>Open Claude Code</h4>
+          <p>Open your terminal and type <strong>claude</strong> to start Claude Code. Or go to <strong>claude.ai</strong> in your browser. Either works!</p>
+        </div>
+      </div>
+
+      <div class="step" style="margin-top:12px;">
+        <div class="step-num" style="background:var(--system-color);">2</div>
+        <div class="step-content">
+          <h4>Set the System Prompt First</h4>
+          <p>Before describing your game, tell Claude <em>who it is</em>. This is your system prompt &mdash; paste it first:</p>
+        </div>
+      </div>
+      <div class="prompt-box system-prompt" style="margin-top:4px; margin-bottom:0;">
+        <span class="label">SYSTEM PROMPT (send this first)</span>
+        <p style="color:#f39c12;">You are an expert web developer who builds fun, simple browser games for middle schoolers. Write clean HTML, CSS, and JavaScript all in one file. Keep the code easy to understand and add comments explaining what each section does.</p>
+      </div>
+
+      <div class="step" style="margin-top:16px;">
+        <div class="step-num" style="background:var(--prompt-color);">3</div>
+        <div class="step-content">
+          <h4>Send Your User Prompt</h4>
+          <p>Now describe what you want to build. This is your user prompt:</p>
+        </div>
+      </div>
+      <div class="prompt-box user-prompt" style="margin-top:4px; margin-bottom:0;">
+        <span class="label">USER PROMPT (your game request)</span>
+        <p style="color:#43E97B;">Build a Tic-Tac-Toe game as a single HTML file I can open in my browser. Two players take turns clicking squares. Show whose turn it is at the top. Highlight the three winning squares when someone wins and show a "Player X wins!" message. Add a Restart button to play again. Make it look clean and colorful.</p>
+      </div>
+
+      <div class="step" style="margin-top:16px;">
+        <div class="step-num" style="background:var(--user-color);">4</div>
+        <div class="step-content">
+          <h4>Save &amp; Open the File</h4>
+          <p>Claude will give you the code. Save it as <strong>tictactoe.html</strong>, then double-click the file to open it in your browser. You should be able to play right away!</p>
+        </div>
+      </div>
+
+      <div class="step" style="margin-top:12px;">
+        <div class="step-num" style="background:var(--gpt-color);">5</div>
+        <div class="step-content">
+          <h4>Level It Up &mdash; Try These Follow-Up Prompts</h4>
+          <p>Once your game works, ask Claude to improve it! Click each idea below:</p>
+        </div>
+      </div>
+
+      <div style="margin-top:10px; display:flex; flex-direction:column; gap:8px;">
+
+        <button class="reveal-btn" onclick="toggleInfo('vc-score')" style="text-align:left;">&#x1F3C6; Add a score counter</button>
+        <div class="hidden-content" id="vc-score">
+          <div class="prompt-box user-prompt" style="margin-top:6px;">
+            <span class="label">FOLLOW-UP PROMPT</span>
+            <p style="color:#43E97B;">Add a score counter that tracks how many games Player X and Player O have each won. Keep the score even after clicking Restart.</p>
+          </div>
+        </div>
+
+        <button class="reveal-btn" onclick="toggleInfo('vc-theme')" style="text-align:left;">&#x1F3A8; Change the look</button>
+        <div class="hidden-content" id="vc-theme">
+          <div class="prompt-box user-prompt" style="margin-top:6px;">
+            <span class="label">FOLLOW-UP PROMPT</span>
+            <p style="color:#43E97B;">Make the game look like a dark space theme — black background, glowing neon blue and pink for the X and O pieces, and a starry background.</p>
+          </div>
+        </div>
+
+        <button class="reveal-btn" onclick="toggleInfo('vc-ai')" style="text-align:left;">&#x1F916; Play against AI</button>
+        <div class="hidden-content" id="vc-ai">
+          <div class="prompt-box user-prompt" style="margin-top:6px;">
+            <span class="label">FOLLOW-UP PROMPT</span>
+            <p style="color:#43E97B;">Add a single-player mode where I play against the computer. The computer should play randomly for easy mode. Add a button to switch between 2-player and vs Computer mode.</p>
+          </div>
+        </div>
+
+        <button class="reveal-btn" onclick="toggleInfo('vc-sound')" style="text-align:left;">&#x1F50A; Add sound effects</button>
+        <div class="hidden-content" id="vc-sound">
+          <div class="prompt-box user-prompt" style="margin-top:6px;">
+            <span class="label">FOLLOW-UP PROMPT</span>
+            <p style="color:#43E97B;">Add short sound effects using the Web Audio API — a click sound when placing a piece, and a victory sound when someone wins. No external files needed.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="callout warning" style="margin-top:16px;">
+      <p>&#x1F527; <strong>When something looks wrong:</strong> copy the broken part, paste it back to Claude and say exactly what's wrong. <em>"The restart button doesn't clear the board — here's my current code: [paste it]."</em> Describe the bug, don't just say "fix it."</p>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(9)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-10"></div>
+      <button class="nav-btn" onclick="goTo(11)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 11: Wrap-Up & Homework ==================== -->
+<div class="slide" id="slide-11">
+  <div class="slide-inner">
+    <span class="slide-number">11 / 11</span>
     <div class="big-icon" style="font-size:60px; animation: bounce 2s ease infinite;">&#x1F389;</div>
     <h2>Wrap-Up &amp; Homework</h2>
 
@@ -896,36 +1008,52 @@
       </ul>
     </div>
 
-    <h3 style="color:var(--secondary); margin-top:28px; margin-bottom:12px;">Homework</h3>
+    <div class="callout brain" style="margin-top:20px;">
+      <p>&#x1F510; <strong>Pro tip for vibe coding:</strong> Always start with a <strong>system prompt</strong> to set Claude's role before giving your task. It makes a big difference!</p>
+      <div class="prompt-box system-prompt" style="margin-top:10px;">
+        <span class="label">SYSTEM PROMPT (paste this first)</span>
+        <p style="color:#f39c12;">You are an expert web developer who builds fun, simple browser games for middle schoolers. Write clean HTML, CSS, and JavaScript all in one file. Keep the code easy to understand and add comments explaining what each section does.</p>
+      </div>
+      <p style="margin-top:10px; font-size:0.9em; color:#555;">Then follow up with your <strong>user prompt</strong> describing exactly what game you want to build.</p>
+    </div>
+
+    <h3 style="color:var(--secondary); margin-top:28px; margin-bottom:12px;">Homework &#x1F3AE; Vibe Code Something!</h3>
     <div class="grid-2" style="margin-top:12px;">
       <div class="card" style="border-top:4px solid var(--primary);">
-        <div class="card-icon">&#x1F3AD;</div>
-        <h3>Role Swap Challenge</h3>
-        <p>Pick ONE question (e.g., "What causes earthquakes?"). Ask it <strong>3 times</strong> with different roles:<br><br>
-        1. "You are a scientist"<br>
-        2. "You are a rapper"<br>
-        3. "You are a medieval knight"<br><br>
-        Screenshot all three. Which was most helpful? Which was funniest?</p>
+        <div class="card-icon">&#x1F579;&#xFE0F;</div>
+        <h3>Build Your Own Game</h3>
+        <p>Use Claude to vibe code a game of your choice. Here are some ideas:<br><br>
+        &bull; Rock Paper Scissors<br>
+        &bull; A trivia quiz about your favorite topic<br>
+        &bull; A simple click-the-target game<br>
+        &bull; Number guessing game<br><br>
+        Save it as an HTML file and make sure it actually works in your browser. <strong>Screenshot your finished game!</strong></p>
       </div>
       <div class="card" style="border-top:4px solid var(--secondary);">
-        <div class="card-icon">&#x1F4DD;</div>
-        <h3>Build Your Own Prompt</h3>
-        <p>Write a prompt that uses all three parts:<br><br>
-        1. <strong>Who:</strong> "You are a ___"<br>
-        2. <strong>What:</strong> the task or question<br>
-        3. <strong>How:</strong> format instructions<br><br>
-        Example: <em>"You are a sports commentator. Describe my morning routine as if it's an exciting game. Use play-by-play style."</em></p>
+        <div class="card-icon">&#x2B06;&#xFE0F;</div>
+        <h3>Level It Up</h3>
+        <p>Once your game works, send <strong>at least 2 follow-up prompts</strong> to improve it. Ideas:<br><br>
+        &bull; Add a score or timer<br>
+        &bull; Change the colors / theme<br>
+        &bull; Add a high score that saves<br>
+        &bull; Make it mobile-friendly<br><br>
+        <strong>Write down the exact prompts you used.</strong> We'll share them next class!</p>
       </div>
+    </div>
+    <div class="card" style="border-top:4px solid var(--accent); margin-top:14px;">
+      <div class="card-icon">&#x1F4AC;</div>
+      <h3>Bonus: Debug Like a Pro</h3>
+      <p>If something breaks (it will!), practice fixing it with Claude. Copy the broken section, paste it in, and describe exactly what's wrong. <strong>Screenshot the bug AND the fixed version.</strong> Bonus points for explaining in your own words why it broke.</p>
     </div>
 
     <div class="callout info" style="margin-top:20px;">
-      <p><strong>Next week preview:</strong> Now that you know how to talk to AI, we'll put it to work! We'll use prompts to build a presentation and a school report &mdash; your first real AI-powered projects!</p>
+      <p><strong>Next week preview:</strong> We'll share your vibe-coded games with the class! Then we'll go deeper &mdash; using AI to build a real project: a personal webpage about something you love.</p>
     </div>
 
     <div class="copyright">Bodhi AI Classes LLC</div>
     <div class="nav">
-      <button class="nav-btn" onclick="goTo(9)">&#8592; Back</button>
-      <div class="nav-dots" id="dots-10"></div>
+      <button class="nav-btn" onclick="goTo(10)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-11"></div>
       <button class="nav-btn" disabled>Next &#8594;</button>
     </div>
   </div>
@@ -933,7 +1061,7 @@
 
 <!-- ==================== JAVASCRIPT ==================== -->
 <script>
-  const TOTAL = 10;
+  const TOTAL = 11;
   let currentSlide = 1;
 
   // Build nav dots
