@@ -646,30 +646,32 @@
 <div class="slide" id="slide-6">
   <div class="slide-inner">
     <span class="slide-number">6 / 10</span>
-    <h2>What Is a Prompt? &#x1F3AC;</h2>
-    <p>Think of the AI like an <strong>actor who takes on any role you give them</strong>. Every time you chat with an LLM, two things happen behind the scenes &mdash; like a TV show being filmed!</p>
+    <h2>What Is a Prompt? &#x1F4AC;</h2>
+    <p>A <strong>prompt</strong> is any text you send to an AI to get a response. But here's the thing &mdash; every AI conversation actually has <strong>two parts</strong>, not one. Let's break them down.</p>
 
     <div class="grid-2" style="margin-top:20px;">
       <div style="background: linear-gradient(135deg, #fff3e0, #ffe0b2); border-radius:16px; padding:20px; text-align:center;">
-        <div style="font-size:48px; margin-bottom:8px;">&#x1F3A6;</div>
-        <h3 style="color:var(--system-color); margin-bottom:8px;">The Director's Brief</h3>
-        <p style="font-size:0.95em;"><strong>= System Prompt</strong></p>
-        <p style="font-size:0.9em; margin-top:8px;">Before filming starts, the director tells the actor: <em>"You are a sarcastic pirate chef who only speaks in rhymes."</em> The actor doesn't break character &mdash; no matter what happens on set!</p>
-        <p style="margin-top:12px; font-size:0.85em; color:#888; font-style:italic;">👀 The audience (you!) never sees this part.</p>
+        <div style="font-size:48px; margin-bottom:8px;">&#x1F510;</div>
+        <h3 style="color:var(--system-color); margin-bottom:8px;">System Prompt</h3>
+        <p style="font-size:0.9em; margin-top:8px;">A <strong>secret set of rules</strong> written by whoever built the app &mdash; <em>before</em> you ever show up. It tells the AI who it is, how to behave, and what it should or shouldn't do.</p>
+        <p style="margin-top:12px; font-size:0.85em; color:#888; font-style:italic;">&#x1F6AB; You never see this. It's already there when you open the app.</p>
       </div>
       <div style="background: linear-gradient(135deg, #e8fbe8, #d4edda); border-radius:16px; padding:20px; text-align:center;">
-        <div style="font-size:48px; margin-bottom:8px;">&#x1F3A4;</div>
-        <h3 style="color:var(--user-color); margin-bottom:8px;">Your Line</h3>
-        <p style="font-size:0.95em;"><strong>= User Prompt</strong></p>
-        <p style="font-size:0.9em; margin-top:8px;">Now YOU walk on set and say something: <em>"Hey, what should I make for dinner tonight?"</em> The actor responds &mdash; in full pirate chef rhyme mode, because that's their character!</p>
-        <p style="margin-top:12px; font-size:0.85em; color:#888; font-style:italic;">✏️ This is the part YOU write every time.</p>
+        <div style="font-size:48px; margin-bottom:8px;">&#x270F;&#xFE0F;</div>
+        <h3 style="color:var(--user-color); margin-bottom:8px;">User Prompt</h3>
+        <p style="font-size:0.9em; margin-top:8px;">The message <strong>you type</strong> every time you talk to the AI. Your question, your request, your idea &mdash; whatever you want to ask or say.</p>
+        <p style="margin-top:12px; font-size:0.85em; color:#888; font-style:italic;">&#x2705; This is the part you write. You control this.</p>
       </div>
+    </div>
+
+    <div class="callout info" style="margin-top:20px;">
+      <p>&#x1F4A1; <strong>Think of it like a new employee's first day:</strong> The company hands them a job description before any customer walks in &mdash; <em>"Be helpful, only answer cooking questions, always be friendly."</em> That job description is the <strong>system prompt</strong>. When a customer walks in and asks <em>"What's a good pasta recipe?"</em> &mdash; that's the <strong>user prompt</strong>. The employee uses <em>both</em> to give a great answer.</p>
     </div>
 
     <p style="margin-top:20px; font-weight:600; color:var(--primary);">Here's what it actually looks like behind the scenes:</p>
 
     <div class="prompt-box system-prompt" style="margin-top:12px;">
-      <span class="label">SYSTEM PROMPT (hidden)</span>
+      <span class="label">SYSTEM PROMPT (hidden from you)</span>
       <p style="color:#f39c12;">You are a friendly homework helper for 7th graders. Keep answers short, use simple words, and always end with an encouraging emoji.</p>
     </div>
 
@@ -685,7 +687,7 @@
 
     <button class="reveal-btn" onclick="toggleInfo('same-q-diff-sys')" style="margin-top:8px;">What if the system prompt changed? &#x1F914;</button>
     <div class="hidden-content" id="same-q-diff-sys">
-      <p><strong>Same user question</strong> — "What is photosynthesis?" — but with a different system prompt:</p>
+      <p><strong>Same user question</strong> &mdash; "What is photosynthesis?" &mdash; but with a different system prompt:</p>
       <div class="prompt-box system-prompt" style="margin-top:8px;">
         <span class="label">NEW SYSTEM PROMPT</span>
         <p style="color:#f39c12;">You are a university biology professor. Use technical terminology.</p>
@@ -694,7 +696,7 @@
         <span class="label">AI RESPONSE NOW</span>
         <p style="color:#bb86fc;">Photosynthesis is the biochemical process by which photoautotrophs convert light energy into chemical energy, stored as glucose via the Calvin cycle...</p>
       </div>
-      <p style="margin-top:8px; color:#666;">Same AI. Same question. Completely different vibe! The director changed, so the actor changed.</p>
+      <p style="margin-top:8px; color:#666;">Same AI. Same question. Completely different answer! The system prompt changed the AI's job description &mdash; so its whole style changed too.</p>
     </div>
 
     <div class="copyright">Bodhi AI Classes LLC</div>
