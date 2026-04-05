@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ML, AI, and Gen AI - Week 3</title>
+  <title>ML, AI, Gen AI &amp; Neural Networks - Week 3</title>
   <style>
     :root {
       --primary: #6C63FF;
@@ -17,6 +17,11 @@
       --ml-color: #9b59b6;
       --dl-color: #27ae60;
       --genai-color: #e74c3c;
+      --brain-color: #e74c3c;
+      --neuron-color: #9b59b6;
+      --network-color: #3498db;
+      --weight-color: #f39c12;
+      --signal-color: #43E97B;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -110,6 +115,10 @@
     @keyframes bounce {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-10px); }
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
     }
 
     .grid-2 {
@@ -410,6 +419,112 @@
     .callout.success { background: #e8fbe8; border-left: 4px solid var(--accent); }
     .callout.warning { background: #fff3e0; border-left: 4px solid #ff9800; }
     .callout.key { background: #f0f0ff; border-left: 4px solid var(--primary); }
+    .callout.brain { background: #fde8e8; border-left: 4px solid var(--brain-color); }
+
+    /* ---- Activity Steps ---- */
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin: 16px 0;
+      padding: 16px;
+      background: #f8f9fa;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+    .step:hover { background: #f0f0ff; }
+    .step-num {
+      background: var(--primary);
+      color: white;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+    .step-content { flex: 1; }
+    .step-content h4 { color: var(--primary); margin-bottom: 4px; }
+
+    /* ---- Layer Diagram ---- */
+    .layer-diagram {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      margin: 32px 0;
+    }
+    .layer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 24px;
+    }
+    .layer-label {
+      font-weight: 800;
+      font-size: 0.95em;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+    .neuron-dot {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.8em;
+      color: white;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .neuron-dot:hover { transform: scale(1.2); }
+    .neuron-input { background: var(--network-color); }
+    .neuron-hidden { background: var(--neuron-color); }
+    .neuron-output { background: var(--brain-color); }
+    .layer-connections {
+      display: flex;
+      align-items: center;
+      color: #ccc;
+      font-size: 20px;
+      padding: 0 8px;
+    }
+
+    /* ---- Weight Slider ---- */
+    .weight-control {
+      background: #f8f9fa;
+      border-radius: 16px;
+      padding: 24px;
+      margin: 16px 0;
+      text-align: center;
+    }
+    .weight-control input[type="range"] {
+      width: 80%;
+      margin: 12px 0;
+      accent-color: var(--primary);
+      height: 8px;
+    }
+    .weight-value {
+      font-size: 2em;
+      font-weight: 800;
+      color: var(--primary);
+      margin: 8px 0;
+    }
+
+    /* ---- Neural Network Canvas ---- */
+    .nn-canvas-container {
+      background: white;
+      border: 2px solid #e0e0e0;
+      border-radius: 16px;
+      padding: 20px;
+      margin: 24px auto;
+      max-width: 700px;
+      position: relative;
+    }
 
     /* ---- Navigation ---- */
     .nav {
@@ -470,6 +585,8 @@
       .circle-dl { width: 122px; height: 122px; }
       .circle-genai { width: 52px; height: 52px; }
       .compare-table { font-size: 0.85em; }
+      .layer-diagram { flex-direction: column; }
+      .layer-connections { transform: rotate(90deg); }
     }
   </style>
 </head>
@@ -478,15 +595,15 @@
 <!-- ==================== SLIDE 1: Title ==================== -->
 <div class="slide active" id="slide-1">
   <div class="slide-inner">
-    <span class="slide-number">1 / 12</span>
+    <span class="slide-number">1 / 16</span>
     <div class="big-icon">&#x1F916;</div>
-    <h1>ML, AI, and Gen AI</h1>
+    <h1>ML, AI, Gen AI &amp; Neural Networks</h1>
     <p class="subtitle">Teaching machines with math you already know</p>
     <p style="font-size:1.1em; text-align:center; color:#666; margin-top:16px;">
       Week 3: From Algebra to Artificial Intelligence
     </p>
     <p style="text-align:center; color:#999; margin-top:8px; font-size:0.95em;">
-      Big Question: How do machines actually <em>learn</em>?
+      Big Question: How do machines actually <em>learn</em> &mdash; and what happens when you scale that up?
     </p>
     <div class="copyright">Bodhi AI Classes LLC</div>
     <div class="nav">
@@ -500,7 +617,7 @@
 <!-- ==================== SLIDE 2: Warm-Up ==================== -->
 <div class="slide" id="slide-2">
   <div class="slide-inner">
-    <span class="slide-number">2 / 12</span>
+    <span class="slide-number">2 / 16</span>
     <h2>Warm-Up: What Do You Think AI Is?</h2>
     <p>Before we define anything, let's hear what you think:</p>
 
@@ -556,7 +673,7 @@
 <!-- ==================== SLIDE 3: The Nested Circles ==================== -->
 <div class="slide" id="slide-3">
   <div class="slide-inner">
-    <span class="slide-number">3 / 12</span>
+    <span class="slide-number">3 / 16</span>
     <h2>AI vs. ML vs. Gen AI</h2>
     <p>They're related &mdash; like Russian nesting dolls. Click each circle to learn more!</p>
 
@@ -582,7 +699,7 @@
       <p><strong style="color:var(--ml-color);">ML (Machine Learning)</strong> &mdash; A type of AI where machines <em>learn from data</em> instead of being manually programmed with every rule. You show it examples, and it figures out the pattern on its own.</p>
     </div>
     <div class="hidden-content" id="dl-info">
-      <p><strong style="color:var(--dl-color);">DL (Deep Learning)</strong> &mdash; A type of ML that uses <em>neural networks</em> — layers of math nodes loosely inspired by the brain — to learn directly from raw data like images, audio, and text. Powers face recognition, voice assistants, and more!</p>
+      <p><strong style="color:var(--dl-color);">DL (Deep Learning)</strong> &mdash; A type of ML that uses <em>neural networks</em> &mdash; layers of math nodes loosely inspired by the brain &mdash; to learn directly from raw data like images, audio, and text. Powers face recognition, voice assistants, and more!</p>
     </div>
     <div class="hidden-content" id="genai-info">
       <p><strong style="color:var(--genai-color);">Gen AI (Generative AI)</strong> &mdash; A type of deep learning that can <em>create new content</em>: write essays, generate images, compose music, write code. ChatGPT, Claude, and Gemini are all Gen AI!</p>
@@ -604,7 +721,7 @@
 <!-- ==================== SLIDE 4: AI Examples ==================== -->
 <div class="slide" id="slide-4">
   <div class="slide-inner">
-    <span class="slide-number">4 / 12</span>
+    <span class="slide-number">4 / 16</span>
     <h2>AI Is Everywhere</h2>
     <p>You've been using AI your whole life! But what <em>is</em> AI? Here's the big idea:</p>
 
@@ -623,7 +740,7 @@
       </div>
       <div class="card" style="border-top:4px solid var(--genai-color);">
         <h3 style="color:var(--genai-color);">&#x2728; Gen AI</h3>
-        <p><strong>Creates new content</strong> — text, images, code, music</p>
+        <p><strong>Creates new content</strong> &mdash; text, images, code, music</p>
       </div>
     </div>
 
@@ -656,7 +773,7 @@
       </tr>
       <tr>
         <td>Roomba vacuum</td>
-        <td>Spam email filter</td>
+        <td>YouTube recommendations</td>
         <td>Medical image diagnosis</td>
         <td>AI music generators</td>
       </tr>
@@ -693,7 +810,7 @@
 <!-- ==================== SLIDE 5: You Already Know ML ==================== -->
 <div class="slide" id="slide-5">
   <div class="slide-inner">
-    <span class="slide-number">5 / 12</span>
+    <span class="slide-number">5 / 16</span>
     <h2>You Already Know ML!</h2>
     <p>Remember this from algebra class?</p>
 
@@ -712,7 +829,6 @@
       </div>
     </div>
 
-
     <div class="callout success" style="margin-top:16px;">
       <p><strong>Mind-blowing fact:</strong> The simplest ML model in the world is literally <code style="background:#ddd; padding:2px 8px; border-radius:4px;">y = mx + b</code>. It's called <strong>Linear Regression</strong>. You already know the math behind machine learning!</p>
     </div>
@@ -720,9 +836,8 @@
     <div class="callout info" style="margin-top:12px;">
       <p>&#x1F4A1; <strong>What's a "model"?</strong><br>
       A <strong>model</strong> is a simplified representation of something in the real world that helps a computer understand it and make predictions about it.<br><br>
-      <em>Example: if you study more hours, you tend to score higher. The model captures that relationship — "for every extra hour studied, add about 8 points" — so it can predict your score on a test you haven't taken yet.</em></p>
+      <em>Example: if you study more hours, you tend to score higher. The model captures that relationship &mdash; "for every extra hour studied, add about 8 points" &mdash; so it can predict your score on a test you haven't taken yet.</em></p>
     </div>
-
 
     <div class="copyright">Bodhi AI Classes LLC</div>
     <div class="nav">
@@ -736,7 +851,7 @@
 <!-- ==================== SLIDE 6: The Data ==================== -->
 <div class="slide" id="slide-6">
   <div class="slide-inner">
-    <span class="slide-number">6 / 12</span>
+    <span class="slide-number">6 / 16</span>
     <h2>Let's Do ML: The Data</h2>
     <p>Here's data from students who tracked how many hours they studied and their test scores:</p>
 
@@ -771,7 +886,7 @@
 <!-- ==================== SLIDE 7: Interactive Graph ==================== -->
 <div class="slide" id="slide-7">
   <div class="slide-inner">
-    <span class="slide-number">7 / 12</span>
+    <span class="slide-number">7 / 16</span>
     <h2>Plot It &amp; Find the Line!</h2>
     <p>Here's our data on a graph. Click "Draw Best-Fit Line" to see ML in action!</p>
 
@@ -798,9 +913,9 @@
 <!-- ==================== SLIDE 8: How Does ML Learn? ==================== -->
 <div class="slide" id="slide-8">
   <div class="slide-inner">
-    <span class="slide-number">8 / 12</span>
+    <span class="slide-number">8 / 16</span>
     <h2>How Does ML "Learn"?</h2>
-    <p>The computer doesn't magically know the answer. It learns the same way <em>you</em> learn a new skill — by trying, seeing what went wrong, and adjusting.</p>
+    <p>The computer doesn't magically know the answer. It learns the same way <em>you</em> learn a new skill &mdash; by trying, seeing what went wrong, and adjusting.</p>
 
     <div class="flow" style="margin:24px 0; flex-wrap:wrap; gap:8px;">
       <div class="flow-box" style="background:var(--ai-color);">&#x1F3B2; Make a guess</div>
@@ -816,7 +931,7 @@
       <div class="card" style="border-top:4px solid var(--ml-color);">
         <div class="card-icon">&#x1F3C0;</div>
         <h3>Like Shooting a Basketball</h3>
-        <p>When you shoot, you don't calculate equations. You just take a shot. If it hits the front rim — too short! — your brain adjusts to throw harder next time. ML works the exact same way: guess, see what went wrong, and adjust.</p>
+        <p>When you shoot, you don't calculate equations. You just take a shot. If it hits the front rim &mdash; too short! &mdash; your brain adjusts to throw harder next time. ML works the exact same way: guess, see what went wrong, and adjust.</p>
       </div>
       <div class="card" style="border-top:4px solid var(--dl-color);">
         <div class="card-icon">&#x1F4C8;</div>
@@ -826,7 +941,7 @@
     </div>
 
     <div class="callout key" style="margin-top:16px;">
-      <p><strong>The big idea:</strong> ML doesn't follow instructions — it <em>practices from examples</em>. The more examples it sees, the better it gets. Just like you.</p>
+      <p><strong>The big idea:</strong> ML doesn't follow instructions &mdash; it <em>practices from examples</em>. The more examples it sees, the better it gets. Just like you.</p>
     </div>
 
     <div class="copyright">Bodhi AI Classes LLC</div>
@@ -838,33 +953,38 @@
   </div>
 </div>
 
-<!-- ==================== SLIDE 9: Beyond Lines ==================== -->
+<!-- ==================== SLIDE 9: The Problem with Straight Lines (from W4 S3) ==================== -->
 <div class="slide" id="slide-9">
   <div class="slide-inner">
-    <span class="slide-number">9 / 12</span>
-    <h2>From Lines to Intelligence</h2>
-    <p>Our line is the simplest ML model. But real AI uses the same idea &mdash; scaled up massively!</p>
+    <span class="slide-number">9 / 16</span>
+    <h2>The Problem: Straight Lines Can't Do Everything</h2>
+    <p>We just used a straight line (y = mx + b) to predict test scores. That worked great for simple patterns. But...</p>
 
     <div class="grid-2" style="margin-top:24px;">
-      <div class="card" style="border-top:4px solid var(--ml-color);">
-        <div class="card-icon">&#x1F4CF;</div>
-        <h3>What We Did</h3>
-        <p>1 input (hours) &#x2192; 1 output (score)<br>2 parameters (m, b)<br>6 data points</p>
+      <div class="card" style="border-top:4px solid var(--accent);">
+        <div class="card-icon">&#x2714;&#xFE0F;</div>
+        <h3>Lines Work For</h3>
+        <p>Simple patterns: more study = higher score. One input, one output, straight relationship.</p>
       </div>
-      <div class="card" style="border-top:4px solid var(--genai-color);">
-        <div class="card-icon">&#x1F9E0;</div>
-        <h3>What ChatGPT or Claude or Gemini Does</h3>
-        <p>Millions of inputs &#x2192; next word<br><strong>175 billion</strong> parameters<br>Trillions of words of text</p>
+      <div class="card" style="border-top:4px solid var(--secondary);">
+        <div class="card-icon">&#x274C;</div>
+        <h3>Lines DON'T Work For</h3>
+        <p>Recognizing faces, understanding language, driving cars, playing chess. Way too complex!</p>
       </div>
     </div>
 
-    <div class="callout key" style="margin-top:20px;">
-      <p><strong>Same idea, different scale.</strong> We found the best m and b for a line. ChatGPT or Claude or Gemini found the best values for billions of parameters &mdash; but the process is the same: show data, find patterns, make predictions.</p>
+    <div class="callout warning" style="margin-top:16px;">
+      <p><strong>Think about it:</strong> How would you draw a single straight line to tell the difference between a photo of a cat and a photo of a dog? You can't! You need something much more powerful.</p>
     </div>
 
-    <div style="text-align:center; margin-top:16px;">
-      <p style="font-size:1.1em; color:#666;">&#x1F4A1; "Machine Learning is finding patterns in data. AI is the umbrella. Gen AI is when those patterns are good enough to create something new."</p>
+    <button class="reveal-btn" onclick="toggleInfo('curvy-why')">Why Can't a Line Recognize a Cat?</button>
+    <div class="hidden-content" id="curvy-why">
+      <p>A photo of a cat is made of millions of pixels. Each pixel has a color value. To recognize "cat," the computer needs to combine information from ALL those pixels &mdash; the shape of the ears, the pattern of the fur, the size of the eyes. That's millions of inputs, not just one! A straight line only handles one input. We need a whole <strong>network</strong> of math working together.</p>
     </div>
+
+    <p style="margin-top:20px; text-align:center; font-size:1.3em; font-weight:700; color:var(--primary);">
+      We need something more powerful. Enter: Neural Networks.
+    </p>
 
     <div class="copyright">Bodhi AI Classes LLC</div>
     <div class="nav">
@@ -875,37 +995,35 @@
   </div>
 </div>
 
-<!-- ==================== SLIDE 12: Quiz ==================== -->
+<!-- ==================== SLIDE 10: Your Amazing Brain (from W4 S4) ==================== -->
 <div class="slide" id="slide-10">
   <div class="slide-inner">
-    <span class="slide-number">10 / 12</span>
-    <h2>Quick Quiz!</h2>
+    <span class="slide-number">10 / 16</span>
+    <h2>Your Amazing Brain: The Original Neural Network</h2>
+    <p>Before we talk about computer neural networks, let's understand the inspiration: <strong>your brain</strong>!</p>
 
-    <div style="margin-bottom:28px;">
-      <p><strong>Q1: Which is the correct nesting? (Biggest to smallest)</strong></p>
-      <button class="quiz-option" onclick="checkQuiz(this, false)">A) ML &gt; AI &gt; Gen AI</button>
-      <button class="quiz-option" onclick="checkQuiz(this, true)">B) AI &gt; ML &gt; Gen AI</button>
-      <button class="quiz-option" onclick="checkQuiz(this, false)">C) Gen AI &gt; ML &gt; AI</button>
-      <button class="quiz-option" onclick="checkQuiz(this, false)">D) AI &gt; Gen AI &gt; ML</button>
-      <div class="quiz-feedback" id="q1-feedback"></div>
+    <div class="big-icon" style="font-size:60px; animation: pulse 2s ease infinite;">&#x1F9E0;</div>
+
+    <div class="grid-3">
+      <div class="card" style="background: linear-gradient(135deg, #ffecd2, #fcb69f);">
+        <div class="card-icon">&#x1F4A1;</div>
+        <h3 style="color:var(--brain-color);">86 Billion Neurons</h3>
+        <p>Your brain has about 86 billion tiny cells called neurons. Each one is like a mini-processor.</p>
+      </div>
+      <div class="card" style="background: linear-gradient(135deg, #a8edea, #fed6e3);">
+        <div class="card-icon">&#x1F517;</div>
+        <h3 style="color:var(--neuron-color);">100 Trillion Connections</h3>
+        <p>Neurons are connected by synapses. Each neuron can connect to thousands of others!</p>
+      </div>
+      <div class="card" style="background: linear-gradient(135deg, #d4fc79, #96e6a1);">
+        <div class="card-icon">&#x26A1;</div>
+        <h3 style="color:#2e7d32;">Electric Signals</h3>
+        <p>Neurons communicate by sending tiny electric signals to each other through their connections.</p>
+      </div>
     </div>
 
-    <div style="margin-bottom:28px;">
-      <p><strong>Q2: In ML, "training" means:</strong></p>
-      <button class="quiz-option" onclick="checkQuiz(this, false)">A) Making predictions on new data</button>
-      <button class="quiz-option" onclick="checkQuiz(this, false)">B) Checking if the model works</button>
-      <button class="quiz-option" onclick="checkQuiz(this, true)">C) Finding the best pattern in the data</button>
-      <button class="quiz-option" onclick="checkQuiz(this, false)">D) Writing code for a robot</button>
-      <div class="quiz-feedback" id="q2-feedback"></div>
-    </div>
-
-    <div>
-      <p><strong>Q3: In y = mx + b, ML's job is to find the best:</strong></p>
-      <button class="quiz-option" onclick="checkQuiz(this, false)">A) x and y</button>
-      <button class="quiz-option" onclick="checkQuiz(this, true)">B) m and b</button>
-      <button class="quiz-option" onclick="checkQuiz(this, false)">C) Data and graphs</button>
-      <button class="quiz-option" onclick="checkQuiz(this, false)">D) URL and server</button>
-      <div class="quiz-feedback" id="q3-feedback"></div>
+    <div class="callout brain" style="margin-top:16px;">
+      <p><strong>How you learn:</strong> When you practice something (like shooting a basketball), the connections between certain neurons get <strong>stronger</strong>. The more you practice, the stronger the pathway. That's why repetition works &mdash; you're literally strengthening the wiring in your brain!</p>
     </div>
 
     <div class="copyright">Bodhi AI Classes LLC</div>
@@ -917,34 +1035,61 @@
   </div>
 </div>
 
-<!-- ==================== SLIDE 13: Wrap-Up ==================== -->
+<!-- ==================== SLIDE 11: How a Brain Neuron Works (from W4 S5) ==================== -->
 <div class="slide" id="slide-11">
   <div class="slide-inner">
-    <span class="slide-number">11 / 12</span>
-    <div class="big-icon" style="font-size:60px;">&#x1F389;</div>
-    <h2>Wrap-Up</h2>
+    <span class="slide-number">11 / 16</span>
+    <h2>How a Brain Neuron Works</h2>
+    <p>Each neuron in your brain follows a simple process. Click each step to learn more!</p>
 
-    <div class="flow" style="margin:20px 0;">
-      <div class="flow-box" style="background:var(--ai-color);">&#x1F916; AI</div>
-      <div class="flow-arrow">&#x2283;</div>
-      <div class="flow-box" style="background:var(--ml-color);">&#x1F9E0; ML</div>
-      <div class="flow-arrow">&#x2283;</div>
-      <div class="flow-box" style="background:var(--genai-color);">&#x2728; Gen AI</div>
+    <div class="step" onclick="toggleInfo('neuron-step1')">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>Receive Signals</h4>
+        <p>The neuron receives electric signals from other neurons through its <strong>dendrites</strong> (input wires).</p>
+      </div>
+    </div>
+    <div class="hidden-content" id="neuron-step1">
+      <p>Imagine your neuron is a student in class. The dendrites are like your ears &mdash; they collect information from many sources (the teacher, other students, the textbook).</p>
+      <p style="margin-top:12px; padding:12px; background:#e8f4fd; border-radius:8px;"><strong>Example &mdash; "What is your name?"</strong><br>When someone asks you this, your ear neurons receive the sound waves for each word. Different neurons pick up "what," "is," "your," and "name" &mdash; all arriving at the same time from the same source, like multiple wires carrying different parts of the signal.</p>
+    </div>
+
+    <div class="step" onclick="toggleInfo('neuron-step2')">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>Process &amp; Decide</h4>
+        <p>The neuron adds up all the signals. If the total is strong enough, it <strong>"fires"</strong> &mdash; sends its own signal!</p>
+      </div>
+    </div>
+    <div class="hidden-content" id="neuron-step2">
+      <p>It's like voting: if enough of your friends say "the answer is B," you go with B. But if only one person says B and everyone else says A, you go with A. The neuron needs enough "votes" to activate.</p>
+      <p style="margin-top:12px; padding:12px; background:#e8f4fd; border-radius:8px;"><strong>Example &mdash; "What is your name?"</strong><br>Your brain's language neurons combine the words and recognize this as a <em>question about identity</em>. The "what" signals it's a question. "Your name" signals it's about <em>you</em>. The neurons that understand language fire strongly because the pattern is clear: someone wants to know who you are.</p>
+    </div>
+
+    <div class="step" onclick="toggleInfo('neuron-step3')">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>Send Output</h4>
+        <p>If it fires, it sends a signal through its <strong>axon</strong> (output wire) to the next neurons.</p>
+      </div>
+    </div>
+    <div class="hidden-content" id="neuron-step3">
+      <p>The signal travels down the axon like a text message &mdash; once it reaches the end, it jumps across a tiny gap (called a <strong>synapse</strong>) to the next neuron. That next neuron then does the same thing: receive, process, decide, send.</p>
+      <p style="margin-top:12px; padding:12px; background:#e8f4fd; border-radius:8px;"><strong>Example &mdash; "What is your name?"</strong><br>Now your brain fires signals to the neurons that store your name, then to the motor neurons that control your mouth and vocal cords. The output? You say "My name is ____." The whole chain &mdash; hear the question, understand it, retrieve the answer, speak it &mdash; happens in under a second!</p>
+    </div>
+
+    <div class="flow" style="margin-top:24px;">
+      <div class="flow-box" style="background:var(--network-color);">Receive Signals</div>
+      <div class="flow-arrow">&#8594;</div>
+      <div class="flow-box" style="background:var(--neuron-color);">Process &amp; Decide</div>
+      <div class="flow-arrow">&#8594;</div>
+      <div class="flow-box" style="background:var(--brain-color);">Fire (or don't!)</div>
+      <div class="flow-arrow">&#8594;</div>
+      <div class="flow-box" style="background:var(--accent); color: #1a1a2e;">Send to Next</div>
     </div>
 
     <div class="callout key">
-      <p style="font-size:1.1em; text-align:center;"><strong>"ML is finding patterns. AI is the big umbrella. Gen AI is when the patterns are good enough to create something new."</strong></p>
-    </div>
-
-    <div style="margin-top:20px;">
-      <h3 style="color:var(--primary);">What we learned today:</h3>
-      <ul>
-        <li><strong>AI</strong> = any machine that seems smart</li>
-        <li><strong>ML</strong> = machines that learn from data</li>
-        <li><strong>Gen AI</strong> = ML that creates new content</li>
-        <li><strong>Linear regression</strong> (y = mx + b) is the simplest ML model</li>
-        <li><strong>Training</strong> = finding the line. <strong>Testing</strong> = checking it. <strong>Inference</strong> = using it.</li>
-      </ul>
+      <p><strong>This is the template for EVERYTHING in AI.</strong> Computer scientists looked at this process and said: "Can we build something that works the same way?" The answer was yes &mdash; and they called it a <strong>neural network</strong>.</p>
     </div>
 
     <div class="copyright">Bodhi AI Classes LLC</div>
@@ -956,42 +1101,303 @@
   </div>
 </div>
 
-<!-- ==================== SLIDE 14: Homework ==================== -->
+<!-- ==================== SLIDE 12: From Your Brain to an LLM ==================== -->
 <div class="slide" id="slide-12">
   <div class="slide-inner">
-    <span class="slide-number">12 / 12</span>
-    <h2>Homework</h2>
+    <span class="slide-number">12 / 16</span>
+    <h2>Your Brain vs. an LLM: Same Question!</h2>
+    <p>You just saw how <em>your</em> brain handles "What is your name?" &mdash; an LLM like ChatGPT or Claude does the <strong>same 3 steps</strong>, using artificial neurons instead of real ones.</p>
 
     <div class="grid-2" style="margin-top:24px;">
-      <div class="card" style="border-top:4px solid var(--primary);">
-        <div class="card-icon">&#x1F4AC;</div>
-        <h3>Prompt Experiment</h3>
-        <p>Ask ChatGPT or Claude or Gemini:<br><br><em>"Explain machine learning like I'm in 7th grade."</em><br><br>Then ask:<br><br><em>"Now explain it like I'm a scientist."</em><br><br>Compare the two answers. Which prompt got a better response for you?</p>
+      <div class="card" style="border-top:4px solid var(--brain-color); text-align:left;">
+        <div class="card-icon">&#x1F9E0;</div>
+        <h3 style="color:var(--brain-color);">Your Brain</h3>
+        <div class="step" style="margin:8px 0; padding:10px;">
+          <div class="step-num" style="width:28px; height:28px; font-size:0.75em;">1</div>
+          <div class="step-content"><p style="font-size:0.9em;"><strong>Receive:</strong> Ears pick up the sound waves</p></div>
+        </div>
+        <div class="step" style="margin:8px 0; padding:10px;">
+          <div class="step-num" style="width:28px; height:28px; font-size:0.75em;">2</div>
+          <div class="step-content"><p style="font-size:0.9em;"><strong>Process:</strong> Language neurons recognize it as a question about identity</p></div>
+        </div>
+        <div class="step" style="margin:8px 0; padding:10px;">
+          <div class="step-num" style="width:28px; height:28px; font-size:0.75em;">3</div>
+          <div class="step-content"><p style="font-size:0.9em;"><strong>Output:</strong> You say "My name is Sarah"</p></div>
+        </div>
       </div>
-      <div class="card" style="border-top:4px solid var(--secondary);">
-        <div class="card-icon">&#x1F914;</div>
-        <h3>Think About It</h3>
-        <p>Same AI. Same knowledge. Different prompt. Different output.<br><br><strong>How does the AI "know" how to adjust?</strong><br><br>We'll explore this mystery in the weeks ahead!</p>
+      <div class="card" style="border-top:4px solid var(--network-color); text-align:left;">
+        <div class="card-icon">&#x1F4BB;</div>
+        <h3 style="color:var(--network-color);">ChatGPT / Claude</h3>
+        <div class="step" style="margin:8px 0; padding:10px;">
+          <div class="step-num" style="width:28px; height:28px; font-size:0.75em; background:var(--network-color);">1</div>
+          <div class="step-content"><p style="font-size:0.9em;"><strong>Receive:</strong> Your typed words are converted into numbers</p></div>
+        </div>
+        <div class="step" style="margin:8px 0; padding:10px;">
+          <div class="step-num" style="width:28px; height:28px; font-size:0.75em; background:var(--network-color);">2</div>
+          <div class="step-content"><p style="font-size:0.9em;"><strong>Process:</strong> Billions of artificial neurons figure out what words should come next</p></div>
+        </div>
+        <div class="step" style="margin:8px 0; padding:10px;">
+          <div class="step-num" style="width:28px; height:28px; font-size:0.75em; background:var(--network-color);">3</div>
+          <div class="step-content"><p style="font-size:0.9em;"><strong>Output:</strong> It types "My name is Claude"</p></div>
+        </div>
       </div>
     </div>
 
-    <div class="callout success" style="margin-top:20px;">
-      <p><strong>Next Week Preview:</strong> We go deeper &mdash; into <strong>Neural Networks &amp; the Brain</strong>. How do machines learn like we do? What happens when you make a neural network REALLY big? &#x1F9E0;</p>
+    <div class="callout key" style="margin-top:16px;">
+      <p><strong>What is an LLM?</strong> A <strong>Large Language Model</strong> is a giant neural network trained on billions of sentences. It learned patterns like: after "What is your ___", the next word is often "name" or "age." It's the world's most powerful autocomplete &mdash; predicting the next word, over and over, until it writes a full answer!</p>
+    </div>
+
+    <button class="reveal-btn" onclick="toggleInfo('llm-scale')">How Big Is "Large"?</button>
+    <div class="hidden-content" id="llm-scale">
+      <div class="grid-3" style="margin-top:8px;">
+        <div class="card" style="background:linear-gradient(135deg, #e8f4fd, #d6eaf8);">
+          <h3 style="color:var(--network-color); font-size:1em;">Our y = mx + b</h3>
+          <p style="font-size:2em; font-weight:800; color:var(--network-color);">2</p>
+          <p>parameters</p>
+        </div>
+        <div class="card" style="background:linear-gradient(135deg, #f0e6ff, #e8daff);">
+          <h3 style="color:var(--neuron-color); font-size:1em;">Image Recognizer</h3>
+          <p style="font-size:2em; font-weight:800; color:var(--neuron-color);">25M</p>
+          <p>parameters</p>
+        </div>
+        <div class="card" style="background:linear-gradient(135deg, #fde8e8, #fbd5d5);">
+          <h3 style="color:var(--brain-color); font-size:1em;">GPT-4 / Claude</h3>
+          <p style="font-size:2em; font-weight:800; color:var(--brain-color);">1T+</p>
+          <p>parameters</p>
+        </div>
+      </div>
+      <p style="margin-top:12px; text-align:center; color:#666;">Same math (y = mx + b), just <strong>trillions</strong> of times over. That's why it's called "Large"!</p>
     </div>
 
     <div class="copyright">Bodhi AI Classes LLC</div>
     <div class="nav">
       <button class="nav-btn" onclick="goTo(11)">&#8592; Back</button>
       <div class="nav-dots" id="dots-12"></div>
+      <button class="nav-btn" onclick="goTo(13)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 13: From y=mx+b to Neural Networks (from W4 S12) ==================== -->
+<div class="slide" id="slide-13">
+  <div class="slide-inner">
+    <span class="slide-number">13 / 16</span>
+    <h2>From y = mx + b to Neural Networks</h2>
+    <p>Remember our straight line? A neural network is built from the same idea &mdash; just stacked and layered!</p>
+
+    <div class="step">
+      <div class="step-num" style="background:var(--accent); color:#1a1a2e;">1</div>
+      <div class="step-content">
+        <h4>One equation: y = mx + b</h4>
+        <p>One input, one weight (m), one bias (b), one output. That's a <strong>single artificial neuron</strong>!</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num" style="background:var(--network-color);">2</div>
+      <div class="step-content">
+        <h4>Multiple inputs: y = m&#8321;x&#8321; + m&#8322;x&#8322; + m&#8323;x&#8323; + b</h4>
+        <p>Now one neuron takes multiple inputs, each with its own weight. Like considering weather AND homework AND friends!</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num" style="background:var(--neuron-color);">3</div>
+      <div class="step-content">
+        <h4>Many neurons in a layer</h4>
+        <p>Stack multiple neurons side by side &mdash; each learns a different pattern from the same inputs.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num" style="background:var(--brain-color);">4</div>
+      <div class="step-content">
+        <h4>Many layers deep = "Deep Learning"</h4>
+        <p>Stack layers of neurons &mdash; each layer's output feeds into the next layer's input. THAT's a neural network! When it has many layers, we call it <strong>deep learning</strong>.</p>
+      </div>
+    </div>
+
+    <div class="callout success" style="margin-top:16px;">
+      <p><strong>Mind-blowing fact:</strong> Every single artificial neuron is basically doing y = mx + b (with a twist called an activation function). ChatGPT or Claude or Gemini is essentially <em>trillions</em> of tiny y = mx + b equations working together. The math you learned in 7th grade algebra is literally the building block of the most advanced AI in the world!</p>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(12)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-13"></div>
+      <button class="nav-btn" onclick="goTo(14)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 14: Why This Matters (from W4 S16) ==================== -->
+<div class="slide" id="slide-14">
+  <div class="slide-inner">
+    <span class="slide-number">14 / 16</span>
+    <h2>Why This Matters: Neural Networks Power Everything</h2>
+    <p>Every AI tool you've heard of is a neural network under the hood:</p>
+
+    <div class="grid-2" style="margin-top:20px;">
+      <div class="card" style="border-left:5px solid var(--network-color);">
+        <div class="card-icon">&#x1F4AC;</div>
+        <h3>ChatGPT or Claude or Gemini</h3>
+        <p>A <strong>massive</strong> neural network trained on text from the internet. It learned patterns in language &mdash; which words follow which. That's why it can write!</p>
+      </div>
+      <div class="card" style="border-left:5px solid var(--neuron-color);">
+        <div class="card-icon">&#x1F3A8;</div>
+        <h3>DALL-E / Midjourney</h3>
+        <p>Neural networks that learned patterns in images. They learned what "a cat wearing a hat" looks like by seeing millions of images.</p>
+      </div>
+      <div class="card" style="border-left:5px solid var(--brain-color);">
+        <div class="card-icon">&#x1F3B5;</div>
+        <h3>AI Music (Suno)</h3>
+        <p>Neural networks trained on music. They learned patterns in rhythm, melody, and harmony. Same concept, different data!</p>
+      </div>
+      <div class="card" style="border-left:5px solid var(--accent);">
+        <div class="card-icon">&#x1F3AE;</div>
+        <h3>Game AI (AlphaGo)</h3>
+        <p>A neural network that played millions of Go games against itself. It learned strategies no human had ever discovered!</p>
+      </div>
+    </div>
+
+    <div class="callout key" style="margin-top:16px;">
+      <p><strong>The pattern is always the same:</strong></p>
+      <ol style="list-style:decimal; padding-left:20px; margin-top:8px;">
+        <li style="padding-left:8px;">Build a neural network with layers of neurons</li>
+        <li style="padding-left:8px;">Feed it tons of training data (text, images, music, games)</li>
+        <li style="padding-left:8px;">Let it adjust its weights millions of times</li>
+        <li style="padding-left:8px;">Now it can make predictions on new data it's never seen!</li>
+      </ol>
+    </div>
+
+    <div class="callout brain">
+      <p><strong>Coming up next:</strong> We'll dive deep into how ChatGPT or Claude or Gemini specifically works &mdash; what happens when you type a message and hit enter? How does a neural network <em>write</em>? Hint: it's the world's biggest autocomplete!</p>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(13)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-14"></div>
+      <button class="nav-btn" onclick="goTo(15)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 15: Quiz ==================== -->
+<div class="slide" id="slide-15">
+  <div class="slide-inner">
+    <span class="slide-number">15 / 16</span>
+    <h2>Quiz Time! No Pressure &mdash; Just Vibes</h2>
+
+    <div style="margin-bottom:28px;">
+      <p><strong>Q1: Your friend says "Spotify recommending songs is Gen AI." Are they right?</strong></p>
+      <button class="quiz-option" onclick="checkQuiz(this, false)">A) Yes &mdash; it's super smart so it must be Gen AI</button>
+      <button class="quiz-option" onclick="checkQuiz(this, true)">B) Nope &mdash; it's ML (it predicts what you'll like, but doesn't create new songs)</button>
+      <button class="quiz-option" onclick="checkQuiz(this, false)">C) It's not AI at all, a human picks your playlist</button>
+      <button class="quiz-option" onclick="checkQuiz(this, false)">D) Only on Tuesdays</button>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <div style="margin-bottom:28px;">
+      <p><strong>Q2: When ChatGPT answers "What is your name?" it's basically doing:</strong></p>
+      <button class="quiz-option" onclick="checkQuiz(this, false)">A) Googling the answer real quick</button>
+      <button class="quiz-option" onclick="checkQuiz(this, false)">B) Reading its birth certificate</button>
+      <button class="quiz-option" onclick="checkQuiz(this, true)">C) Predicting the most likely next word, over and over (fancy autocomplete!)</button>
+      <button class="quiz-option" onclick="checkQuiz(this, false)">D) Asking another AI for help</button>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <div style="margin-bottom:28px;">
+      <p><strong>Q3: An ML model learns kind of like:</strong></p>
+      <button class="quiz-option" onclick="checkQuiz(this, false)">A) Reading the textbook once the night before the test</button>
+      <button class="quiz-option" onclick="checkQuiz(this, true)">B) Shooting a basketball 10,000 times and adjusting each time you miss</button>
+      <button class="quiz-option" onclick="checkQuiz(this, false)">C) Copying your friend's homework</button>
+      <button class="quiz-option" onclick="checkQuiz(this, false)">D) Memorizing every answer without understanding anything</button>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <div style="margin-bottom:28px;">
+      <p><strong>Q4: What math is secretly hiding inside every single artificial neuron?</strong></p>
+      <button class="quiz-option" onclick="checkQuiz(this, false)">A) The quadratic formula (teachers love that one)</button>
+      <button class="quiz-option" onclick="checkQuiz(this, true)">B) y = mx + b &mdash; the same line equation from algebra!</button>
+      <button class="quiz-option" onclick="checkQuiz(this, false)">C) E = mc&sup2; (that's Einstein's thing)</button>
+      <button class="quiz-option" onclick="checkQuiz(this, false)">D) There's no math, it runs on vibes</button>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <div>
+      <p><strong>Q5: What does the "L" in LLM stand for?</strong></p>
+      <button class="quiz-option" onclick="checkQuiz(this, true)">A) Large &mdash; as in billions of parameters</button>
+      <button class="quiz-option" onclick="checkQuiz(this, false)">B) Learning &mdash; because it's always studying</button>
+      <button class="quiz-option" onclick="checkQuiz(this, false)">C) Legendary &mdash; because it's that cool</button>
+      <button class="quiz-option" onclick="checkQuiz(this, false)">D) Laser &mdash; it uses laser beams to think</button>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(14)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-15"></div>
+      <button class="nav-btn" onclick="goTo(16)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 16: Wrap-Up & Homework ==================== -->
+<div class="slide" id="slide-16">
+  <div class="slide-inner">
+    <span class="slide-number">16 / 16</span>
+    <div class="big-icon" style="font-size:60px;">&#x1F389;</div>
+    <h2>Wrap-Up &amp; Homework</h2>
+
+    <div class="callout success">
+      <p style="font-size:1.1em; text-align:center;"><strong>"ML is finding patterns. Neural networks are how AI scales those patterns up &mdash; using the same y = mx + b math you already know, just stacked into layers."</strong></p>
+    </div>
+
+    <div style="margin-top:20px;">
+      <h3 style="color:var(--primary);">What we learned today:</h3>
+      <ul>
+        <li><strong>AI</strong> = any machine that seems smart</li>
+        <li><strong>ML</strong> = machines that learn from data (y = mx + b)</li>
+        <li><strong>Neural networks</strong> = layers of neurons inspired by your brain</li>
+        <li><strong>Deep learning</strong> = many layers = more complex patterns</li>
+        <li><strong>Gen AI</strong> = neural networks so powerful they create new content</li>
+      </ul>
+    </div>
+
+    <h3 style="color:var(--secondary); margin-top:28px; margin-bottom:12px;">Homework</h3>
+    <div class="grid-2" style="margin-top:12px;">
+      <div class="card" style="border-top:4px solid var(--primary);">
+        <div class="card-icon">&#x1F4AC;</div>
+        <h3>Prompt Experiment</h3>
+        <p>Ask ChatGPT or Claude or Gemini:<br><br><em>"Explain machine learning like I'm in 7th grade."</em><br><br>Then ask:<br><br><em>"Now explain it like I'm a scientist."</em><br><br>Compare the two answers. Which prompt got a better response for you?</p>
+      </div>
+      <div class="card" style="border-top:4px solid var(--secondary);">
+        <div class="card-icon">&#x1F9E0;</div>
+        <h3>TensorFlow Playground</h3>
+        <p>Visit <a href="https://playground.tensorflow.org" target="_blank" style="color:var(--primary); font-weight:600;">playground.tensorflow.org</a><br><br>Can you get it to solve the <strong>spiral pattern</strong>? Screenshot your best result. How many layers and neurons did it take?</p>
+      </div>
+    </div>
+
+    <div class="callout info" style="margin-top:20px;">
+      <p><strong>Next week preview:</strong> "What happens when you make a neural network REALLY big and feed it the entire internet?" We'll learn about LLMs (Large Language Models) &mdash; the world's biggest autocomplete!</p>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(15)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-16"></div>
       <button class="nav-btn" onclick="goToAppendix(1)" style="background:var(--ml-color);">Bonus &#x1F4D6; &#8594;</button>
     </div>
   </div>
 </div>
 
 <!-- ==================== APPENDIX ==================== -->
+
+<!-- Appendix 1: The 3 Steps of ML (from W3) -->
 <div class="slide" id="appendix-1">
   <div class="slide-inner">
-    <span class="slide-number" style="background:var(--ml-color);">Appendix 1 / 3</span>
+    <span class="slide-number" style="background:var(--ml-color);">Appendix 1 / 7</span>
     <h2>The 3 Steps of Machine Learning</h2>
     <p>What we did on the graph follows a pattern every ML model uses:</p>
 
@@ -1019,7 +1425,7 @@
       <p><strong>Training = Finding the best line.</strong> We gave the model our data (hours studied + test scores) and it found the values of <strong>m</strong> and <strong>b</strong> that make <code>y = mx + b</code> fit the data as closely as possible.</p>
     </div>
     <div class="hidden-content" id="test-detail">
-      <p><strong>Testing = Checking with new data.</strong> We hold back some data the model hasn't seen. If the model predicts those scores accurately, we know it learned the real pattern — not just memorized the answers.</p>
+      <p><strong>Testing = Checking with new data.</strong> We hold back some data the model hasn't seen. If the model predicts those scores accurately, we know it learned the real pattern &mdash; not just memorized the answers.</p>
     </div>
     <div class="hidden-content" id="infer-detail">
       <p><strong>Inference = Using it for real.</strong> Now the trained model can predict scores for <em>any</em> number of study hours. "If I study 7 hours, what score will I get?" That's inference!</p>
@@ -1031,21 +1437,17 @@
 
     <div class="copyright">Bodhi AI Classes LLC</div>
     <div class="nav">
-      <button class="nav-btn" onclick="goTo(12)">&#8592; Main Deck</button>
-      <div style="display:flex; gap:8px; align-items:center;">
-        <span style="font-size:0.85em; color:#888;">Appendix</span>
-        <span style="width:10px; height:10px; border-radius:50%; background:var(--ml-color); display:inline-block;"></span>
-        <span style="width:10px; height:10px; border-radius:50%; background:#ddd; display:inline-block; cursor:pointer;" onclick="goToAppendix(2)"></span>
-        <span style="width:10px; height:10px; border-radius:50%; background:#ddd; display:inline-block; cursor:pointer;" onclick="goToAppendix(3)"></span>
-      </div>
+      <button class="nav-btn" onclick="goTo(16)">&#8592; Main Deck</button>
+      <div class="appendix-dots" id="app-dots-1"></div>
       <button class="nav-btn" onclick="goToAppendix(2)">Next &#8594;</button>
     </div>
   </div>
 </div>
 
+<!-- Appendix 2: ML Is Like Studying (from W3) -->
 <div class="slide" id="appendix-2">
   <div class="slide-inner">
-    <span class="slide-number" style="background:var(--ml-color);">Appendix 2 / 3</span>
+    <span class="slide-number" style="background:var(--ml-color);">Appendix 2 / 7</span>
     <h2>ML Is Like Studying for a Test</h2>
     <p>The ML process maps perfectly to your own experience:</p>
 
@@ -1065,26 +1467,22 @@
     </div>
 
     <div class="callout warning">
-      <p><strong>What if you only memorized?</strong> You'd ace the practice test but fail the real one. ML has the same problem — it's called <strong>"overfitting"</strong>: when a model memorizes the data instead of learning the pattern.</p>
+      <p><strong>What if you only memorized?</strong> You'd ace the practice test but fail the real one. ML has the same problem &mdash; it's called <strong>"overfitting"</strong>: when a model memorizes the data instead of learning the pattern.</p>
     </div>
 
     <div class="copyright">Bodhi AI Classes LLC</div>
     <div class="nav">
       <button class="nav-btn" onclick="goToAppendix(1)">&#8592; Back</button>
-      <div style="display:flex; gap:8px; align-items:center;">
-        <span style="font-size:0.85em; color:#888;">Appendix</span>
-        <span style="width:10px; height:10px; border-radius:50%; background:#ddd; display:inline-block; cursor:pointer;" onclick="goToAppendix(1)"></span>
-        <span style="width:10px; height:10px; border-radius:50%; background:var(--ml-color); display:inline-block;"></span>
-        <span style="width:10px; height:10px; border-radius:50%; background:#ddd; display:inline-block; cursor:pointer;" onclick="goToAppendix(3)"></span>
-      </div>
+      <div class="appendix-dots" id="app-dots-2"></div>
       <button class="nav-btn" onclick="goToAppendix(3)">Next &#8594;</button>
     </div>
   </div>
 </div>
 
+<!-- Appendix 3: What ML Is Really Doing (from W3) -->
 <div class="slide" id="appendix-3">
   <div class="slide-inner">
-    <span class="slide-number" style="background:var(--ml-color);">Appendix 3 / 3</span>
+    <span class="slide-number" style="background:var(--ml-color);">Appendix 3 / 7</span>
     <h2>What ML Is Really Doing</h2>
     <p>Training a model is just finding the best <strong>m</strong> and <strong>b</strong>:</p>
 
@@ -1121,22 +1519,268 @@
     <div class="copyright">Bodhi AI Classes LLC</div>
     <div class="nav">
       <button class="nav-btn" onclick="goToAppendix(2)">&#8592; Back</button>
-      <div style="display:flex; gap:8px; align-items:center;">
-        <span style="font-size:0.85em; color:#888;">Appendix</span>
-        <span style="width:10px; height:10px; border-radius:50%; background:#ddd; display:inline-block; cursor:pointer;" onclick="goToAppendix(1)"></span>
-        <span style="width:10px; height:10px; border-radius:50%; background:#ddd; display:inline-block; cursor:pointer;" onclick="goToAppendix(2)"></span>
-        <span style="width:10px; height:10px; border-radius:50%; background:var(--ml-color); display:inline-block;"></span>
-      </div>
-      <button class="nav-btn" onclick="goTo(12)" style="background:var(--primary);">&#x1F3E0; Back to Deck</button>
+      <div class="appendix-dots" id="app-dots-3"></div>
+      <button class="nav-btn" onclick="goToAppendix(4)">Next &#8594;</button>
     </div>
   </div>
 </div>
 
+<!-- Appendix 4: What Are Weights? (from W4 S7) -->
+<div class="slide" id="appendix-4">
+  <div class="slide-inner">
+    <span class="slide-number" style="background:var(--ml-color);">Appendix 4 / 7</span>
+    <h2>What Are "Weights"? The Secret of Learning</h2>
+    <p>Weights are the most important idea in neural networks. Let's understand them with a real-life example!</p>
+
+    <div class="callout info">
+      <p><strong>Imagine:</strong> You're deciding whether to go outside. You consider three things:</p>
+    </div>
+
+    <div class="grid-3" style="margin-top:16px;">
+      <div class="card" style="cursor:pointer;" onclick="toggleInfo('weight-ex1')">
+        <div class="card-icon">&#x2600;&#xFE0F;</div>
+        <h3>Weather</h3>
+        <p>Is it sunny?</p>
+      </div>
+      <div class="card" style="cursor:pointer;" onclick="toggleInfo('weight-ex2')">
+        <div class="card-icon">&#x1F4DA;</div>
+        <h3>Homework</h3>
+        <p>Is homework done?</p>
+      </div>
+      <div class="card" style="cursor:pointer;" onclick="toggleInfo('weight-ex3')">
+        <div class="card-icon">&#x1F46B;</div>
+        <h3>Friends</h3>
+        <p>Are friends out?</p>
+      </div>
+    </div>
+
+    <div class="hidden-content" id="weight-ex1">
+      <p>Weather matters <em>a lot</em> to you. You'd give this a <strong>high weight</strong> (like 0.8). If it's raining, that strongly pushes you toward staying inside.</p>
+    </div>
+    <div class="hidden-content" id="weight-ex2">
+      <p>Homework matters <em>some</em>. You'd give this a <strong>medium weight</strong> (like 0.5). You might still go out even if homework isn't done... but it nags at you.</p>
+    </div>
+    <div class="hidden-content" id="weight-ex3">
+      <p>Friends being out matters <em>a lot</em>. You'd give this a <strong>high weight</strong> (like 0.9). If everyone's hanging out, you really want to go!</p>
+    </div>
+
+    <div class="callout key" style="margin-top:16px;">
+      <p><strong>In a neural network:</strong> Each input has a weight &mdash; a number that says "how much does this matter?" The network <strong>learns</strong> the right weights by practicing on thousands of examples, just like you learned what matters most for going outside through years of experience.</p>
+    </div>
+
+    <div class="weight-control">
+      <p style="font-weight:700; color:var(--primary); font-size:1.1em;">Try it: Adjust the "Friends" weight</p>
+      <input type="range" id="friend-weight" min="0" max="100" value="90" oninput="updateWeight()">
+      <div class="weight-value" id="weight-display">0.90</div>
+      <p id="weight-result" style="font-size:1em; color:#666;">Friends matter A LOT &mdash; you're definitely going outside!</p>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goToAppendix(3)">&#8592; Back</button>
+      <div class="appendix-dots" id="app-dots-4"></div>
+      <button class="nav-btn" onclick="goToAppendix(5)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- Appendix 5: Layers (from W4 S8) -->
+<div class="slide" id="appendix-5">
+  <div class="slide-inner">
+    <span class="slide-number" style="background:var(--ml-color);">Appendix 5 / 7</span>
+    <h2>Layers: How Neural Networks Are Organized</h2>
+    <p>Just like your brain has different regions that handle different tasks, neural networks are organized in <strong>layers</strong>.</p>
+
+    <div class="layer-diagram">
+      <div class="layer">
+        <div class="layer-label" style="color:var(--network-color);">Input<br>Layer</div>
+        <div class="neuron-dot neuron-input" title="Input 1">I1</div>
+        <div class="neuron-dot neuron-input" title="Input 2">I2</div>
+        <div class="neuron-dot neuron-input" title="Input 3">I3</div>
+        <div class="neuron-dot neuron-input" title="Input 4">I4</div>
+      </div>
+      <div class="layer-connections">&#x27A1;&#x27A1;&#x27A1;</div>
+      <div class="layer">
+        <div class="layer-label" style="color:var(--neuron-color);">Hidden<br>Layer 1</div>
+        <div class="neuron-dot neuron-hidden">H1</div>
+        <div class="neuron-dot neuron-hidden">H2</div>
+        <div class="neuron-dot neuron-hidden">H3</div>
+      </div>
+      <div class="layer-connections">&#x27A1;&#x27A1;&#x27A1;</div>
+      <div class="layer">
+        <div class="layer-label" style="color:var(--neuron-color);">Hidden<br>Layer 2</div>
+        <div class="neuron-dot neuron-hidden">H4</div>
+        <div class="neuron-dot neuron-hidden">H5</div>
+        <div class="neuron-dot neuron-hidden">H6</div>
+      </div>
+      <div class="layer-connections">&#x27A1;&#x27A1;&#x27A1;</div>
+      <div class="layer">
+        <div class="layer-label" style="color:var(--brain-color);">Output<br>Layer</div>
+        <div class="neuron-dot neuron-output">O1</div>
+        <div class="neuron-dot neuron-output">O2</div>
+      </div>
+    </div>
+
+    <div class="grid-3" style="margin-top:8px;">
+      <div class="card" style="background: linear-gradient(135deg, #e8f4fd, #d6eaf8);">
+        <h3 style="color:var(--network-color);">Input Layer</h3>
+        <p>Receives the raw data &mdash; like pixels of an image, words in a sentence, or numbers in a spreadsheet.</p>
+      </div>
+      <div class="card" style="background: linear-gradient(135deg, #f0e6ff, #e8daff);">
+        <h3 style="color:var(--neuron-color);">Hidden Layers</h3>
+        <p>The "thinking" layers! They find patterns in the data. More layers = more complex patterns.</p>
+      </div>
+      <div class="card" style="background: linear-gradient(135deg, #fde8e8, #fbd5d5);">
+        <h3 style="color:var(--brain-color);">Output Layer</h3>
+        <p>Gives the final answer &mdash; "it's a cat," "the next word is 'the'," or "turn left."</p>
+      </div>
+    </div>
+
+    <div class="callout brain">
+      <p><strong>Brain analogy:</strong> When you see a dog, your eyes (input layer) send signals to your visual cortex (hidden layers), which recognizes shapes, then fur, then "dog shape," then your brain says "That's a dog!" (output layer). Each layer builds on what the previous one figured out.</p>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goToAppendix(4)">&#8592; Back</button>
+      <div class="appendix-dots" id="app-dots-5"></div>
+      <button class="nav-btn" onclick="goToAppendix(6)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- Appendix 6: How a Neural Network Recognizes a Cat (from W4 S9) -->
+<div class="slide" id="appendix-6">
+  <div class="slide-inner">
+    <span class="slide-number" style="background:var(--ml-color);">Appendix 6 / 7</span>
+    <h2>Example: How a Neural Network Recognizes a Cat</h2>
+    <p>Let's walk through what happens in each layer when AI looks at a photo. Click each layer!</p>
+
+    <div class="step" onclick="toggleInfo('cat-layer1')">
+      <div class="step-num" style="background:var(--network-color);">1</div>
+      <div class="step-content">
+        <h4>Input Layer &mdash; Raw Pixels</h4>
+        <p>The photo is broken into thousands of tiny pixels. Each pixel becomes a number (its color value). The input layer receives ALL those numbers.</p>
+      </div>
+    </div>
+    <div class="hidden-content" id="cat-layer1">
+      <p>A small 100x100 photo = 10,000 pixels. Each pixel has 3 color values (red, green, blue). So the input layer receives <strong>30,000 numbers</strong> just for a tiny image!</p>
+    </div>
+
+    <div class="step" onclick="toggleInfo('cat-layer2')">
+      <div class="step-num" style="background:var(--neuron-color);">2</div>
+      <div class="step-content">
+        <h4>Hidden Layer 1 &mdash; Edges &amp; Lines</h4>
+        <p>The first hidden layer learns to detect simple things: edges, lines, and basic shapes in the image.</p>
+      </div>
+    </div>
+    <div class="hidden-content" id="cat-layer2">
+      <p>It's like squinting at a picture &mdash; you can see outlines and boundaries, but not details yet. This layer might detect "there's a curve here" or "there's a straight line there."</p>
+    </div>
+
+    <div class="step" onclick="toggleInfo('cat-layer3')">
+      <div class="step-num" style="background:var(--neuron-color);">3</div>
+      <div class="step-content">
+        <h4>Hidden Layer 2 &mdash; Parts &amp; Features</h4>
+        <p>The second layer combines edges into <em>parts</em>: pointy ears, round eyes, whisker patterns, fur texture.</p>
+      </div>
+    </div>
+    <div class="hidden-content" id="cat-layer3">
+      <p>Now it's getting somewhere! "Those two triangular shapes at the top? Probably ears. Those two circles? Probably eyes." It's building up from simple to complex.</p>
+    </div>
+
+    <div class="step" onclick="toggleInfo('cat-layer4')">
+      <div class="step-num" style="background:var(--neuron-color);">4</div>
+      <div class="step-content">
+        <h4>Hidden Layer 3 &mdash; Objects</h4>
+        <p>The third layer puts all the parts together: "pointy ears + round eyes + whiskers + fur = this looks like a cat face!"</p>
+      </div>
+    </div>
+    <div class="hidden-content" id="cat-layer4">
+      <p>Each deeper layer understands something more abstract. The first layer knows lines, the second knows shapes, the third knows what a "cat" looks like by combining those shapes!</p>
+    </div>
+
+    <div class="step" onclick="toggleInfo('cat-layer5')">
+      <div class="step-num" style="background:var(--brain-color);">5</div>
+      <div class="step-content">
+        <h4>Output Layer &mdash; The Answer!</h4>
+        <p>"I'm 95% confident this is a cat, 3% dog, 2% rabbit."</p>
+      </div>
+    </div>
+    <div class="hidden-content" id="cat-layer5">
+      <p>The output layer gives a <strong>probability</strong> for each possible answer. It doesn't say "definitely a cat" &mdash; it says "most likely a cat." Remember: AI deals in probabilities, not certainties!</p>
+    </div>
+
+    <div class="callout success">
+      <p><strong>Key pattern:</strong> Each layer builds on the one before it. Simple &rarr; Complex &rarr; Answer. This is exactly how your brain works too &mdash; your visual cortex processes edges, then shapes, then objects, then meaning!</p>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goToAppendix(5)">&#8592; Back</button>
+      <div class="appendix-dots" id="app-dots-6"></div>
+      <button class="nav-btn" onclick="goToAppendix(7)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- Appendix 7: Brain Neuron vs Computer Neuron (moved from main deck) -->
+<div class="slide" id="appendix-7">
+  <div class="slide-inner">
+    <span class="slide-number" style="background:var(--ml-color);">Appendix 7 / 7</span>
+    <h2>Brain Neuron vs. Computer Neuron</h2>
+    <p>Computer scientists built <strong>artificial neurons</strong> inspired by real ones. Here's how they compare:</p>
+
+    <table class="compare-table">
+      <tr>
+        <th style="background:var(--brain-color);">&#x1F9E0; Your Brain</th>
+        <th style="background:var(--network-color);">&#x1F4BB; Computer</th>
+      </tr>
+      <tr>
+        <td><strong>Neuron</strong> &mdash; a tiny cell that processes signals</td>
+        <td><strong>Artificial Neuron</strong> &mdash; a tiny math function that processes numbers</td>
+      </tr>
+      <tr>
+        <td><strong>Dendrites</strong> &mdash; receive signals from other neurons</td>
+        <td><strong>Inputs</strong> &mdash; receive numbers from data or other neurons</td>
+      </tr>
+      <tr>
+        <td><strong>Synapse strength</strong> &mdash; how strongly two neurons are connected</td>
+        <td><strong>Weights</strong> &mdash; numbers that control how much each input matters</td>
+      </tr>
+      <tr>
+        <td><strong>Firing threshold</strong> &mdash; the neuron fires only if signal is strong enough</td>
+        <td><strong>Activation function</strong> &mdash; decides if the neuron "turns on"</td>
+      </tr>
+      <tr>
+        <td><strong>Axon</strong> &mdash; sends signal to next neurons</td>
+        <td><strong>Output</strong> &mdash; sends a number to the next layer</td>
+      </tr>
+      <tr>
+        <td><strong>Learning</strong> &mdash; synapses get stronger with practice</td>
+        <td><strong>Training</strong> &mdash; weights get adjusted to reduce errors</td>
+      </tr>
+    </table>
+
+    <div class="callout success">
+      <p><strong>The big idea:</strong> An artificial neuron is just a math equation that takes in numbers, multiplies them by weights, adds them up, and decides whether to "fire." It's a simplified version of what your brain does billions of times per second!</p>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goToAppendix(6)">&#8592; Back</button>
+      <div class="appendix-dots" id="app-dots-7"></div>
+      <button class="nav-btn" onclick="goTo(16)" style="background:var(--primary);">&#x1F3E0; Back to Deck</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== JAVASCRIPT ==================== -->
 <script>
-  const TOTAL = 12;
+  const TOTAL = 16;
+  const APPENDIX_TOTAL = 7;
   let currentSlide = 1;
   let currentAppendix = 0; // 0 = not in appendix
-  const APPENDIX_TOTAL = 3;
 
   // Build nav dots for main slides
   for (let s = 1; s <= TOTAL; s++) {
@@ -1150,7 +1794,33 @@
     }
   }
 
+  // Build appendix dots
+  for (let s = 1; s <= APPENDIX_TOTAL; s++) {
+    const dotsContainer = document.getElementById('app-dots-' + s);
+    if (!dotsContainer) continue;
+    dotsContainer.style.display = 'flex';
+    dotsContainer.style.gap = '8px';
+    dotsContainer.style.alignItems = 'center';
+    const label = document.createElement('span');
+    label.style.fontSize = '0.85em';
+    label.style.color = '#888';
+    label.textContent = 'Appendix';
+    dotsContainer.appendChild(label);
+    for (let d = 1; d <= APPENDIX_TOTAL; d++) {
+      const dot = document.createElement('span');
+      dot.style.width = '10px';
+      dot.style.height = '10px';
+      dot.style.borderRadius = '50%';
+      dot.style.display = 'inline-block';
+      dot.style.cursor = 'pointer';
+      dot.style.background = (d === s) ? 'var(--ml-color)' : '#ddd';
+      dot.onclick = () => goToAppendix(d);
+      dotsContainer.appendChild(dot);
+    }
+  }
+
   function goTo(n) {
+    if (n < 1 || n > TOTAL) return;
     if (currentAppendix > 0) {
       document.getElementById('appendix-' + currentAppendix).classList.remove('active');
       currentAppendix = 0;
@@ -1164,6 +1834,7 @@
   }
 
   function goToAppendix(n) {
+    if (n < 1 || n > APPENDIX_TOTAL) return;
     if (currentAppendix > 0) {
       document.getElementById('appendix-' + currentAppendix).classList.remove('active');
     } else {
@@ -1177,17 +1848,18 @@
   // Keyboard navigation
   document.addEventListener('keydown', e => {
     if (currentAppendix > 0) {
-      if (e.key === 'ArrowRight' && currentAppendix < APPENDIX_TOTAL) goToAppendix(currentAppendix + 1);
-      if (e.key === 'ArrowLeft' && currentAppendix > 1) goToAppendix(currentAppendix - 1);
+      if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); if (currentAppendix < APPENDIX_TOTAL) goToAppendix(currentAppendix + 1); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); if (currentAppendix > 1) goToAppendix(currentAppendix - 1); else goTo(TOTAL); }
     } else {
-      if (e.key === 'ArrowRight' && currentSlide < TOTAL) goTo(currentSlide + 1);
-      if (e.key === 'ArrowLeft' && currentSlide > 1) goTo(currentSlide - 1);
+      if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); goTo(currentSlide + 1); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); goTo(currentSlide - 1); }
     }
   });
 
   // ---- Toggle Info Boxes ----
   function toggleInfo(id) {
-    document.getElementById(id).classList.toggle('show');
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle('show');
   }
 
   // ---- Scatter Plot & Line (Slide 7) ----
@@ -1318,7 +1990,6 @@
   }
 
   function predictScore() {
-    // Draw prediction point on graph
     const canvas = document.getElementById('scatter-canvas');
     const ctx = canvas.getContext('2d');
     const W = canvas.width;
@@ -1366,6 +2037,26 @@
     document.getElementById('predict-btn').style.display = 'none';
   }
 
+  // ---- Weight Slider (Appendix 4) ----
+  function updateWeight() {
+    const val = document.getElementById('friend-weight').value / 100;
+    document.getElementById('weight-display').textContent = val.toFixed(2);
+    const result = document.getElementById('weight-result');
+    if (val > 0.7) {
+      result.textContent = 'Friends matter A LOT \u2014 you\'re definitely going outside!';
+      result.style.color = '#2e7d32';
+    } else if (val > 0.4) {
+      result.textContent = 'Friends matter some \u2014 you might go outside, depends on other factors.';
+      result.style.color = '#f39c12';
+    } else if (val > 0.1) {
+      result.textContent = 'Friends barely matter \u2014 you\'d rather stay in, even if they\'re out.';
+      result.style.color = '#e67e22';
+    } else {
+      result.textContent = 'Friends don\'t matter at all \u2014 you\'re making this decision on your own!';
+      result.style.color = '#e74c3c';
+    }
+  }
+
   // ---- Quiz ----
   function checkQuiz(btn, isCorrect) {
     const parent = btn.parentElement;
@@ -1385,7 +2076,7 @@
       feedback.style.display = 'block';
       feedback.style.background = '#ffe8e8';
       feedback.style.color = '#c62828';
-      feedback.textContent = 'Not quite — think back to what we covered!';
+      feedback.textContent = 'Not quite \u2014 think back to what we covered!';
     }
     options.forEach(o => o.style.pointerEvents = 'none');
   }
