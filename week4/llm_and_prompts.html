@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LLMs &amp; the Art of Talking to AI - Week 4</title>
+  <style>
+    :root {
+      --primary: #6C63FF;
+      --secondary: #FF6584;
+      --accent: #43E97B;
+      --dark: #2D3436;
+      --light: #F8F9FA;
+      --card-bg: #FFFFFF;
+      --shadow: 0 8px 30px rgba(0,0,0,0.12);
+      --llm-color: #3498db;
+      --gpt-color: #9b59b6;
+      --prompt-color: #e74c3c;
+      --system-color: #f39c12;
+      --user-color: #27ae60;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+      min-height: 100vh;
+      color: var(--dark);
+    }
+
+    /* ---- Slide System ---- */
+    .slide {
+      display: none;
+      min-height: 100vh;
+      padding: 40px 20px;
+      animation: fadeIn 0.5s ease;
+    }
+    .slide.active { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    .slide-inner {
+      background: var(--card-bg);
+      border-radius: 24px;
+      padding: 48px;
+      max-width: 920px;
+      width: 100%;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide-number {
+      position: absolute;
+      top: 16px;
+      right: 24px;
+      font-size: 14px;
+      color: #aaa;
+      font-weight: 600;
+    }
+
+    h1 {
+      font-size: 2.4em;
+      background: linear-gradient(135deg, #302b63, #e74c3c);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+
+    h2 {
+      font-size: 1.8em;
+      color: var(--primary);
+      margin-bottom: 16px;
+    }
+
+    .subtitle {
+      font-size: 1.2em;
+      color: #888;
+      margin-bottom: 32px;
+    }
+
+    p, li {
+      font-size: 1.15em;
+      line-height: 1.7;
+      color: #444;
+    }
+
+    ul { list-style: none; padding: 0; }
+    ul li { padding: 8px 0; padding-left: 28px; position: relative; }
+    ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 16px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+
+    /* ---- Visual Components ---- */
+    .big-icon {
+      font-size: 80px;
+      text-align: center;
+      margin: 24px 0;
+      animation: pulse 2s ease infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin: 24px 0;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+      margin: 24px 0;
+    }
+
+    .card {
+      background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: default;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.15); }
+
+    .card .card-icon { font-size: 48px; margin-bottom: 12px; }
+    .card h3 { color: var(--primary); margin-bottom: 8px; font-size: 1.2em; }
+    .card p { font-size: 0.95em; color: #555; }
+
+    /* ---- Flow Diagram ---- */
+    .flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: 32px 0;
+      flex-wrap: wrap;
+    }
+    .flow-box {
+      background: var(--primary);
+      color: white;
+      padding: 16px 28px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1.1em;
+      text-align: center;
+      min-width: 120px;
+    }
+    .flow-arrow {
+      font-size: 28px;
+      color: var(--secondary);
+      font-weight: bold;
+    }
+
+    /* ---- Interactive Bits ---- */
+    .reveal-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 12px;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin: 8px 4px;
+    }
+    .reveal-btn:hover { background: #5a52d5; transform: scale(1.05); }
+
+    .hidden-content {
+      display: none;
+      margin-top: 16px;
+      padding: 20px;
+      background: #f0f0ff;
+      border-radius: 12px;
+      animation: fadeIn 0.4s ease;
+    }
+    .hidden-content.show { display: block; }
+
+    /* ---- Steps ---- */
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin: 16px 0;
+      padding: 16px;
+      background: #f8f9fa;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+    .step:hover { background: #f0f0ff; }
+    .step-num {
+      background: var(--primary);
+      color: white;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+    .step-content { flex: 1; }
+    .step-content h4 { color: var(--primary); margin-bottom: 4px; }
+
+    /* ---- Example Cards ---- */
+    .example-card {
+      background: #f8f9fa;
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin: 8px 0;
+      border-left: 4px solid var(--primary);
+      transition: all 0.3s ease;
+    }
+    .example-card:hover { background: #f0f0ff; }
+    .example-card strong { color: var(--primary); }
+
+    /* ---- Word Breakdown ---- */
+    .word-card {
+      border-radius: 16px;
+      padding: 28px 24px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .word-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.15); }
+    .word-card .letter {
+      font-size: 3em;
+      font-weight: 900;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .word-card .word {
+      font-size: 1.3em;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 10px;
+    }
+    .word-card p { font-size: 0.95em; color: #555; }
+
+    /* ---- Prompt Box ---- */
+    .prompt-box {
+      background: #1a1a2e;
+      color: #e0e0e0;
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin: 12px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 1em;
+      line-height: 1.6;
+      position: relative;
+    }
+    .prompt-box .label {
+      position: absolute;
+      top: -10px;
+      left: 16px;
+      background: var(--primary);
+      color: white;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-size: 0.75em;
+      font-weight: 700;
+      padding: 2px 12px;
+      border-radius: 8px;
+    }
+    .prompt-box.system-prompt { border-left: 4px solid var(--system-color); }
+    .prompt-box.system-prompt .label { background: var(--system-color); }
+    .prompt-box.user-prompt { border-left: 4px solid var(--user-color); }
+    .prompt-box.user-prompt .label { background: var(--user-color); }
+    .prompt-box.ai-response { border-left: 4px solid var(--gpt-color); background: #16213e; }
+    .prompt-box.ai-response .label { background: var(--gpt-color); }
+
+    /* ---- Quiz ---- */
+    .quiz-option {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 16px 20px;
+      margin: 8px 0;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      background: white;
+      font-size: 1.05em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .quiz-option:hover { border-color: var(--primary); background: #f0f0ff; }
+    .quiz-option.correct { border-color: var(--accent); background: #e8fbe8; }
+    .quiz-option.wrong { border-color: var(--secondary); background: #ffe8e8; }
+    .quiz-feedback {
+      margin-top: 12px;
+      padding: 16px;
+      border-radius: 12px;
+      font-weight: 600;
+      display: none;
+    }
+
+    /* ---- Callout Boxes ---- */
+    .callout {
+      padding: 20px;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+    .callout.info { background: #e8f4fd; border-left: 4px solid var(--llm-color); }
+    .callout.success { background: #e8fbe8; border-left: 4px solid var(--accent); }
+    .callout.warning { background: #fff3e0; border-left: 4px solid #ff9800; }
+    .callout.key { background: #f0f0ff; border-left: 4px solid var(--primary); }
+    .callout.brain { background: #fde8e8; border-left: 4px solid var(--prompt-color); }
+
+    /* ---- Navigation ---- */
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 2px solid #eee;
+    }
+    .nav-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 14px 32px;
+      border-radius: 12px;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .nav-btn:hover { background: #5a52d5; transform: scale(1.05); }
+    .nav-btn:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+    .nav-dots { display: flex; gap: 8px; }
+    .nav-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.4);
+      border: 2px solid var(--primary);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .nav-dot.active { background: var(--primary); }
+
+    /* ---- Copyright ---- */
+    .copyright {
+      text-align: center;
+      font-size: 0.7em;
+      color: #bbb;
+      margin-top: 16px;
+      padding-top: 8px;
+    }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 700px) {
+      .slide-inner { padding: 28px 20px; }
+      h1 { font-size: 1.8em; }
+      h2 { font-size: 1.4em; }
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .flow { flex-direction: column; }
+      .flow-arrow { transform: rotate(90deg); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ==================== SLIDE 1: Title ==================== -->
+<div class="slide active" id="slide-1">
+  <div class="slide-inner">
+    <span class="slide-number">1 / 10</span>
+    <div class="big-icon">&#x1F4AC;</div>
+    <h1>LLMs &amp; the Art of Talking to AI</h1>
+    <p class="subtitle">How AI understands you &mdash; and how to talk to it like a pro</p>
+    <p style="font-size:1.1em; text-align:center; color:#666; margin-top:16px;">
+      Week 4: From Neural Networks to Conversations
+    </p>
+    <p style="text-align:center; color:#999; margin-top:8px; font-size:0.95em;">
+      Big Question: When you type a message to ChatGPT or Claude, what actually happens &mdash; and how can you get better answers?
+    </p>
+    <div class="callout info" style="margin-top:24px;">
+      <p><strong>Recap:</strong> Last week we learned that neural networks are layers of y = mx + b equations inspired by your brain. An LLM is what you get when you make a neural network <em>really, really big</em> and train it on the entire internet. Today we go inside.</p>
+    </div>
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" disabled>&#8592; Back</button>
+      <div class="nav-dots" id="dots-1"></div>
+      <button class="nav-btn" onclick="goTo(2)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 2: Homework Debrief ==================== -->
+<div class="slide" id="slide-2">
+  <div class="slide-inner">
+    <span class="slide-number">2 / 10</span>
+    <h2>Homework Debrief: Two Prompts, Two Answers</h2>
+    <p>Last week you asked ChatGPT or Claude or Gemini to explain ML two ways. Let's compare!</p>
+
+    <div class="grid-2" style="margin-top:24px;">
+      <div class="card" style="border-top: 4px solid var(--user-color);">
+        <div class="card-icon">&#x1F466;</div>
+        <h3>"Like I'm in 7th Grade"</h3>
+        <p>Simple words, analogies, relatable examples. Probably shorter and friendlier.</p>
+      </div>
+      <div class="card" style="border-top: 4px solid var(--gpt-color);">
+        <div class="card-icon">&#x1F468;&#x200D;&#x1F52C;</div>
+        <h3>"Like I'm a Scientist"</h3>
+        <p>Technical terms, math, detailed explanations. Probably longer and more precise.</p>
+      </div>
+    </div>
+
+    <div class="callout key" style="margin-top:24px;">
+      <p><strong>Key takeaway:</strong> Same AI, same knowledge, different prompt = completely different output. The AI <em>adjusted</em> based on how you asked. But how? That's what we'll learn today &mdash; starting with what an LLM actually is.</p>
+    </div>
+
+    <button class="reveal-btn" onclick="toggleInfo('debrief-discuss')">Discussion Questions</button>
+    <div class="hidden-content" id="debrief-discuss">
+      <ul>
+        <li>Which answer was more helpful for <em>you</em>?</li>
+        <li>Did the "scientist" answer use words you didn't know?</li>
+        <li>What does this tell us about the importance of <strong>how you ask</strong>?</li>
+      </ul>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(1)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-2"></div>
+      <button class="nav-btn" onclick="goTo(3)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 3: Decoding LLM & GPT ==================== -->
+<div class="slide" id="slide-3">
+  <div class="slide-inner">
+    <span class="slide-number">3 / 10</span>
+    <h2>Decoding the Alphabet Soup: LLM &amp; GPT</h2>
+    <p>You say "ChatGPT" and "LLM" every day &mdash; but what do these letters actually mean? Click each one!</p>
+
+    <p style="font-weight:700; color:var(--llm-color); margin:20px 0 8px;">L &nbsp; L &nbsp; M</p>
+    <div class="grid-3">
+      <div class="word-card" style="background: linear-gradient(135deg, #e8f4fd, #d6eaf8); cursor:pointer;" onclick="toggleInfo('llm-l')">
+        <span class="letter" style="color:var(--llm-color);">L</span>
+        <span class="word" style="color:var(--llm-color);">Large</span>
+        <p>Click to learn more</p>
+      </div>
+      <div class="word-card" style="background: linear-gradient(135deg, #f0e6ff, #e8daff); cursor:pointer;" onclick="toggleInfo('llm-l2')">
+        <span class="letter" style="color:var(--gpt-color);">L</span>
+        <span class="word" style="color:var(--gpt-color);">Language</span>
+        <p>Click to learn more</p>
+      </div>
+      <div class="word-card" style="background: linear-gradient(135deg, #fde8e8, #fbd5d5); cursor:pointer;" onclick="toggleInfo('llm-m')">
+        <span class="letter" style="color:var(--prompt-color);">M</span>
+        <span class="word" style="color:var(--prompt-color);">Model</span>
+        <p>Click to learn more</p>
+      </div>
+    </div>
+
+    <div class="hidden-content" id="llm-l">
+      <p><strong style="color:var(--llm-color);">Large</strong> = REALLY large. We're talking hundreds of billions of parameters (each parameter is like one m or b in y = mx + b). GPT-4 has over <strong>1 trillion</strong> parameters. If you wrote one per second, it would take over 31,000 years!</p>
+    </div>
+    <div class="hidden-content" id="llm-l2">
+      <p><strong style="color:var(--gpt-color);">Language</strong> = It works with human language &mdash; English, Spanish, code, emoji, you name it. It trained by reading billions of sentences from books, websites, and articles and learned the <em>patterns</em> of how humans write and speak.</p>
+    </div>
+    <div class="hidden-content" id="llm-m">
+      <p><strong style="color:var(--prompt-color);">Model</strong> = Remember from last week? A model is a simplified version of something real. This model is a simplified version of <em>how language works</em> &mdash; which words follow which, what makes a sentence make sense, how questions get answered.</p>
+    </div>
+
+    <p style="font-weight:700; color:var(--user-color); margin:20px 0 8px;">G &nbsp; P &nbsp; T</p>
+    <div class="grid-3">
+      <div class="word-card" style="background: linear-gradient(135deg, #e8fbe8, #d4edda); cursor:pointer;" onclick="toggleInfo('gpt-g')">
+        <span class="letter" style="color:var(--user-color);">G</span>
+        <span class="word" style="color:var(--user-color);">Generative</span>
+        <p>Click to learn more</p>
+      </div>
+      <div class="word-card" style="background: linear-gradient(135deg, #fff3e0, #ffe0b2); cursor:pointer;" onclick="toggleInfo('gpt-p')">
+        <span class="letter" style="color:var(--system-color);">P</span>
+        <span class="word" style="color:var(--system-color);">Pre-trained</span>
+        <p>Click to learn more</p>
+      </div>
+      <div class="word-card" style="background: linear-gradient(135deg, #e8f4fd, #d6eaf8); cursor:pointer;" onclick="toggleInfo('gpt-t')">
+        <span class="letter" style="color:var(--llm-color);">T</span>
+        <span class="word" style="color:var(--llm-color);">Transformer</span>
+        <p>Click to learn more</p>
+      </div>
+    </div>
+
+    <div class="hidden-content" id="gpt-g">
+      <p><strong style="color:var(--user-color);">Generative</strong> = It <em>generates</em> (creates) brand-new text. It doesn't look up a stored answer &mdash; it writes a new sentence word by word, every single time. That's what makes it "Gen AI"!</p>
+    </div>
+    <div class="hidden-content" id="gpt-p">
+      <p><strong style="color:var(--system-color);">Pre-trained</strong> = Before you ever talked to it, it already did its homework. It read billions of pages of text and learned language patterns. "Pre" means it trained <em>before</em> being released &mdash; you're talking to a model that already graduated from the world's biggest school!</p>
+    </div>
+    <div class="hidden-content" id="gpt-t">
+      <p><strong style="color:var(--llm-color);">Transformer</strong> = A type of neural network that's really good at understanding context. When you write "I saw a bat at the baseball game," the Transformer knows "bat" means a wooden stick, not a flying animal &mdash; because it figures out which words in the sentence relate to each other.</p>
+    </div>
+
+    <div class="callout key" style="margin-top:16px;">
+      <p><strong>Put it all together:</strong> A <strong>GPT</strong> is a neural network that <em>generates</em> text, was <em>pre-trained</em> on the internet, and uses a <em>Transformer</em> to understand context. A <strong>LLM</strong> is the broader category &mdash; ChatGPT, Claude, and Gemini are all LLMs!</p>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(2)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-3"></div>
+      <button class="nav-btn" onclick="goTo(4)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 4: Two Superpowers ==================== -->
+<div class="slide" id="slide-4">
+  <div class="slide-inner">
+    <span class="slide-number">4 / 10</span>
+    <h2>Two Superpowers: Understanding vs. Generating</h2>
+    <p>AI language models come in two flavors &mdash; just like your brain has two skills when someone talks to you.</p>
+
+    <div class="grid-2" style="margin-top:24px;">
+      <div class="card" style="border-top:5px solid var(--llm-color); text-align:left;">
+        <div class="card-icon">&#x1F4D6;</div>
+        <h3 style="color:var(--llm-color);">Language Understanding</h3>
+        <p style="font-size:1em; font-weight:600; color:var(--llm-color); margin-bottom:8px;">Reading &amp; Comprehension</p>
+        <p>Like when someone asks you "What is your name?" and your brain <strong>understands the question</strong> &mdash; it figures out the meaning, the intent, and what kind of answer is expected.</p>
+        <div style="margin-top:12px; padding:12px; background:#e8f4fd; border-radius:8px;">
+          <p style="font-size:0.9em;"><strong>AI examples:</strong> Spam filters reading your email, Google understanding your search, autocorrect fixing your typos.</p>
+        </div>
+      </div>
+      <div class="card" style="border-top:5px solid var(--prompt-color); text-align:left;">
+        <div class="card-icon">&#x270D;&#xFE0F;</div>
+        <h3 style="color:var(--prompt-color);">Language Generation</h3>
+        <p style="font-size:1em; font-weight:600; color:var(--prompt-color); margin-bottom:8px;">Writing &amp; Creating</p>
+        <p>Like when your brain <strong>formulates the answer</strong> &mdash; "My name is Sarah" &mdash; choosing the right words, in the right order, to make a sentence that makes sense.</p>
+        <div style="margin-top:12px; padding:12px; background:#fde8e8; border-radius:8px;">
+          <p style="font-size:0.9em;"><strong>AI examples:</strong> ChatGPT writing essays, Claude answering questions, AI generating stories or code.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout brain" style="margin-top:16px;">
+      <p><strong>Your brain does both!</strong> When someone says "What is your name?" your brain first <em>understands</em> (that's a question about my identity) and then <em>generates</em> a response ("My name is Sarah"). LLMs like ChatGPT and Claude do <strong>both too</strong> &mdash; they understand your prompt, then generate a response one word at a time.</p>
+    </div>
+
+    <button class="reveal-btn" onclick="toggleInfo('encoder-decoder')">Nerd Corner: The Technical Names</button>
+    <div class="hidden-content" id="encoder-decoder">
+      <div class="grid-2">
+        <div class="example-card" style="border-left-color:var(--llm-color);">
+          <p><strong style="color:var(--llm-color);">Understanding models</strong> are called <em>autoencoding</em> models. "Auto" = self, "encoding" = turning words into meaning. Example: BERT (made by Google).</p>
+        </div>
+        <div class="example-card" style="border-left-color:var(--prompt-color);">
+          <p><strong style="color:var(--prompt-color);">Generating models</strong> are called <em>autoregressive</em> models. "Auto" = self, "regressive" = predicting what comes next based on what came before. Example: GPT (made by OpenAI).</p>
+        </div>
+      </div>
+      <p style="margin-top:12px; text-align:center; color:#666;">Modern LLMs like ChatGPT and Claude combine both &mdash; they understand AND generate!</p>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(3)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-4"></div>
+      <button class="nav-btn" onclick="goTo(5)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 5: How an LLM Answers ==================== -->
+<div class="slide" id="slide-5">
+  <div class="slide-inner">
+    <span class="slide-number">5 / 10</span>
+    <h2>How an LLM Answers "What Is Your Name?"</h2>
+    <p>Let's walk through exactly what happens inside the AI, step by step. Click each step!</p>
+
+    <div class="step" onclick="toggleInfo('llm-step1')">
+      <div class="step-num" style="background:var(--llm-color);">1</div>
+      <div class="step-content">
+        <h4>Break Into Tokens</h4>
+        <p>The AI breaks your sentence into small pieces called <strong>tokens</strong>. "What is your name?" becomes: <code style="background:#eee; padding:2px 6px; border-radius:4px;">["What", " is", " your", " name", "?"]</code></p>
+      </div>
+    </div>
+    <div class="hidden-content" id="llm-step1">
+      <p>Tokens are like puzzle pieces. Some are whole words, some are parts of words. The word "basketball" might become ["basket", "ball"]. The AI works with these pieces, not whole sentences.</p>
+    </div>
+
+    <div class="step" onclick="toggleInfo('llm-step2')">
+      <div class="step-num" style="background:var(--gpt-color);">2</div>
+      <div class="step-content">
+        <h4>Understand the Context</h4>
+        <p>The Transformer looks at ALL the tokens together and figures out the <strong>meaning</strong>. "What" + "is" + "your" + "name" = <em>someone is asking for my identity</em>.</p>
+      </div>
+    </div>
+    <div class="hidden-content" id="llm-step2">
+      <p>This is where "attention" kicks in. The AI asks: which words matter most for understanding this sentence? "What" and "name" are the most important &mdash; they tell the AI this is a question about identity. "Is" and "your" provide structure.</p>
+    </div>
+
+    <div class="step" onclick="toggleInfo('llm-step3')">
+      <div class="step-num" style="background:var(--prompt-color);">3</div>
+      <div class="step-content">
+        <h4>Predict the Next Word</h4>
+        <p>The AI asks: "After all these tokens, what word is most likely to come next?" Answer: <strong>"My"</strong>. Then it asks again: after "My," what's next? <strong>"name"</strong>. Then <strong>"is"</strong>. Then <strong>"Claude"</strong>.</p>
+      </div>
+    </div>
+    <div class="hidden-content" id="llm-step3">
+      <p>This is the autocomplete superpower! The AI doesn't "know" its name like you know yours. It learned from millions of conversations that after "What is your name?" the pattern is usually "My name is ___." It's predicting the most likely next word, every single time.</p>
+    </div>
+
+    <div class="flow" style="margin-top:20px;">
+      <div class="flow-box" style="background:var(--llm-color);">Tokens</div>
+      <div class="flow-arrow">&#8594;</div>
+      <div class="flow-box" style="background:var(--gpt-color);">Understand</div>
+      <div class="flow-arrow">&#8594;</div>
+      <div class="flow-box" style="background:var(--prompt-color);">Predict Next Word</div>
+      <div class="flow-arrow">&#8594;</div>
+      <div class="flow-box" style="background:var(--accent); color:#1a1a2e;">Repeat!</div>
+    </div>
+
+    <div class="callout key" style="margin-top:12px;">
+      <p><strong>The secret:</strong> An LLM is just a next-word prediction machine. It generates entire essays, poems, and code by predicting one word at a time, billions of times. The "intelligence" comes from the patterns it learned during training.</p>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(4)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-5"></div>
+      <button class="nav-btn" onclick="goTo(6)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 6: What Is a Prompt? ==================== -->
+<div class="slide" id="slide-6">
+  <div class="slide-inner">
+    <span class="slide-number">6 / 10</span>
+    <h2>What Is a Prompt? &#x1F3AC;</h2>
+    <p>Think of the AI like an <strong>actor who takes on any role you give them</strong>. Every time you chat with an LLM, two things happen behind the scenes &mdash; like a TV show being filmed!</p>
+
+    <div class="grid-2" style="margin-top:20px;">
+      <div style="background: linear-gradient(135deg, #fff3e0, #ffe0b2); border-radius:16px; padding:20px; text-align:center;">
+        <div style="font-size:48px; margin-bottom:8px;">&#x1F3A6;</div>
+        <h3 style="color:var(--system-color); margin-bottom:8px;">The Director's Brief</h3>
+        <p style="font-size:0.95em;"><strong>= System Prompt</strong></p>
+        <p style="font-size:0.9em; margin-top:8px;">Before filming starts, the director tells the actor: <em>"You are a sarcastic pirate chef who only speaks in rhymes."</em> The actor doesn't break character &mdash; no matter what happens on set!</p>
+        <p style="margin-top:12px; font-size:0.85em; color:#888; font-style:italic;">👀 The audience (you!) never sees this part.</p>
+      </div>
+      <div style="background: linear-gradient(135deg, #e8fbe8, #d4edda); border-radius:16px; padding:20px; text-align:center;">
+        <div style="font-size:48px; margin-bottom:8px;">&#x1F3A4;</div>
+        <h3 style="color:var(--user-color); margin-bottom:8px;">Your Line</h3>
+        <p style="font-size:0.95em;"><strong>= User Prompt</strong></p>
+        <p style="font-size:0.9em; margin-top:8px;">Now YOU walk on set and say something: <em>"Hey, what should I make for dinner tonight?"</em> The actor responds &mdash; in full pirate chef rhyme mode, because that's their character!</p>
+        <p style="margin-top:12px; font-size:0.85em; color:#888; font-style:italic;">✏️ This is the part YOU write every time.</p>
+      </div>
+    </div>
+
+    <p style="margin-top:20px; font-weight:600; color:var(--primary);">Here's what it actually looks like behind the scenes:</p>
+
+    <div class="prompt-box system-prompt" style="margin-top:12px;">
+      <span class="label">SYSTEM PROMPT (hidden)</span>
+      <p style="color:#f39c12;">You are a friendly homework helper for 7th graders. Keep answers short, use simple words, and always end with an encouraging emoji.</p>
+    </div>
+
+    <div class="prompt-box user-prompt">
+      <span class="label">USER PROMPT (you typed this)</span>
+      <p style="color:#43E97B;">What is photosynthesis?</p>
+    </div>
+
+    <div class="prompt-box ai-response">
+      <span class="label">AI RESPONSE</span>
+      <p style="color:#bb86fc;">Photosynthesis is how plants make their own food! They use sunlight, water, and air to create energy &mdash; kind of like solar panels, but for plants. &#x1F331;</p>
+    </div>
+
+    <button class="reveal-btn" onclick="toggleInfo('same-q-diff-sys')" style="margin-top:8px;">What if the system prompt changed? &#x1F914;</button>
+    <div class="hidden-content" id="same-q-diff-sys">
+      <p><strong>Same user question</strong> — "What is photosynthesis?" — but with a different system prompt:</p>
+      <div class="prompt-box system-prompt" style="margin-top:8px;">
+        <span class="label">NEW SYSTEM PROMPT</span>
+        <p style="color:#f39c12;">You are a university biology professor. Use technical terminology.</p>
+      </div>
+      <div class="prompt-box ai-response" style="margin-top:8px;">
+        <span class="label">AI RESPONSE NOW</span>
+        <p style="color:#bb86fc;">Photosynthesis is the biochemical process by which photoautotrophs convert light energy into chemical energy, stored as glucose via the Calvin cycle...</p>
+      </div>
+      <p style="margin-top:8px; color:#666;">Same AI. Same question. Completely different vibe! The director changed, so the actor changed.</p>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(5)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-6"></div>
+      <button class="nav-btn" onclick="goTo(7)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 7: Why "You Are a..." Changes Everything ==================== -->
+<div class="slide" id="slide-7">
+  <div class="slide-inner">
+    <span class="slide-number">7 / 10</span>
+    <h2>Why "You Are a..." Changes Everything</h2>
+    <p>Watch what happens when we ask the <strong>same question</strong> but change just the first line of the prompt:</p>
+
+    <div class="grid-2" style="margin-top:20px;">
+      <div style="text-align:left;">
+        <div class="prompt-box system-prompt">
+          <span class="label">PROMPT A</span>
+          <p style="color:#f39c12;">You are a <strong>doctor</strong>.</p>
+          <p style="color:#43E97B; margin-top:8px;">Why does my head hurt?</p>
+        </div>
+        <div class="prompt-box ai-response">
+          <span class="label">AI ANSWER</span>
+          <p style="color:#bb86fc;">"Headaches can be caused by dehydration, stress, lack of sleep, or eye strain. Try drinking water and resting. If it persists, see a healthcare provider."</p>
+        </div>
+      </div>
+      <div style="text-align:left;">
+        <div class="prompt-box system-prompt">
+          <span class="label">PROMPT B</span>
+          <p style="color:#f39c12;">You are a <strong>computer expert</strong>.</p>
+          <p style="color:#43E97B; margin-top:8px;">Why does my head hurt?</p>
+        </div>
+        <div class="prompt-box ai-response">
+          <span class="label">AI ANSWER</span>
+          <p style="color:#bb86fc;">"You might be getting screen fatigue! Try the 20-20-20 rule: every 20 minutes, look at something 20 feet away for 20 seconds. Also check your monitor brightness and posture."</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout key" style="margin-top:16px;">
+      <p><strong>Same question. Totally different answers!</strong> The "You are a..." instruction changes which <em>patterns</em> the LLM uses. When it's told "you are a doctor," it pulls from medical language patterns. When told "you are a computer expert," it pulls from tech patterns. You're steering which part of its training it uses!</p>
+    </div>
+
+    <button class="reveal-btn" onclick="toggleInfo('role-why')">But Why Does This Work?</button>
+    <div class="hidden-content" id="role-why">
+      <p>Remember: the LLM predicts the <em>most likely next word</em>. When you say "You are a doctor," the AI thinks: "In all the text I've read, when a <em>doctor</em> is asked about headaches, they usually talk about dehydration, stress, and medical advice." The role changes which patterns are <strong>most likely</strong> &mdash; and that changes the entire answer!</p>
+      <p style="margin-top:12px;"><strong>Pro tip:</strong> Be specific! "You are a pediatric doctor who explains things to kids" will give even <em>more</em> tailored answers than just "You are a doctor."</p>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(6)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-7"></div>
+      <button class="nav-btn" onclick="goTo(8)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 8: Prompt Playground ==================== -->
+<div class="slide" id="slide-8">
+  <div class="slide-inner">
+    <span class="slide-number">8 / 10</span>
+    <h2>Prompt Playground: Try These!</h2>
+    <p>Open ChatGPT, Claude, or Gemini and try each of these prompts. Notice how the role changes the answer!</p>
+
+    <div class="step" onclick="toggleInfo('prompt-ex1')">
+      <div class="step-num" style="background:var(--system-color);">1</div>
+      <div class="step-content">
+        <h4>The Homework Helper</h4>
+        <p><em>"You are a friendly 7th grade math teacher. Explain what a variable is using a pizza analogy."</em></p>
+      </div>
+    </div>
+    <div class="hidden-content" id="prompt-ex1">
+      <p>Now try the same question WITHOUT the role: just ask <em>"Explain what a variable is."</em> Compare the two answers. Which was more fun to read? Which helped you understand better?</p>
+    </div>
+
+    <div class="step" onclick="toggleInfo('prompt-ex2')">
+      <div class="step-num" style="background:var(--user-color);">2</div>
+      <div class="step-content">
+        <h4>The Story Writer</h4>
+        <p><em>"You are a creative author who writes funny adventure stories for teenagers. Write a short story about a kid whose backpack secretly contains a portal to another dimension."</em></p>
+      </div>
+    </div>
+    <div class="hidden-content" id="prompt-ex2">
+      <p>Now change the role to <em>"You are a serious news reporter"</em> and ask the same thing. The AI will write about the backpack as a news article! Same topic, completely different style.</p>
+    </div>
+
+    <div class="step" onclick="toggleInfo('prompt-ex3')">
+      <div class="step-num" style="background:var(--prompt-color);">3</div>
+      <div class="step-content">
+        <h4>The Debate Coach</h4>
+        <p><em>"You are a debate coach. Give me 3 arguments FOR and 3 arguments AGAINST homework. Keep each argument to one sentence."</em></p>
+      </div>
+    </div>
+    <div class="hidden-content" id="prompt-ex3">
+      <p>Notice how the prompt asked for a specific format (3 + 3, one sentence each). Being specific about what you want helps the AI give you exactly what you need!</p>
+    </div>
+
+    <div class="step" onclick="toggleInfo('prompt-ex4')">
+      <div class="step-num" style="background:var(--gpt-color);">4</div>
+      <div class="step-content">
+        <h4>The Translator</h4>
+        <p><em>"You are a translator who also explains cultural context. Translate 'It's raining cats and dogs' into Spanish, and explain why a direct translation would confuse a Spanish speaker."</em></p>
+      </div>
+    </div>
+    <div class="hidden-content" id="prompt-ex4">
+      <p>This prompt does two things: asks for a translation AND an explanation. Layering your requests helps you get richer, more interesting answers!</p>
+    </div>
+
+    <div class="callout success" style="margin-top:16px;">
+      <p><strong>The pattern:</strong> Great prompts have three parts: (1) <strong>Who</strong> the AI should be, (2) <strong>What</strong> you want it to do, and (3) <strong>How</strong> you want the answer formatted. The more specific you are, the better the result!</p>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(7)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-8"></div>
+      <button class="nav-btn" onclick="goTo(9)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 9: Quiz ==================== -->
+<div class="slide" id="slide-9">
+  <div class="slide-inner">
+    <span class="slide-number">9 / 10</span>
+    <h2>Quiz Time!</h2>
+
+    <div style="margin-bottom:28px;">
+      <p><strong>Q1: What does an LLM actually do when it writes a response?</strong></p>
+      <button class="quiz-option" onclick="checkQuiz(this, false)">A) It searches Google and copies the best result</button>
+      <button class="quiz-option" onclick="checkQuiz(this, true)">B) It predicts the most likely next word, over and over</button>
+      <button class="quiz-option" onclick="checkQuiz(this, false)">C) A human types the answer really fast</button>
+      <button class="quiz-option" onclick="checkQuiz(this, false)">D) It reads your mind using Wi-Fi</button>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <div style="margin-bottom:28px;">
+      <p><strong>Q2: You ask "Why is the sky blue?" twice &mdash; once with "You are a scientist" and once with "You are a kindergarten teacher." What happens?</strong></p>
+      <button class="quiz-option" onclick="checkQuiz(this, false)">A) The exact same answer both times</button>
+      <button class="quiz-option" onclick="checkQuiz(this, false)">B) It refuses to answer the second time</button>
+      <button class="quiz-option" onclick="checkQuiz(this, true)">C) You get a technical answer and a simple one &mdash; the role changes the style</button>
+      <button class="quiz-option" onclick="checkQuiz(this, false)">D) The AI gets confused and crashes</button>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <div style="margin-bottom:28px;">
+      <p><strong>Q3: What's the difference between a system prompt and a user prompt?</strong></p>
+      <button class="quiz-option" onclick="checkQuiz(this, false)">A) There is no difference, they're the same thing</button>
+      <button class="quiz-option" onclick="checkQuiz(this, false)">B) The system prompt is what the AI writes back</button>
+      <button class="quiz-option" onclick="checkQuiz(this, true)">C) The system prompt sets the AI's role/rules; the user prompt is your question</button>
+      <button class="quiz-option" onclick="checkQuiz(this, false)">D) The system prompt is louder</button>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <div>
+      <p><strong>Q4: The "T" in GPT stands for Transformer. What's its superpower?</strong></p>
+      <button class="quiz-option" onclick="checkQuiz(this, false)">A) It can turn into a robot truck</button>
+      <button class="quiz-option" onclick="checkQuiz(this, false)">B) It transforms electricity into words</button>
+      <button class="quiz-option" onclick="checkQuiz(this, true)">C) It pays attention to which words in a sentence relate to each other</button>
+      <button class="quiz-option" onclick="checkQuiz(this, false)">D) It transforms your homework into A+ papers automatically</button>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(8)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-9"></div>
+      <button class="nav-btn" onclick="goTo(10)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 10: Wrap-Up & Homework ==================== -->
+<div class="slide" id="slide-10">
+  <div class="slide-inner">
+    <span class="slide-number">10 / 10</span>
+    <div class="big-icon" style="font-size:60px; animation: bounce 2s ease infinite;">&#x1F389;</div>
+    <h2>Wrap-Up &amp; Homework</h2>
+
+    <div class="callout success">
+      <p style="font-size:1.1em; text-align:center;"><strong>"An LLM is a giant neural network that predicts the next word. A great prompt tells it WHO to be, WHAT to do, and HOW to answer."</strong></p>
+    </div>
+
+    <div style="margin-top:20px;">
+      <h3 style="color:var(--primary);">What we learned today:</h3>
+      <ul>
+        <li><strong>LLM</strong> = Large Language Model &mdash; a huge neural network trained on language</li>
+        <li><strong>GPT</strong> = Generative Pre-trained Transformer &mdash; one type of LLM</li>
+        <li>AI has two superpowers: <strong>understanding</strong> language and <strong>generating</strong> language</li>
+        <li><strong>System prompt</strong> = hidden role instructions; <strong>User prompt</strong> = your message</li>
+        <li>"You are a ___" steers which <strong>patterns</strong> the AI uses to respond</li>
+      </ul>
+    </div>
+
+    <h3 style="color:var(--secondary); margin-top:28px; margin-bottom:12px;">Homework</h3>
+    <div class="grid-2" style="margin-top:12px;">
+      <div class="card" style="border-top:4px solid var(--primary);">
+        <div class="card-icon">&#x1F3AD;</div>
+        <h3>Role Swap Challenge</h3>
+        <p>Pick ONE question (e.g., "What causes earthquakes?"). Ask it <strong>3 times</strong> with different roles:<br><br>
+        1. "You are a scientist"<br>
+        2. "You are a rapper"<br>
+        3. "You are a medieval knight"<br><br>
+        Screenshot all three. Which was most helpful? Which was funniest?</p>
+      </div>
+      <div class="card" style="border-top:4px solid var(--secondary);">
+        <div class="card-icon">&#x1F4DD;</div>
+        <h3>Build Your Own Prompt</h3>
+        <p>Write a prompt that uses all three parts:<br><br>
+        1. <strong>Who:</strong> "You are a ___"<br>
+        2. <strong>What:</strong> the task or question<br>
+        3. <strong>How:</strong> format instructions<br><br>
+        Example: <em>"You are a sports commentator. Describe my morning routine as if it's an exciting game. Use play-by-play style."</em></p>
+      </div>
+    </div>
+
+    <div class="callout info" style="margin-top:20px;">
+      <p><strong>Next week preview:</strong> Now that you know how to talk to AI, we'll put it to work! We'll use prompts to build a presentation and a school report &mdash; your first real AI-powered projects!</p>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(9)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-10"></div>
+      <button class="nav-btn" disabled>Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== JAVASCRIPT ==================== -->
+<script>
+  const TOTAL = 10;
+  let currentSlide = 1;
+
+  // Build nav dots
+  for (let s = 1; s <= TOTAL; s++) {
+    const dotsContainer = document.getElementById('dots-' + s);
+    if (!dotsContainer) continue;
+    for (let d = 1; d <= TOTAL; d++) {
+      const dot = document.createElement('span');
+      dot.className = 'nav-dot' + (d === s ? ' active' : '');
+      dot.onclick = () => goTo(d);
+      dotsContainer.appendChild(dot);
+    }
+  }
+
+  function goTo(n) {
+    if (n < 1 || n > TOTAL) return;
+    document.getElementById('slide-' + currentSlide).classList.remove('active');
+    currentSlide = n;
+    document.getElementById('slide-' + currentSlide).classList.add('active');
+    updateDots();
+    window.scrollTo(0, 0);
+  }
+
+  function updateDots() {
+    for (let i = 1; i <= TOTAL; i++) {
+      const container = document.getElementById('dots-' + i);
+      if (!container) continue;
+      container.innerHTML = '';
+      for (let j = 1; j <= TOTAL; j++) {
+        const d = document.createElement('span');
+        d.className = 'nav-dot' + (j === currentSlide ? ' active' : '');
+        d.onclick = () => goTo(j);
+        container.appendChild(d);
+      }
+    }
+  }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); goTo(currentSlide + 1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); goTo(currentSlide - 1); }
+  });
+
+  // Toggle info boxes
+  function toggleInfo(id) {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle('show');
+  }
+
+  // Quiz
+  function checkQuiz(btn, isCorrect) {
+    const parent = btn.parentElement;
+    const options = parent.querySelectorAll('.quiz-option');
+    const feedback = parent.querySelector('.quiz-feedback');
+    const alreadyAnswered = Array.from(options).some(o => o.classList.contains('correct') || o.classList.contains('wrong'));
+    if (alreadyAnswered) return;
+
+    if (isCorrect) {
+      btn.classList.add('correct');
+      feedback.style.display = 'block';
+      feedback.style.background = '#e8fbe8';
+      feedback.style.color = '#2e7d32';
+      feedback.textContent = 'Correct! You got it!';
+    } else {
+      btn.classList.add('wrong');
+      feedback.style.display = 'block';
+      feedback.style.background = '#ffe8e8';
+      feedback.style.color = '#c62828';
+      feedback.textContent = 'Not quite \u2014 think back to what we covered!';
+    }
+    options.forEach(o => o.style.pointerEvents = 'none');
+  }
+</script>
+
+</body>
+</html>
