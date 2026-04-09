@@ -122,17 +122,13 @@
 | 0:00–0:10 | **Homework debrief:** Compare ChatGPT answers (7th grader vs. scientist). Discuss: same AI, same knowledge, different prompt → different output. How does it "know" how to adjust? |
 | 0:10–0:25 | **Mini-lecture — From Lines to Brains:** "Last week we drew a straight line through data. But what if the pattern isn't a straight line?" Show a curvy scatter plot. "We need something more powerful. Enter: neural networks." **The brain analogy:** Your brain has ~86 billion neurons connected by synapses. When you learn something, certain connections get stronger. A neural network is the same idea in software: (1) **Neurons** — tiny math functions that take inputs and produce outputs, (2) **Connections (weights)** — how strongly one neuron influences another, (3) **Learning** — adjusting the weights until the network gets good at the task. Show a simple diagram: input layer → hidden layer → output layer. |
 | 0:25–0:40 | **Activity — "Human Neural Network":** Three students form a network. Student A gets an input (a number or word), passes a modified version to Student B, who passes a modified version to Student C, who gives the final answer. Teacher says "wrong" or "right." Students adjust their rules. After several rounds, the "network" starts getting it right. Debrief: "You just did what a neural network does — adjusted your rules based on feedback." |
-| 0:40–0:52 | **Visual demo:** Use TensorFlow Playground (playground.tensorflow.org) to show a neural network learning in real time. Students click "play" and watch it solve a classification problem. Adjust neurons and layers — what changes? |
-| 0:52–1:00 | **Wrap-up:** "A neural network learns by adjusting its connections, just like your brain strengthens pathways when you practice something." Preview: "Next week — what happens when you make a neural network REALLY big and feed it the entire internet?" |
+| 0:40–1:00 | **Wrap-up:** "A neural network learns by adjusting its connections, just like your brain strengthens pathways when you practice something." Preview: "Next week — what happens when you make a neural network REALLY big and feed it the entire internet?" |
 
 ### Key Concepts Introduced
 - Neural network, neuron, weights, layers (input, hidden, output)
 - Training = adjusting weights based on feedback
 - Neural networks as pattern finders for complex data
 - Connection to the human brain: neurons, synapses, learning through repetition
-
-### Homework / Between Sessions
-- Try TensorFlow Playground at home. Can you get it to solve the spiral pattern? How many layers and neurons did it take?
 
 ---
 
@@ -282,7 +278,6 @@ This is a **no-grade, progress-based** course. Assessment is observational:
 | Tool | Purpose | Cost |
 |------|---------|------|
 | [Teachable Machine](https://teachablemachine.withgoogle.com) | Train an ML model in the browser (Week 3) | Free |
-| [TensorFlow Playground](https://playground.tensorflow.org) | Neural network visualization (Week 4) | Free |
 | [ChatGPT](https://chat.openai.com) / [Claude](https://claude.ai) | LLM interaction, prompt engineering, vibe coding | Free tier |
 | [Replit](https://replit.com) | Browser-based coding — run AI-generated code | Free tier |
 | [p5.js Editor](https://editor.p5js.org) | Creative coding / visual projects | Free |
