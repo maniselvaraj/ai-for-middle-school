@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vibe Coding — Build a Web App - Week 5</title>
+  <style>
+    :root {
+      --primary: #6C63FF;
+      --secondary: #FF6584;
+      --accent: #43E97B;
+      --dark: #2D3436;
+      --light: #F8F9FA;
+      --card-bg: #FFFFFF;
+      --shadow: 0 8px 30px rgba(0,0,0,0.12);
+      --good-color: #27ae60;
+      --bad-color: #e74c3c;
+      --system-color: #f39c12;
+      --user-color: #3498db;
+      --ai-color: #9b59b6;
+      --vibe-color: #FF6584;
+      --prompt-color: #e74c3c;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+      min-height: 100vh;
+      color: var(--dark);
+    }
+
+    /* ---- Slide System ---- */
+    .slide {
+      display: none;
+      min-height: 100vh;
+      padding: 40px 20px;
+      animation: fadeIn 0.5s ease;
+    }
+    .slide.active { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    .slide-inner {
+      background: var(--card-bg);
+      border-radius: 24px;
+      padding: 48px;
+      max-width: 960px;
+      width: 100%;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide-number {
+      position: absolute;
+      top: 16px;
+      right: 24px;
+      font-size: 14px;
+      color: #aaa;
+      font-weight: 600;
+    }
+
+    .time-badge {
+      display: inline-block;
+      background: var(--primary);
+      color: white;
+      font-size: 0.8em;
+      font-weight: 700;
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: 2.4em;
+      background: linear-gradient(135deg, #0f2027, #FF6584);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+
+    h2 {
+      font-size: 1.8em;
+      color: var(--primary);
+      margin-bottom: 16px;
+    }
+
+    .subtitle {
+      font-size: 1.2em;
+      color: #888;
+      margin-bottom: 32px;
+    }
+
+    p, li {
+      font-size: 1.1em;
+      line-height: 1.7;
+      color: #444;
+    }
+
+    ul { list-style: none; padding: 0; }
+    ul li { padding: 8px 0; padding-left: 28px; position: relative; }
+    ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 16px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+
+    /* ---- Visual Components ---- */
+    .big-icon {
+      font-size: 80px;
+      text-align: center;
+      margin: 24px 0;
+      animation: pulse 2s ease infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin: 24px 0;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+      margin: 24px 0;
+    }
+
+    .card {
+      background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.15); }
+    .card .card-icon { font-size: 48px; margin-bottom: 12px; }
+    .card h3 { color: var(--primary); margin-bottom: 8px; font-size: 1.1em; }
+    .card p { font-size: 0.95em; color: #555; }
+
+    /* ---- Prompt Comparison ---- */
+    .prompt-compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 16px 0;
+    }
+    .prompt-panel {
+      border-radius: 16px;
+      padding: 20px;
+      position: relative;
+    }
+    .prompt-panel.bad {
+      background: #fff5f5;
+      border: 2px solid var(--bad-color);
+    }
+    .prompt-panel.good {
+      background: #f0fff4;
+      border: 2px solid var(--good-color);
+    }
+    .prompt-panel .panel-label {
+      font-size: 0.8em;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+    .prompt-panel.bad .panel-label { color: var(--bad-color); }
+    .prompt-panel.good .panel-label { color: var(--good-color); }
+    .prompt-text {
+      background: #1a1a2e;
+      color: #e0e0e0;
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9em;
+      line-height: 1.6;
+      margin: 8px 0;
+    }
+    .prompt-why {
+      font-size: 0.9em;
+      color: #666;
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    /* ---- Prompt Box ---- */
+    .prompt-box {
+      background: #1a1a2e;
+      color: #e0e0e0;
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin: 12px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 0.95em;
+      line-height: 1.7;
+      position: relative;
+    }
+    .prompt-box .label {
+      position: absolute;
+      top: -10px;
+      left: 16px;
+      color: white;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-size: 0.75em;
+      font-weight: 700;
+      padding: 2px 12px;
+      border-radius: 8px;
+    }
+    .prompt-box.system-prompt { border-left: 4px solid var(--system-color); }
+    .prompt-box.system-prompt .label { background: var(--system-color); }
+    .prompt-box.user-prompt { border-left: 4px solid var(--user-color); }
+    .prompt-box.user-prompt .label { background: var(--user-color); }
+    .prompt-box.ai-response { border-left: 4px solid var(--ai-color); background: #16213e; }
+    .prompt-box.ai-response .label { background: var(--ai-color); }
+    .prompt-box.build-prompt { border-left: 4px solid var(--accent); }
+    .prompt-box.build-prompt .label { background: var(--accent); color: #1a1a2e; }
+
+    .prompt-highlight { color: #43E97B; font-weight: 700; }
+    .prompt-comment { color: #888; font-style: italic; }
+
+    /* ---- Lever Tags ---- */
+    .lever {
+      display: inline-block;
+      padding: 3px 12px;
+      border-radius: 20px;
+      font-size: 0.8em;
+      font-weight: 700;
+      margin: 2px 4px;
+      color: white;
+    }
+    .lever.role { background: #e74c3c; }
+    .lever.context { background: #3498db; }
+    .lever.task { background: #27ae60; }
+    .lever.format { background: #9b59b6; }
+
+    /* ---- Step System ---- */
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin: 12px 0;
+      padding: 16px;
+      background: #f8f9fa;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+    .step:hover { background: #f0f0ff; }
+    .step-num {
+      background: var(--primary);
+      color: white;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      flex-shrink: 0;
+      font-size: 1em;
+    }
+    .step-content { flex: 1; }
+    .step-content h4 { color: var(--primary); margin-bottom: 4px; font-size: 1em; }
+    .step-content p { font-size: 0.95em; }
+
+    /* ---- Flow Diagram ---- */
+    .flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: 24px 0;
+      flex-wrap: wrap;
+    }
+    .flow-box {
+      background: var(--primary);
+      color: white;
+      padding: 14px 22px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1em;
+      text-align: center;
+      min-width: 110px;
+    }
+    .flow-arrow {
+      font-size: 26px;
+      color: var(--secondary);
+      font-weight: bold;
+    }
+
+    /* ---- Callout Boxes ---- */
+    .callout {
+      padding: 18px 20px;
+      border-radius: 12px;
+      margin: 14px 0;
+    }
+    .callout.info { background: #e8f4fd; border-left: 4px solid var(--user-color); }
+    .callout.success { background: #e8fbe8; border-left: 4px solid var(--accent); }
+    .callout.warning { background: #fff3e0; border-left: 4px solid #ff9800; }
+    .callout.key { background: #f0f0ff; border-left: 4px solid var(--primary); }
+    .callout.vibe { background: #fff0f5; border-left: 4px solid var(--vibe-color); }
+    .callout.mission { background: #1a1a2e; border-left: 4px solid var(--accent); color: #e0e0e0; }
+    .callout.mission p { color: #e0e0e0; }
+    .callout.mission strong { color: var(--accent); }
+
+    /* ---- Interactive ---- */
+    .reveal-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 12px;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin: 8px 4px;
+    }
+    .reveal-btn:hover { background: #5a52d5; transform: scale(1.05); }
+    .reveal-btn.green { background: var(--good-color); }
+    .reveal-btn.green:hover { background: #1e8449; }
+
+    .hidden-content {
+      display: none;
+      margin-top: 16px;
+      padding: 20px;
+      background: #f0f0ff;
+      border-radius: 12px;
+      animation: fadeIn 0.4s ease;
+    }
+    .hidden-content.show { display: block; }
+
+    /* ---- Agenda Table ---- */
+    .agenda-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 0.95em;
+    }
+    .agenda-table th {
+      background: var(--primary);
+      color: white;
+      padding: 10px 14px;
+      text-align: left;
+    }
+    .agenda-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid #eee;
+      vertical-align: top;
+    }
+    .agenda-table tr:nth-child(even) td { background: #f8f9fa; }
+    .agenda-table tr:hover td { background: #f0f0ff; }
+
+    /* ---- Prompt Number Badge ---- */
+    .prompt-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: var(--accent);
+      color: #1a1a2e;
+      border-radius: 50%;
+      font-weight: 900;
+      font-size: 1.1em;
+      margin-right: 12px;
+      flex-shrink: 0;
+    }
+
+    .prompt-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .prompt-header h3 {
+      color: var(--dark);
+      font-size: 1.3em;
+    }
+
+    /* ---- Practice Box ---- */
+    .practice-box {
+      background: linear-gradient(135deg, #e8fbe8, #d4edda);
+      border-radius: 16px;
+      padding: 24px;
+      margin: 16px 0;
+      border: 2px dashed var(--good-color);
+    }
+    .practice-box h3 { color: var(--good-color); margin-bottom: 12px; }
+
+    /* ---- Tag Pills ---- */
+    .tag {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8em;
+      font-weight: 600;
+      margin: 3px;
+    }
+    .tag.nextjs { background: #000; color: #fff; }
+    .tag.mui { background: #1976d2; color: #fff; }
+    .tag.react { background: #61dafb; color: #1a1a2e; }
+    .tag.memory { background: #ff9800; color: white; }
+    .tag.guest { background: #43E97B; color: #1a1a2e; }
+
+    /* ---- Navigation ---- */
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 2px solid #eee;
+    }
+    .nav-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 14px 32px;
+      border-radius: 12px;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .nav-btn:hover { background: #5a52d5; transform: scale(1.05); }
+    .nav-btn:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+    .nav-dots { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+    .nav-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.4);
+      border: 2px solid var(--primary);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .nav-dot.active { background: var(--primary); }
+
+    /* ---- Copyright ---- */
+    .copyright {
+      text-align: center;
+      font-size: 0.7em;
+      color: #bbb;
+      margin-top: 16px;
+      padding-top: 8px;
+    }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 700px) {
+      .slide-inner { padding: 28px 16px; }
+      h1 { font-size: 1.8em; }
+      h2 { font-size: 1.4em; }
+      .grid-2, .grid-3, .prompt-compare { grid-template-columns: 1fr; }
+      .flow { flex-direction: column; }
+      .flow-arrow { transform: rotate(90deg); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ==================== SLIDE 1: Title ==================== -->
+<div class="slide active" id="slide-1">
+  <div class="slide-inner">
+    <span class="slide-number">1 / 19</span>
+    <div class="big-icon">&#x1F6CD;&#xFE0F;</div>
+    <h1>Vibe Coding</h1>
+    <p class="subtitle">Describe it — and AI builds it for you</p>
+    <p style="font-size:1.1em; text-align:center; color:#666; margin-top:8px;">
+      Week 5 &mdash; 90 Minutes
+    </p>
+
+    <table class="agenda-table" style="margin-top:28px;">
+      <thead>
+        <tr><th>Time</th><th>What We're Doing</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>0:00 – 0:05</td><td>&#x1F504; Quick Recap: Structure of a Good Prompt + System Prompts</td></tr>
+        <tr><td>0:05 – 0:20</td><td>&#x2694;&#xFE0F; Good vs. Bad Prompt Battle — Practice Round</td></tr>
+        <tr><td>0:20 – 0:30</td><td>&#x1F9E0; What is Vibe Coding? Meet your tools.</td></tr>
+        <tr><td>0:30 – 0:90</td><td>&#x1F6E0;&#xFE0F; Build Amazon Jr. &mdash; Step by step with AI</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout vibe" style="margin-top:20px;">
+      <p><strong>Today's Big Idea:</strong> You are the architect. AI is the builder. Your job is to describe exactly what you want — clearly, completely, and creatively.</p>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" disabled>&#8592; Back</button>
+      <div class="nav-dots" id="dots-1"></div>
+      <button class="nav-btn" onclick="goTo(2)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 2: Prompt Recap ==================== -->
+<div class="slide" id="slide-2">
+  <div class="slide-inner">
+    <span class="slide-number">2 / 19</span>
+    <span class="time-badge">&#x23F1; 0:00 – 0:05</span>
+    <h2>&#x1F504; Quick Recap: The 4 Levers of a Great Prompt</h2>
+    <p>Before we build anything, let's refresh the rules. A great prompt has 4 parts:</p>
+
+    <div class="grid-2" style="margin-top:20px;">
+      <div class="card" style="border-top: 4px solid #e74c3c;">
+        <div class="card-icon">&#x1F3AD;</div>
+        <h3><span class="lever role">Role</span></h3>
+        <p>"You are a friendly shopping assistant for kids..."</p>
+      </div>
+      <div class="card" style="border-top: 4px solid #3498db;">
+        <div class="card-icon">&#x1F4CB;</div>
+        <h3><span class="lever context">Context</span></h3>
+        <p>"I'm building a kids' online store using Next.js..."</p>
+      </div>
+      <div class="card" style="border-top: 4px solid #27ae60;">
+        <div class="card-icon">&#x2705;</div>
+        <h3><span class="lever task">Task</span></h3>
+        <p>"Create a product card component that shows name, price, and image..."</p>
+      </div>
+      <div class="card" style="border-top: 4px solid #9b59b6;">
+        <div class="card-icon">&#x1F4D0;</div>
+        <h3><span class="lever format">Format</span></h3>
+        <p>"Use Material UI, keep code in one file, add comments explaining each part..."</p>
+      </div>
+    </div>
+
+    <div class="callout key">
+      <p><strong>The magic formula:</strong> <em>Role + Context + Task + Format</em> = AI actually understands what you want.</p>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(1)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-2"></div>
+      <button class="nav-btn" onclick="goTo(3)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 3: System Prompt ==================== -->
+<div class="slide" id="slide-3">
+  <div class="slide-inner">
+    <span class="slide-number">3 / 19</span>
+    <span class="time-badge">&#x23F1; 0:00 – 0:05</span>
+    <h2>&#x1F9E0; Why System Prompts Are a Superpower</h2>
+    <p>A <strong>system prompt</strong> is a set of invisible instructions you give the AI <em>before</em> the conversation starts. It shapes how the AI behaves for your entire session.</p>
+
+    <div class="grid-2" style="margin-top:20px;">
+      <div>
+        <p style="font-weight:700; margin-bottom:8px; color:#888;">Without a system prompt:</p>
+        <div class="prompt-box user-prompt">
+          <span class="label">You say</span>
+          Help me build a website.
+        </div>
+        <div class="prompt-box ai-response" style="margin-top:8px;">
+          <span class="label">AI replies</span>
+          Sure! What kind of website? Do you want HTML/CSS? React? Django? WordPress? I can...
+          <span class="prompt-comment"> [3 paragraphs of generic questions]</span>
+        </div>
+      </div>
+      <div>
+        <p style="font-weight:700; margin-bottom:8px; color:#888;">With a system prompt:</p>
+        <div class="prompt-box system-prompt">
+          <span class="label">System Prompt</span>
+          You are a coding assistant for 7th graders building a Next.js app. Always write clean code with comments. Use Material UI. Keep responses beginner-friendly.
+        </div>
+        <div class="prompt-box ai-response" style="margin-top:8px;">
+          <span class="label">Now you just say</span>
+          Help me build a website.
+        </div>
+      </div>
+    </div>
+
+    <div class="callout success" style="margin-top:16px;">
+      <p><strong>Think of the system prompt as hiring someone.</strong> The system prompt is the job description. Every response they give you follows those rules — no need to repeat yourself every time!</p>
+    </div>
+
+    <button class="reveal-btn" onclick="toggleInfo('sys-example')">&#x1F4A1; See Our System Prompt for Today</button>
+    <div class="hidden-content" id="sys-example">
+      <div class="prompt-box system-prompt">
+        <span class="label">System Prompt We'll Use Today</span>
+        You are an expert Next.js developer helping 7th grade students build their first web app. Write all code using Next.js 14 (App Router), TypeScript, and Material UI v5. Keep folder structures clean, separate frontend and backend clearly, add helpful comments to every file, and explain what each piece of code does in simple language. Never use a database — store everything in memory arrays.
+      </div>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(2)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-3"></div>
+      <button class="nav-btn" onclick="goTo(4)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 4: Good vs Bad Prompts ==================== -->
+<div class="slide" id="slide-4">
+  <div class="slide-inner">
+    <span class="slide-number">4 / 19</span>
+    <span class="time-badge">&#x23F1; 0:05 – 0:20</span>
+    <h2>&#x2694;&#xFE0F; Good vs. Bad: Prompt Battle!</h2>
+    <p>Same goal. Very different results. Spot what's missing in the bad prompt — then see how the good one fixes it.</p>
+
+    <p style="font-weight:700; color:var(--primary); margin:20px 0 8px;">Example 1: Writing a story</p>
+    <div class="prompt-compare">
+      <div class="prompt-panel bad">
+        <div class="panel-label">&#x274C; Bad Prompt</div>
+        <div class="prompt-text">Write me a story.</div>
+        <p class="prompt-why">Missing: Who is it for? What genre? How long? What should happen?</p>
+      </div>
+      <div class="prompt-panel good">
+        <div class="panel-label">&#x2705; Good Prompt</div>
+        <div class="prompt-text">You are a children's author. Write a 3-paragraph adventure story for a 7th grader about a robot who discovers a hidden underwater city. End with a cliffhanger. Use short sentences.</div>
+        <p class="prompt-why"><span class="lever role">Role</span> <span class="lever context">Context</span> <span class="lever task">Task</span> <span class="lever format">Format</span></p>
+      </div>
+    </div>
+
+    <p style="font-weight:700; color:var(--primary); margin:16px 0 8px;">Example 2: Getting help with code</p>
+    <div class="prompt-compare">
+      <div class="prompt-panel bad">
+        <div class="panel-label">&#x274C; Bad Prompt</div>
+        <div class="prompt-text">Fix my code.</div>
+        <p class="prompt-why">Missing: What code? What is it supposed to do? What's the error?</p>
+      </div>
+      <div class="prompt-panel good">
+        <div class="panel-label">&#x2705; Good Prompt</div>
+        <div class="prompt-text">I'm building a Next.js shopping cart. My addToCart function adds the same item twice when clicked once. Here's the code: [paste code]. Fix the bug and explain why it was happening.</div>
+        <p class="prompt-why"><span class="lever context">Context</span> <span class="lever task">Task</span> <span class="lever format">Format</span> + specific error</p>
+      </div>
+    </div>
+
+    <button class="reveal-btn" onclick="toggleInfo('example3')">See Example 3: Asking for an explanation</button>
+    <div class="hidden-content" id="example3">
+      <div class="prompt-compare">
+        <div class="prompt-panel bad">
+          <div class="panel-label">&#x274C; Bad Prompt</div>
+          <div class="prompt-text">Explain React.</div>
+          <p class="prompt-why">Way too broad — could get a 5-word answer or a 50-page textbook.</p>
+        </div>
+        <div class="prompt-panel good">
+          <div class="panel-label">&#x2705; Good Prompt</div>
+          <div class="prompt-text">You are a teacher. Explain what React components are to a 7th grader who knows what HTML is but has never coded before. Use a real-life analogy and keep it under 5 sentences.</div>
+          <p class="prompt-why"><span class="lever role">Role</span> <span class="lever context">Context</span> <span class="lever task">Task</span> <span class="lever format">Format</span></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(3)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-4"></div>
+      <button class="nav-btn" onclick="goTo(5)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 5: Practice Time ==================== -->
+<div class="slide" id="slide-5">
+  <div class="slide-inner">
+    <span class="slide-number">5 / 19</span>
+    <span class="time-badge">&#x23F1; 0:10 – 0:20</span>
+    <h2>&#x1F3AE; Practice Round — Your Turn!</h2>
+    <p>Each of you gets one bad prompt. Your challenge: <strong>rewrite it using all 4 levers</strong>. Then we'll submit yours to Claude/ChatGPT and compare results!</p>
+
+    <div class="practice-box">
+      <h3>&#x1F4CB; Student 1 — Rewrite This Prompt:</h3>
+      <div class="prompt-text" style="background:#1a1a2e; color:#e0e0e0; border-radius:8px; padding:12px; margin:8px 0;">Make me a quiz.</div>
+      <p>&#x1F4A1; Hint: Who is the quiz for? What topic? How many questions? What format?</p>
+    </div>
+
+    <div class="practice-box">
+      <h3>&#x1F4CB; Student 2 — Rewrite This Prompt:</h3>
+      <div class="prompt-text" style="background:#1a1a2e; color:#e0e0e0; border-radius:8px; padding:12px; margin:8px 0;">Help me with my homework.</div>
+      <p>&#x1F4A1; Hint: What subject? What specifically do you need? What level of detail?</p>
+    </div>
+
+    <div class="practice-box">
+      <h3>&#x1F4CB; Student 3 — Rewrite This Prompt:</h3>
+      <div class="prompt-text" style="background:#1a1a2e; color:#e0e0e0; border-radius:8px; padding:12px; margin:8px 0;">Draw me something cool.</div>
+      <p>&#x1F4A1; Hint: What style? What subject? What mood? What should be in the scene?</p>
+    </div>
+
+    <div class="callout warning">
+      <p><strong>Prompt Battle Rules:</strong> Read your rewritten prompts out loud. Submit them all. We vote on whose output was best — and discuss <em>why</em> it won.</p>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(4)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-5"></div>
+      <button class="nav-btn" onclick="goTo(6)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 6: What is Vibe Coding ==================== -->
+<div class="slide" id="slide-6">
+  <div class="slide-inner">
+    <span class="slide-number">6 / 19</span>
+    <span class="time-badge">&#x23F1; 0:20 – 0:30</span>
+    <h2>&#x1F9E0; What Is Vibe Coding?</h2>
+
+    <div class="callout vibe">
+      <p><strong>Vibe coding</strong> (coined by Andrej Karpathy, ex-Tesla AI director): You <em>describe</em> what you want to build in plain English. AI writes the code. You read, test, tweak, and iterate. You never need to memorize syntax.</p>
+    </div>
+
+    <div class="flow" style="margin-top:24px;">
+      <div class="flow-box" style="background:#e74c3c;">&#x1F4AC; Describe It</div>
+      <div class="flow-arrow">&#8594;</div>
+      <div class="flow-box" style="background:#9b59b6;">&#x1F916; AI Builds It</div>
+      <div class="flow-arrow">&#8594;</div>
+      <div class="flow-box" style="background:#27ae60;">&#x1F50D; Test It</div>
+      <div class="flow-arrow">&#8594;</div>
+      <div class="flow-box" style="background:#f39c12;">&#x1F504; Improve It</div>
+    </div>
+
+    <div class="grid-2" style="margin-top:8px;">
+      <div class="card" style="border-top: 4px solid var(--good-color);">
+        <div class="card-icon">&#x1F9B8;</div>
+        <h3>You are the Architect</h3>
+        <p>You decide what to build, what it looks like, what it does, and what to change.</p>
+      </div>
+      <div class="card" style="border-top: 4px solid var(--ai-color);">
+        <div class="card-icon">&#x1F916;</div>
+        <h3>AI is the Builder</h3>
+        <p>AI writes the actual code, explains it, and fixes bugs when you tell it what's wrong.</p>
+      </div>
+    </div>
+
+    <div class="callout key">
+      <p><strong>What you DO need:</strong> Understanding of frontend/backend (Week 2) + great prompts (Weeks 4–5). That's it. That's your toolkit.</p>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(5)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-6"></div>
+      <button class="nav-btn" onclick="goTo(7)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 7: Tools ==================== -->
+<div class="slide" id="slide-7">
+  <div class="slide-inner">
+    <span class="slide-number">7 / 19</span>
+    <span class="time-badge">&#x23F1; 0:20 – 0:30</span>
+    <h2>&#x1F6E0;&#xFE0F; Your Vibe Coding Toolkit</h2>
+    <p>Three tools installed on your computer. That's all you need.</p>
+
+    <div class="grid-3" style="margin-top:20px;">
+      <div class="card" style="border-top: 4px solid #e74c3c;">
+        <div class="card-icon">&#x1F916;</div>
+        <h3>Claude / ChatGPT</h3>
+        <p>Your AI coding partner. You describe what to build, it writes the code. Also ask it to explain or fix anything.</p>
+        <p style="margin-top:8px; font-size:0.85em; color:#888;">claude.ai &nbsp;|&nbsp; chatgpt.com</p>
+      </div>
+      <div class="card" style="border-top: 4px solid #3498db;">
+        <div class="card-icon">&#x1F4BB;</div>
+        <h3>VS Code</h3>
+        <p>A free code editor — where you'll paste AI's code, save files, and see your project folder.</p>
+        <p style="margin-top:8px; font-size:0.85em; color:#888;">code.visualstudio.com</p>
+      </div>
+      <div class="card" style="border-top: 4px solid var(--good-color);">
+        <div class="card-icon">&#x1F5A5;&#xFE0F;</div>
+        <h3>Node.js</h3>
+        <p>The engine that runs your app on your own computer. Once installed, you never have to touch it again.</p>
+        <p style="margin-top:8px; font-size:0.85em; color:#888;">nodejs.org (LTS version)</p>
+      </div>
+    </div>
+
+    <div class="callout key" style="margin-top:16px;">
+      <p><strong>&#x1F4BB; How to open the Terminal (the black command window):</strong></p>
+      <div class="grid-2" style="margin-top:12px; gap:12px;">
+        <div style="background:#1a1a2e; border-radius:10px; padding:14px; color:#e0e0e0; font-family:monospace; font-size:0.9em;">
+          <p style="color:#43E97B; font-weight:700; margin-bottom:6px;">&#xF8FF; Mac</p>
+          Press <strong style="color:#FF9900;">Cmd + Space</strong>, type "Terminal", hit Enter
+        </div>
+        <div style="background:#1a1a2e; border-radius:10px; padding:14px; color:#e0e0e0; font-family:monospace; font-size:0.9em;">
+          <p style="color:#43E97B; font-weight:700; margin-bottom:6px;">&#x229E; Windows</p>
+          Press <strong style="color:#FF9900;">Win + R</strong>, type "cmd", hit Enter &mdash; or search "Terminal" in Start
+        </div>
+      </div>
+    </div>
+
+    <div class="step" style="margin-top:12px;">
+      <div class="step-num">&#x1F3AF;</div>
+      <div class="step-content">
+        <h4>Today's workflow</h4>
+        <p>Claude → generates code → paste into VS Code → run in Terminal → open in browser → ask Claude to fix/improve → repeat</p>
+      </div>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(6)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-7"></div>
+      <button class="nav-btn" onclick="goTo(8)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 8: Mission Briefing ==================== -->
+<div class="slide" id="slide-8">
+  <div class="slide-inner">
+    <span class="slide-number">8 / 19</span>
+    <span class="time-badge">&#x23F1; 0:30 onwards</span>
+    <h2>&#x1F6CD;&#xFE0F; Mission: Build Amazon Jr.</h2>
+    <p>We're building a simplified Amazon-style shopping app — together, using AI. Here's what it will have:</p>
+
+    <div class="grid-2" style="margin-top:20px;">
+      <div>
+        <div class="step">
+          <div class="step-num">&#x1F5BC;&#xFE0F;</div>
+          <div class="step-content">
+            <h4>Product Gallery</h4>
+            <p>6–8 fun products with images, names, and random prices.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">&#x1F6D2;</div>
+          <div class="step-content">
+            <h4>Shopping Cart</h4>
+            <p>Add items, see totals, remove items — all without a database.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">&#x1F4B3;</div>
+          <div class="step-content">
+            <h4>Guest Checkout</h4>
+            <p>Kid-friendly: just name and address — no accounts, no passwords.</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="step">
+          <div class="step-num">&#x1F4C1;</div>
+          <div class="step-content">
+            <h4>Clean Folder Structure</h4>
+            <p>Frontend and backend clearly separated — just like real apps.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">&#x1F3A8;</div>
+          <div class="step-content">
+            <h4>Material UI Design</h4>
+            <p>Looks like a real app — buttons, cards, navigation bar.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">&#x1F9E0;</div>
+          <div class="step-content">
+            <h4>Everything In Memory</h4>
+            <p>No database. Data lives in arrays — simple and fast to build.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout mission" style="margin-top:16px;">
+      <p>&#x1F4E6; Tech stack: <strong>Next.js 14 + Material UI + in-memory state</strong></p>
+      <p style="margin-top:8px;">Tags: <span class="tag nextjs">Next.js</span> <span class="tag mui">Material UI</span> <span class="tag react">React</span> <span class="tag memory">In-Memory</span> <span class="tag guest">Guest Checkout</span></p>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(7)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-8"></div>
+      <button class="nav-btn" onclick="goTo(9)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 9: App Capabilities ==================== -->
+<div class="slide" id="slide-9">
+  <div class="slide-inner">
+    <span class="slide-number">9 / 19</span>
+    <h2>&#x1F5A5;&#xFE0F; The 5 Screens of Amazon Jr.</h2>
+    <p>Before we build anything, let's walk through <em>what a user actually sees and does</em> in this app. Think of these as 5 different rooms in a store.</p>
+
+    <div class="grid-2" style="margin-top:20px; gap:14px;">
+      <div class="step">
+        <div class="step-num">&#x1F3E0;</div>
+        <div class="step-content">
+          <h4>Homepage — The Storefront</h4>
+          <p>Shows all 8 products in a grid. Each product has a photo, name, price, and an "Add to Cart" button. You can filter by category.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">&#x1F50D;</div>
+        <div class="step-content">
+          <h4>Product Page — The Detail View</h4>
+          <p>Click any product to see a bigger photo, full description, star rating, and an "Add to Cart" button. Back button to return to the store.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">&#x1F6D2;</div>
+        <div class="step-content">
+          <h4>Cart Page — Your Bag</h4>
+          <p>Everything you added. Change quantities, remove items, see the total. Button to go to checkout.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">&#x1F4DD;</div>
+        <div class="step-content">
+          <h4>Checkout Page — The Form</h4>
+          <p>A simple form: your name, email, and delivery address. No account needed. Hit "Place Order" to finish.</p>
+        </div>
+      </div>
+      <div class="step" style="grid-column: 1 / -1;">
+        <div class="step-num">&#x1F389;</div>
+        <div class="step-content">
+          <h4>Confirmation Page — You're Done!</h4>
+          <p>Shows a big green checkmark, your order number, and a "Shop More" button. The cart empties automatically.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout vibe" style="margin-top:12px;">
+      <p><strong>Notice:</strong> We described the whole app in plain English — no code, no jargon. This is exactly what we'll give to AI to build. Next: we'll turn this into a proper <strong>spec document</strong>.</p>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(8)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-9"></div>
+      <button class="nav-btn" onclick="goTo(10)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 10: What Is a Spec? ==================== -->
+<div class="slide" id="slide-10">
+  <div class="slide-inner">
+    <span class="slide-number">10 / 19</span>
+    <h2>&#x1F4CB; What Is a Spec — and Why Write One First?</h2>
+    <p>Before any professional software team writes a single line of code, they write a <strong>spec</strong>.</p>
+
+    <div class="callout vibe" style="margin-top:20px;">
+      <p><strong>A spec</strong> (short for "specification") is a plain-English document that describes <em>what</em> an app does — who uses it, what screens it has, what you can do on each screen, and what it should NOT do.</p>
+    </div>
+
+    <div class="grid-2" style="margin-top:20px;">
+      <div class="card" style="border-top: 4px solid var(--bad-color);">
+        <div class="card-icon">&#x274C;</div>
+        <h3>Without a spec</h3>
+        <p>You start building, AI makes assumptions, features creep in, you lose track of what you wanted, and the app gets messy fast.</p>
+      </div>
+      <div class="card" style="border-top: 4px solid var(--good-color);">
+        <div class="card-icon">&#x2705;</div>
+        <h3>With a spec</h3>
+        <p>Every prompt references the spec. AI always knows what you're building. No confusion. Every piece fits together.</p>
+      </div>
+    </div>
+
+    <div class="step" style="margin-top:16px;">
+      <div class="step-num">&#x1F4A1;</div>
+      <div class="step-content">
+        <h4>Today's plan — in order</h4>
+        <p><strong>Step 1:</strong> Prompt AI to write our spec (plain English, no code)<br>
+        <strong>Step 2:</strong> Read it together — does it describe what we want?<br>
+        <strong>Step 3:</strong> Use the spec as context for every build prompt that follows</p>
+      </div>
+    </div>
+
+    <div class="callout key">
+      <p><strong>Real world connection:</strong> At companies like Apple, Google, and Meta — engineers, designers, and product managers all start with a spec document before any code is written. You're working like a real software team today.</p>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(9)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-10"></div>
+      <button class="nav-btn" onclick="goTo(11)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 11: Spec Prompt ==================== -->
+<div class="slide" id="slide-11">
+  <div class="slide-inner">
+    <span class="slide-number">11 / 19</span>
+    <span class="time-badge">&#x1F4AC; Spec Prompt</span>
+    <div class="prompt-header">
+      <span class="prompt-badge" style="background:#9b59b6;">S</span>
+      <h3>Generate the App Spec — Send This to Claude First</h3>
+    </div>
+    <p>This is the very first thing we send to AI. No code yet — just a clear description of what we want to build.</p>
+
+    <div class="prompt-box build-prompt" style="margin-top:16px;">
+      <span class="label">&#x1F916; Send to Claude or ChatGPT</span>
+      You are helping 7th grade students plan their first web app.<br><br>
+      Write a SPEC.md document for an app called "Amazon Jr." — a simple online store for kids. Write everything in plain English. No code. No technical jargon. Imagine you're explaining it to a 12-year-old.<br><br>
+      The app must have exactly these 5 screens:<br>
+      1. <span class="prompt-highlight">Homepage</span> — a grid of 8 kid-friendly products (photo, name, price, "Add to Cart" button). Filter by category.<br>
+      2. <span class="prompt-highlight">Product Detail Page</span> — click a product to see a bigger photo, full description, star rating, and "Add to Cart" button.<br>
+      3. <span class="prompt-highlight">Shopping Cart</span> — shows everything added, quantities you can change, a remove button, and total price. Button to go to checkout.<br>
+      4. <span class="prompt-highlight">Checkout Page</span> — a simple form (first name, last name, email, address). No login, no password. Guest checkout only. Shows order summary.<br>
+      5. <span class="prompt-highlight">Order Confirmation</span> — big checkmark, order number, friendly message, button to go back to shopping.<br><br>
+      Rules for this app:<br>
+      - No login or accounts<br>
+      - No database — cart and orders reset when browser closes<br>
+      - 8 products with fun names, short descriptions, prices between $5–$60<br>
+      - Colorful, kid-friendly design using Material UI<br>
+      - Keep it simple — no wishlist, no reviews, no recommendations<br><br>
+      Format the spec with these sections: App Name &amp; Purpose, Who Uses It, The 5 Screens (one subsection each), What It Does NOT Do, Tech Stack.
+    </div>
+
+    <div class="callout success" style="margin-top:12px;">
+      <p><strong>After you get the spec:</strong> Read it out loud together. Ask: "Does this describe what we want to build?" If anything is wrong, fix the spec <em>before</em> writing any code.</p>
+    </div>
+
+    <div class="callout warning">
+      <p><strong>&#x1F4BE; Important — Save it as a file!</strong> Copy the spec Claude gave you. In VS Code, create a new file in your project folder, name it <strong>SPEC.md</strong>, paste the spec in, and save. Every build prompt from here will reference this file by name.</p>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(10)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-11"></div>
+      <button class="nav-btn" onclick="goTo(12)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 12: Reading the Spec ==================== -->
+<div class="slide" id="slide-12">
+  <div class="slide-inner">
+    <span class="slide-number">12 / 19</span>
+    <h2>&#x1F4D6; Read the Spec Together</h2>
+    <p>Here's what a good spec looks like after AI generates it. Let's walk through each section.</p>
+
+    <div class="prompt-box" style="border-left: 4px solid #9b59b6; font-size:0.88em;">
+      <span class="label" style="background:#9b59b6;">SPEC.md — Amazon Jr.</span>
+      <br>
+      <span class="prompt-highlight">## App Name &amp; Purpose</span><br>
+      Amazon Jr. is a simple online store where kids can browse fun products, add them to a cart, and place a pretend order — no account needed.<br><br>
+      <span class="prompt-highlight">## Who Uses It</span><br>
+      Kids aged 10–14 who want to practice online shopping on a safe, simple website.<br><br>
+      <span class="prompt-highlight">## The 5 Screens</span><br>
+      <strong>Homepage:</strong> Shows 8 products as cards in a 3-column grid. Each card has a photo, name, price, category tag, and "Add to Cart" button. Filter buttons at the top let you show only Toys, Books, Games, Art, or Sports.<br><br>
+      <strong>Product Detail Page:</strong> When you click a product card, you see a full-page view with a larger photo, full description, star rating, stock count, and a big "Add to Cart" button. A "Back to Shop" link returns you to the homepage.<br><br>
+      <strong>Shopping Cart:</strong> A list of everything in the cart. Each row shows photo, name, price, + / - quantity buttons, subtotal, and a remove button. A summary box shows subtotal, shipping (free over $35), and total. "Proceed to Checkout" button at the bottom.<br><br>
+      <strong>Checkout Page:</strong> A simple form with 5 fields: First Name, Last Name, Email, Street Address, City &amp; Zip. Order summary on the right. "Place Order" button submits.<br><br>
+      <strong>Confirmation Page:</strong> Big green checkmark. "Order Placed!" heading. Your order number (like AJR-48291). "Your stuff is on the way! &#x1F4E6;" Shop More button.<br><br>
+      <span class="prompt-highlight">## What It Does NOT Do</span><br>
+      No user accounts, no payment processing, no real orders, no database, no product reviews, no search bar.<br><br>
+      <span class="prompt-highlight">## Tech Stack</span><br>
+      Next.js 14, TypeScript, Material UI v5, React Context for cart (in-memory only).
+    </div>
+
+    <div class="callout warning" style="margin-top:12px;">
+      <p><strong>&#x1F914; Class Discussion:</strong> Does this match what we described? What would you change? What did AI add that you didn't ask for? What did it miss?</p>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(11)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-12"></div>
+      <button class="nav-btn" onclick="goTo(13)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 13: Build Prompt 1 - Setup ==================== -->
+<div class="slide" id="slide-13">
+  <div class="slide-inner">
+    <span class="slide-number">13 / 19</span>
+    <span class="time-badge">&#x1F528; Build Prompt 1 of 5</span>
+    <div class="prompt-header">
+      <span class="prompt-badge">1</span>
+      <h3>Project Setup — Get the App Running on Your Computer</h3>
+    </div>
+    <p>Before we build anything, we need the right tools installed. Let AI figure out exactly what you need and walk you through it.</p>
+
+    <div class="prompt-box build-prompt" style="margin-top:16px;">
+      <span class="label">&#x1F916; Send to Claude or ChatGPT</span>
+      I am a 7th grade student and I want to build my first website. I have never coded before and I don't know what npm or Node.js are.<br><br>
+      My app spec is saved in a file called <span class="prompt-highlight">SPEC.md</span> in my project folder. Please read it.<br><br>
+      Please help me:<br>
+      1. Tell me what free tools I need to download on my Mac / Windows computer to build this app. Explain what each tool does in one simple sentence — like I'm 12 years old.<br>
+      2. Give me a link to download each tool and the exact version to pick.<br>
+      3. After I install the tools, give me step-by-step instructions to create my project and see it running in my browser. Show me exactly what to type and where to type it.<br>
+      4. Tell me what I should see on my screen when everything is working.<br><br>
+      Use the simplest possible language. No jargon. If you have to use a technical word, explain it right away.
+    </div>
+
+    <div class="callout key" style="margin-top:12px;">
+      <p><strong>&#x1F4A1; What Claude will tell you to install:</strong></p>
+      <div class="grid-3" style="margin-top:12px; gap:10px;">
+        <div style="background:#f8f9fa; border-radius:10px; padding:12px; text-align:center;">
+          <div style="font-size:2em;">&#x1F3CE;&#xFE0F;</div>
+          <p style="font-weight:700; color:var(--good-color); margin:4px 0;">Node.js</p>
+          <p style="font-size:0.85em;">The engine that makes web apps run on your computer</p>
+        </div>
+        <div style="background:#f8f9fa; border-radius:10px; padding:12px; text-align:center;">
+          <div style="font-size:2em;">&#x1F4BB;</div>
+          <p style="font-weight:700; color:var(--user-color); margin:4px 0;">VS Code</p>
+          <p style="font-size:0.85em;">A free code editor — like Google Docs, but for code</p>
+        </div>
+        <div style="background:#f8f9fa; border-radius:10px; padding:12px; text-align:center;">
+          <div style="font-size:2em;">&#x1F5A5;&#xFE0F;</div>
+          <p style="font-weight:700; color:var(--primary); margin:4px 0;">Terminal</p>
+          <p style="font-size:0.85em;">Already on your computer — a text window where you run commands</p>
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" onclick="toggleInfo('setup-tip')">&#x1F914; Something went wrong?</button>
+    <div class="hidden-content" id="setup-tip">
+      <p>Copy the exact error message you see (the red text) and paste it into Claude. Say: <em>"I got this error while trying to set up my project. I'm on a Mac/Windows. Can you fix it step by step?"</em></p>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(12)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-13"></div>
+      <button class="nav-btn" onclick="goTo(14)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 14: Build Prompt 2 - Homepage ==================== -->
+<div class="slide" id="slide-14">
+  <div class="slide-inner">
+    <span class="slide-number">14 / 19</span>
+    <span class="time-badge">&#x1F528; Build Prompt 2 of 5</span>
+    <div class="prompt-header">
+      <span class="prompt-badge">2</span>
+      <h3>Homepage — The Storefront</h3>
+    </div>
+    <p>Now describe the homepage in plain English. Paste the spec and let AI handle all the code decisions.</p>
+
+    <div class="prompt-box build-prompt">
+      <span class="label">&#x1F916; Send to Claude or ChatGPT</span>
+      I'm building an app called Amazon Jr. My spec is saved in a file called <span class="prompt-highlight">SPEC.md</span> in my project folder. Please read it.<br><br>
+      Build the <span class="prompt-highlight">Homepage</span> screen described in the spec.<br><br>
+      Here is what I want it to look like and do:<br>
+      - An orange navigation bar at the top with "Amazon Jr. &#x1F6CD;&#xFE0F;" on the left and a shopping cart icon on the right that shows how many items are in the cart<br>
+      - A welcome banner below the nav that says "Welcome to Amazon Jr. — Shop awesome stuff!"<br>
+      - A row of filter buttons to show products by category<br>
+      - A grid of product cards — 3 cards per row on a big screen. Each card shows a photo, the product name, the price, a star rating, and an "Add to Cart" button<br>
+      - Clicking a product card takes you to a detailed page for that product<br>
+      - The cart should remember what was added and not reset when you switch pages<br><br>
+      For product photos, use free images from picsum.photos. For example: https://picsum.photos/seed/lego/400/300 — you can change the word after "seed/" to get a different photo for each product.<br><br>
+      Make 8 fun kid-friendly products with names, descriptions, and prices between $5 and $60. Add comments to the code explaining what each part does.
+    </div>
+
+    <div class="callout success" style="margin-top:12px;">
+      <p><strong>&#x2705; After it works:</strong> Open your browser at localhost:3000. You should see the orange navbar and a grid of product cards. Click "Add to Cart" on a product — the number on the cart icon should go up!</p>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(13)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-14"></div>
+      <button class="nav-btn" onclick="goTo(15)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 15: Build Prompt 3 - Product Detail ==================== -->
+<div class="slide" id="slide-15">
+  <div class="slide-inner">
+    <span class="slide-number">15 / 19</span>
+    <span class="time-badge">&#x1F528; Build Prompt 3 of 5</span>
+    <div class="prompt-header">
+      <span class="prompt-badge">3</span>
+      <h3>Product Detail Page — The Full View</h3>
+    </div>
+    <p>When a customer clicks on a product card, they land here. Describe the experience — let AI figure out the code.</p>
+
+    <div class="prompt-box build-prompt">
+      <span class="label">&#x1F916; Send to Claude or ChatGPT</span>
+      I'm building Amazon Jr. My spec is in the file <span class="prompt-highlight">SPEC.md</span> in my project folder. Please read it.<br><br>
+      Build the <span class="prompt-highlight">Product Detail Page</span> described in the spec.<br><br>
+      Here is what I want it to look like and do:<br>
+      - When someone clicks on a product card on the homepage, they should see a full page just for that product<br>
+      - Show a large photo of the product on the left side<br>
+      - On the right side: the product name in big text, a category label, the star rating, the price in big bold green text, how many are left in stock (like "Only 8 left!"), the full description, and a big "Add to Cart &#x1F6D2;" button<br>
+      - At the very top, show a "← Back to Shop" button that takes them back to the homepage<br>
+      - If someone somehow lands on a page for a product that doesn't exist, show a friendly error message and a button to go home<br>
+      - Use the same orange and white colors as the rest of the app<br>
+      - Make it colorful and fun<br><br>
+      Make sure the cart still remembers everything from the homepage when the customer adds more items here.
+    </div>
+
+    <div class="callout success" style="margin-top:12px;">
+      <p><strong>&#x2705; After it works:</strong> Go to the homepage, click on any product card (not the "Add to Cart" button — the card itself). You should land on a new page showing that product's full details.</p>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(14)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-15"></div>
+      <button class="nav-btn" onclick="goTo(16)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 16: Build Prompt 4 - Cart ==================== -->
+<div class="slide" id="slide-16">
+  <div class="slide-inner">
+    <span class="slide-number">16 / 19</span>
+    <span class="time-badge">&#x1F528; Build Prompt 4 of 5</span>
+    <div class="prompt-header">
+      <span class="prompt-badge">4</span>
+      <h3>Shopping Cart Page</h3>
+    </div>
+    <p>Describe the cart experience the way you'd explain it to a friend. No tech talk needed.</p>
+
+    <div class="prompt-box build-prompt">
+      <span class="label">&#x1F916; Send to Claude or ChatGPT</span>
+      I'm building Amazon Jr. My spec is in the file <span class="prompt-highlight">SPEC.md</span> in my project folder. Please read it.<br><br>
+      Build the <span class="prompt-highlight">Shopping Cart</span> screen described in the spec.<br><br>
+      Here is what I want it to look like and do:<br>
+      - Show a list of everything the customer added to their cart<br>
+      - For each item in the cart, show: a small photo, the product name, the price, buttons to increase or decrease how many they want, and a button to remove it completely<br>
+      - On the right side, show an order summary with the total price. If the total is over $35, shipping is free — otherwise it's $4.99<br>
+      - A big green "Proceed to Checkout" button at the bottom<br>
+      - If the cart is empty, show a fun message like "Your cart is empty! &#x1F6D2; Go find something awesome!" with a button back to the homepage<br>
+      - Keep the language friendly and fun — this is a store for kids<br><br>
+      The cart should already have the items in it from the homepage and product pages. Don't reset it when the customer navigates to this page.
+    </div>
+
+    <div class="callout info" style="margin-top:12px;">
+      <p><strong>&#x1F4DD; Why no database?</strong> The cart is like a sticky note — it lives in the browser's memory while the app is open. When you close the browser, it's gone. That's totally fine for our app — and it means we don't need to learn databases today!</p>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(15)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-16"></div>
+      <button class="nav-btn" onclick="goTo(17)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 17: Build Prompt 5 - Checkout ==================== -->
+<div class="slide" id="slide-17">
+  <div class="slide-inner">
+    <span class="slide-number">17 / 19</span>
+    <span class="time-badge">&#x1F528; Build Prompt 5 of 5</span>
+    <div class="prompt-header">
+      <span class="prompt-badge">5</span>
+      <h3>Checkout + Order Confirmation</h3>
+    </div>
+    <p>The final two screens — the form and the celebration. Describe the whole experience and let AI do the rest.</p>
+
+    <div class="prompt-box build-prompt">
+      <span class="label">&#x1F916; Send to Claude or ChatGPT</span>
+      I'm building Amazon Jr. My spec is in the file <span class="prompt-highlight">SPEC.md</span> in my project folder. Please read it.<br><br>
+      Build the <span class="prompt-highlight">Checkout</span> and <span class="prompt-highlight">Order Confirmation</span> screens described in the spec.<br><br>
+      <strong style="color:#43E97B;">Checkout screen:</strong><br>
+      - No login or account needed — anyone can check out as a guest<br>
+      - Show a simple form asking for: first name, last name, email address, and delivery address (street, city, zip code). All fields are required.<br>
+      - Next to the form, show a summary of what they're ordering — each item, the total price, and the shipping cost<br>
+      - Show a progress bar at the top so the customer can see they're on step 2 of 3: "Cart → Your Info → Confirmed"<br>
+      - Fun encouraging message above the form: "Almost there! &#x1F929; Your stuff is almost ordered!"<br>
+      - A "Place Order &#x1F4E6;" button at the bottom. When clicked, it should check that all fields are filled in, create a random order number (like AJR-48291), clear the cart, and take the customer to the confirmation screen<br>
+      - Don't use a database — just keep the order in memory<br><br>
+      <strong style="color:#43E97B;">Order Confirmation screen:</strong><br>
+      - Make it feel like a celebration! &#x1F389;<br>
+      - Show a big green checkmark at the top<br>
+      - Heading: "Order Placed!"<br>
+      - Show their order number<br>
+      - Message: "Your awesome stuff is on its way! Expect it in 3–5 days &#x1F4E6;"<br>
+      - A "Shop More &#x1F6CD;&#xFE0F;" button that goes back to the homepage<br><br>
+      Make both screens colorful and fun. Add comments explaining what each part does.
+    </div>
+
+    <div class="callout success" style="margin-top:12px;">
+      <p><strong>&#x2705; After it works:</strong> Add products to the cart → go to cart → click "Proceed to Checkout" → fill in the form → click "Place Order" → you should see the big green checkmark and your order number!</p>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(16)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-17"></div>
+      <button class="nav-btn" onclick="goTo(18)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 18: Debugging with AI ==================== -->
+<div class="slide" id="slide-18">
+  <div class="slide-inner">
+    <span class="slide-number">18 / 19</span>
+    <h2>&#x1F41B; Debugging Is Part of the Vibe</h2>
+    <p>Things will break. That's normal. That's how every developer works. Here's your debugging toolkit:</p>
+
+    <div class="step" style="margin-top:20px;">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>Read the Error Message First</h4>
+        <p>Don't panic! Look for the red text in your Terminal window. It usually tells you exactly which file and which line number has the problem.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>Paste It Into Claude — With the Spec</h4>
+        <p>Copy the error text + the broken file. Also paste the spec so Claude understands what you're building. Say: <em>"Here's my spec, here's the error, here's the file — fix it and explain what went wrong."</em></p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>Ask "Why Did This Happen?"</h4>
+        <p>Don't just copy the fix — ask Claude to explain the bug in plain English. You'll never forget it.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h4>Save → Terminal → Refresh</h4>
+        <p>After pasting fixed code into VS Code: save the file (Ctrl+S / Cmd+S), check the Terminal (Next.js auto-reloads), then refresh your browser.</p>
+      </div>
+    </div>
+
+    <div class="callout vibe" style="margin-top:16px;">
+      <p><strong>&#x1F9BE; The Vibe Coder Mindset:</strong> "I don't need to memorize how to fix every bug. I need to know how to describe it clearly to AI — and how to understand the answer." That's the real skill.</p>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(17)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-18"></div>
+      <button class="nav-btn" onclick="goTo(19)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 19: Wrap-Up ==================== -->
+<div class="slide" id="slide-19">
+  <div class="slide-inner">
+    <span class="slide-number">19 / 19</span>
+    <div class="big-icon">&#x1F389;</div>
+    <h2>You Just Built a Web App!</h2>
+    <p style="text-align:center; font-size:1.2em; color:#555; margin-bottom:24px;">Let's recap what you did today — and where you're headed.</p>
+
+    <div class="grid-3">
+      <div class="card" style="border-top: 4px solid #9b59b6;">
+        <div class="card-icon">&#x1F4CB;</div>
+        <h3>You Wrote a Spec First</h3>
+        <p>You described the whole app in plain English before writing a single line of code. That's how real teams work.</p>
+      </div>
+      <div class="card" style="border-top: 4px solid var(--primary);">
+        <div class="card-icon">&#x1F4AC;</div>
+        <h3>You Prompted Like a Pro</h3>
+        <p>Every build prompt referenced the spec. AI always knew exactly what you were building. No confusion.</p>
+      </div>
+      <div class="card" style="border-top: 4px solid var(--accent);">
+        <div class="card-icon">&#x1F9E0;</div>
+        <h3>You Learned to Iterate</h3>
+        <p>Spec → Build → Test → Fix → Improve. That's the loop every developer uses — with or without AI.</p>
+      </div>
+    </div>
+
+    <div class="callout mission" style="margin-top:20px;">
+      <p><strong>&#x1F3AF; Homework Challenge:</strong></p>
+      <p style="margin-top:8px;">Pick ONE thing to add to Amazon Jr. on your own. Write a spec for just that feature — then prompt AI to build it.</p>
+      <ul style="margin-top:8px; padding-left:0;">
+        <li style="padding-left:0; padding:4px 0;">&#x2B50; Add a wishlist button to each product</li>
+        <li style="padding-left:0; padding:4px 0;">&#x1F50D; Add a search bar to filter products by name</li>
+        <li style="padding-left:0; padding:4px 0;">&#x1F4AC; Change the products to something YOU would actually sell</li>
+        <li style="padding-left:0; padding:4px 0;">&#x1F3A8; Change the color theme to something that's your own style</li>
+      </ul>
+      <p style="margin-top:8px;"><strong>Next week:</strong> Capstone project — pick your own idea, write your own spec, and build it from scratch!</p>
+    </div>
+
+    <div class="callout key">
+      <p><strong>&#x1F4DD; Capstone Ideas:</strong> A quiz game, an interactive story, a personal homepage, a scoreboard for your friend group, a chatbot about your favorite show. Start thinking — and start with a spec!</p>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(18)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-19"></div>
+      <button class="nav-btn" disabled>Done! &#x1F389;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== JavaScript ==================== -->
+<script>
+  const TOTAL = 19;
+
+  function goTo(n) {
+    document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+    document.getElementById('slide-' + n).classList.add('active');
+    buildDots(n);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function buildDots(current) {
+    for (let i = 1; i <= TOTAL; i++) {
+      const container = document.getElementById('dots-' + i);
+      if (!container) continue;
+      container.innerHTML = '';
+      for (let d = 1; d <= TOTAL; d++) {
+        const dot = document.createElement('div');
+        dot.className = 'nav-dot' + (d === current ? ' active' : '');
+        dot.onclick = (function(target) { return function() { goTo(target); }; })(d);
+        container.appendChild(dot);
+      }
+    }
+  }
+
+  function toggleInfo(id) {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle('show');
+  }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', function(e) {
+    const current = parseInt(document.querySelector('.slide.active').id.replace('slide-', ''));
+    if ((e.key === 'ArrowRight' || e.key === ' ') && current < TOTAL) goTo(current + 1);
+    if (e.key === 'ArrowLeft' && current > 1) goTo(current - 1);
+  });
+
+  // Init
+  buildDots(1);
+</script>
+
+</body>
+</html>

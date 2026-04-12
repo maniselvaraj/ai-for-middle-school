@@ -102,6 +102,61 @@
 
 *(Removed old slides 8 (3 Steps of ML), 9 (Study Analogy), 10 (What ML Is Really Doing). Created new slide 8 "How Does ML Learn?" with a thermostat analogy and a Guess→Check→Adjust→Repeat flow. Renumbered old slide 11→9, 12→10, 13→11, 14→12. Added a 3-slide Appendix section (A1: 3 Steps of ML, A2: Study Analogy, A3: What ML Is Really Doing) with its own navigation, dot indicators, and a `goToAppendix()` JS function. Updated TOTAL to 12. Added a "Bonus" button on slide 12 to enter the appendix.)*
 
+## Prompt 17: Week 5 Slides — Vibe Coding + Amazon Jr. Build
+
+> You are a gen ai expert teaching gen ai to 7th graders. So far the students were introduced over 4 weeks on below topics:
+> 1. how computer works
+> 2. how internet works
+> 3. what is ml vs ai vs gen ai
+> 4. what is llm and prompting
+>
+> All content are in folder week1 to week4. Generate a similar set of slides in week5 folder using below agenda:
+> 1. revisit the structure of a good prompt for 5 mins and why system prompt is important.
+> 2. show examples of good and bad prompt so students can practice in class for 15 mins
+> 3. use the agenda for week 7 from genai_middle_school_syllabus.md for rest of the 90 mins introducing them to vibe coding.
+> 4. generate a set of prompts to build a simple amazon.com replica. the specifications for the replica are:
+> 4.1 create a full stack app in next.js and create folder structures differentiating frontend and backend
+> 4.2 use material ui for the look and feel
+> 4.3 download 5 to 10 images from website as images for products
+> 4.4. create amazon.com like ecommerce website with random generated price
+> 4.5 create a shopping cart and check out experience fit for kids. use guest checkout only.
+> 4.6. do not use a database for this session. keep everything in memory.
+> The goal is not to create a full fledged website. so keep things simple.
+
+*(Generated `week5/vibe_coding.html` — a 17-slide interactive HTML slideshow covering: title + session agenda (90 min), 4-lever prompt recap (Role/Context/Task/Format cards), system prompt explanation with before/after comparison demo, good vs. bad prompt examples (3 pairs: story, code fix, explanation), per-student practice round (1 bad prompt each to rewrite and battle), what is vibe coding (Karpathy definition + Describe→Build→Test→Improve flow), tools overview (Claude, Replit, bolt.new), Amazon Jr. mission briefing (6 features), app architecture with folder structure diagram (src/app = frontend, src/app/api = backend, src/context = cart, src/data = products), and 5 guided build prompts: (1) project setup + folder tree, (2) products data array with picsum.photos images + TypeScript types, (3) homepage/Navbar/ProductCard with orange Amazon-style nav and category filters, (4) CartContext + cart page with in-memory state + order summary, (5) guest checkout form + POST /api/orders + confirmation page. Also includes a bonus prompt for the products API routes + product detail page, an AI debugging workflow slide (4-step process), and a wrap-up with 4 homework challenge options and capstone preview. Session uses Next.js 14 App Router + TypeScript + Material UI v5, everything in-memory, no database.)*
+
+---
+
+## Session: Week 5 Revisions (2026-04-11)
+
+### Prompt 18: Simplify Week 5 for Local Dev + Spec-Driven Approach
+
+> The students are in 7th grade and below aspects might overwhelm them:
+> 1. usage of replit might confuse them with local development. Update all work to use local development on Mac and Windows.
+> 2. on week 5 slide 9, introducing rest api like GET /api/products might overwhelm the kids.
+> 3. instead of pure vibe coding, take a spec driven approach and explain the app in terms of capabilities like homepage, product detail page, shopping cart etc and generate appropriate prompts to create a spec file for the app.
+> 4. then create subsequent prompts to execute the spec and create the app. so all content from slide 10 and later have to be greatly revamped.
+
+*(Updated `week5/vibe_coding.html` — now 19 slides (was 17). Slide 7: replaced Replit/bolt.new with local dev toolkit (VS Code + Node.js + Terminal), added Mac/Windows terminal instructions (Cmd+Space vs Win+R). Slide 8: slide number updated. Slide 9: replaced REST API language (GET /api/products etc.) with "The 5 Screens of Amazon Jr." — each screen described purely as what a user sees and does (Homepage, Product Page, Cart, Checkout, Confirmation). Slides 10–19 completely replaced with spec-driven approach: slide 10 explains what a spec is and why to write one first (with/without spec comparison cards), slide 11 is the spec generation prompt (plain English, no code, 5 sections), slide 12 walks through an example generated spec, slides 13–17 are 5 build prompts each referencing the spec by name, slide 18 is debugging workflow updated to reference Terminal instead of Replit console, slide 19 is wrap-up updated to emphasize spec-first habit in homework.)*
+
+### Prompt 19: Remove Technical Jargon from Build Prompts
+
+> The prompts are very technical with references to typescript etc. Kids at 7th grade will not learn much from such details. Act on the following feedback:
+> 1. the prompt on project set up on slide 13 should include all dependencies like npm and node etc. the 7th graders do not know npm or node. so generate instructions that they would understand.
+> 2. the prompt on slide 14 is very technical. use a prompt that will build on top of the spec.md file. do not use any references to typescript files or anything code related.
+> 3. do not use any "id" concept. these are 7th grade kids. instead use product name.
+> 4. dont have prompts like "Create the file src/app/products/[id]/page.tsx." on slide 15. let claude code figure it out. same comment applies to slides 16, 17
+
+*(Rewrote slides 13–17. Slide 13: setup prompt now asks Claude to explain what each tool is in plain English and provide download links — no npm/Node jargon in the prompt itself; added 3 plain-English explanation cards for Node.js, VS Code, and Terminal. Slide 14: removed all file paths (src/data/products.ts, src/components/, src/context/CartContext.tsx, etc.), TypeScript types, and CartContext references; prompt now describes the homepage experience in plain English (orange navbar, welcome banner, filter buttons, product grid) and lets AI decide the implementation. Slide 15: removed src/app/products/[id]/page.tsx and the entire "id" concept; prompt says "when someone clicks on a product card, they should see a full page just for that product." Slide 16: removed CartContext/Material UI component references and file paths; prompt reads like describing a store to a friend. Slide 17: removed all file path instructions and in-memory array details; split into two plain-English sections (Checkout screen / Confirmation screen) with emoji separators. Added "After it works" success callouts on slides 14, 15, 17.)*
+
+### Prompt 20: Reference SPEC.md by File Path Instead of Pasting Content
+
+> on slide 13, and later, instead of "[paste your SPEC.md content here]", can the prompt point to the file location instead?
+
+*(Replaced all 5 instances of `[paste your SPEC.md content here]` placeholder across slides 13–17 with direct file references: "My spec is saved in a file called SPEC.md in my project folder. Please read it." The filename is highlighted in green in the prompt box. Added a warning callout on slide 11 (spec generation slide) telling kids to copy Claude's output into a new VS Code file named SPEC.md and save it in their project folder before proceeding to the build prompts.)*
+
+---
+
 ### Prompt 16: Improve Slide 8 with Basketball Analogy
 
 > Slide 8 is still not apt for 7th graders. [Feedback: thermostat analogy feels mechanical, "iteration" adds jargon. Suggestion: use basketball shooting analogy, replace "iteration" with "practice", update flow labels to be more human.]
