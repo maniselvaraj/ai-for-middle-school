@@ -475,10 +475,10 @@
 <!-- ==================== SLIDE 1: Title ==================== -->
 <div class="slide active" id="slide-1">
   <div class="slide-inner">
-    <span class="slide-number">1 / 19</span>
+    <span class="slide-number">1 / 16</span>
     <div class="big-icon">&#x1F6CD;&#xFE0F;</div>
-    <h1>Vibe Coding</h1>
-    <p class="subtitle">Describe it — and AI builds it for you</p>
+    <h1>Vibe Coding with Claude Code</h1>
+    <p class="subtitle">You describe it. Claude Code writes the files. You watch it happen.</p>
     <p style="font-size:1.1em; text-align:center; color:#666; margin-top:8px;">
       Week 5 &mdash; 90 Minutes
     </p>
@@ -488,15 +488,15 @@
         <tr><th>Time</th><th>What We're Doing</th></tr>
       </thead>
       <tbody>
-        <tr><td>0:00 – 0:05</td><td>&#x1F504; Quick Recap: Structure of a Good Prompt + System Prompts</td></tr>
-        <tr><td>0:05 – 0:20</td><td>&#x2694;&#xFE0F; Good vs. Bad Prompt Battle — Practice Round</td></tr>
-        <tr><td>0:20 – 0:30</td><td>&#x1F9E0; What is Vibe Coding? Meet your tools.</td></tr>
-        <tr><td>0:30 – 0:90</td><td>&#x1F6E0;&#xFE0F; Build Amazon Jr. &mdash; Step by step with AI</td></tr>
+        <tr><td>0:00 &ndash; 0:05</td><td>&#x1F504; Quick Recap: The 4 Levers of a Great Prompt</td></tr>
+        <tr><td>0:05 &ndash; 0:20</td><td>&#x2694;&#xFE0F; Good vs. Bad Prompt Battle &mdash; Practice Round</td></tr>
+        <tr><td>0:20 &ndash; 0:30</td><td>&#x1F9E0; What is Vibe Coding? Meet Claude Code.</td></tr>
+        <tr><td>0:30 &ndash; 1:30</td><td>&#x1F6E0;&#xFE0F; Build Amazon Jr. &mdash; One screen at a time, together</td></tr>
       </tbody>
     </table>
 
     <div class="callout vibe" style="margin-top:20px;">
-      <p><strong>Today's Big Idea:</strong> You are the architect. AI is the builder. Your job is to describe exactly what you want — clearly, completely, and creatively.</p>
+      <p><strong>Today's Big Idea:</strong> You are the architect. Claude Code is your teammate. You describe &mdash; it builds. No copying code. No pasting. Just talk to it.</p>
     </div>
 
     <div class="copyright">Bodhi AI Classes LLC</div>
@@ -511,8 +511,8 @@
 <!-- ==================== SLIDE 2: Prompt Recap ==================== -->
 <div class="slide" id="slide-2">
   <div class="slide-inner">
-    <span class="slide-number">2 / 19</span>
-    <span class="time-badge">&#x23F1; 0:00 – 0:05</span>
+    <span class="slide-number">2 / 16</span>
+    <span class="time-badge">&#x23F1; 0:00 &ndash; 0:05</span>
     <h2>&#x1F504; Quick Recap: The 4 Levers of a Great Prompt</h2>
     <p>Before we build anything, let's refresh the rules. A great prompt has 4 parts:</p>
 
@@ -552,68 +552,13 @@
   </div>
 </div>
 
-<!-- ==================== SLIDE 3: System Prompt ==================== -->
+<!-- ==================== SLIDE 3: Good vs Bad Prompts ==================== -->
 <div class="slide" id="slide-3">
   <div class="slide-inner">
-    <span class="slide-number">3 / 19</span>
-    <span class="time-badge">&#x23F1; 0:00 – 0:05</span>
-    <h2>&#x1F9E0; Why System Prompts Are a Superpower</h2>
-    <p>A <strong>system prompt</strong> is a set of invisible instructions you give the AI <em>before</em> the conversation starts. It shapes how the AI behaves for your entire session.</p>
-
-    <div class="grid-2" style="margin-top:20px;">
-      <div>
-        <p style="font-weight:700; margin-bottom:8px; color:#888;">Without a system prompt:</p>
-        <div class="prompt-box user-prompt">
-          <span class="label">You say</span>
-          Help me build a website.
-        </div>
-        <div class="prompt-box ai-response" style="margin-top:8px;">
-          <span class="label">AI replies</span>
-          Sure! What kind of website? Do you want HTML/CSS? React? Django? WordPress? I can...
-          <span class="prompt-comment"> [3 paragraphs of generic questions]</span>
-        </div>
-      </div>
-      <div>
-        <p style="font-weight:700; margin-bottom:8px; color:#888;">With a system prompt:</p>
-        <div class="prompt-box system-prompt">
-          <span class="label">System Prompt</span>
-          You are a coding assistant for 7th graders building a Next.js app. Always write clean code with comments. Use Material UI. Keep responses beginner-friendly.
-        </div>
-        <div class="prompt-box ai-response" style="margin-top:8px;">
-          <span class="label">Now you just say</span>
-          Help me build a website.
-        </div>
-      </div>
-    </div>
-
-    <div class="callout success" style="margin-top:16px;">
-      <p><strong>Think of the system prompt as hiring someone.</strong> The system prompt is the job description. Every response they give you follows those rules — no need to repeat yourself every time!</p>
-    </div>
-
-    <button class="reveal-btn" onclick="toggleInfo('sys-example')">&#x1F4A1; See Our System Prompt for Today</button>
-    <div class="hidden-content" id="sys-example">
-      <div class="prompt-box system-prompt">
-        <span class="label">System Prompt We'll Use Today</span>
-        You are an expert Next.js developer helping 7th grade students build their first web app. Write all code using Next.js 14 (App Router), TypeScript, and Material UI v5. Keep folder structures clean, separate frontend and backend clearly, add helpful comments to every file, and explain what each piece of code does in simple language. Never use a database — store everything in memory arrays.
-      </div>
-    </div>
-
-    <div class="copyright">Bodhi AI Classes LLC</div>
-    <div class="nav">
-      <button class="nav-btn" onclick="goTo(2)">&#8592; Back</button>
-      <div class="nav-dots" id="dots-3"></div>
-      <button class="nav-btn" onclick="goTo(4)">Next &#8594;</button>
-    </div>
-  </div>
-</div>
-
-<!-- ==================== SLIDE 4: Good vs Bad Prompts ==================== -->
-<div class="slide" id="slide-4">
-  <div class="slide-inner">
-    <span class="slide-number">4 / 19</span>
-    <span class="time-badge">&#x23F1; 0:05 – 0:20</span>
+    <span class="slide-number">3 / 16</span>
+    <span class="time-badge">&#x23F1; 0:05 &ndash; 0:20</span>
     <h2>&#x2694;&#xFE0F; Good vs. Bad: Prompt Battle!</h2>
-    <p>Same goal. Very different results. Spot what's missing in the bad prompt — then see how the good one fixes it.</p>
+    <p>Same goal. Very different results. Spot what's missing in the bad prompt &mdash; then see how the good one fixes it.</p>
 
     <p style="font-weight:700; color:var(--primary); margin:20px 0 8px;">Example 1: Writing a story</p>
     <div class="prompt-compare">
@@ -638,8 +583,8 @@
       </div>
       <div class="prompt-panel good">
         <div class="panel-label">&#x2705; Good Prompt</div>
-        <div class="prompt-text">I'm building a Next.js shopping cart. My addToCart function adds the same item twice when clicked once. Here's the code: [paste code]. Fix the bug and explain why it was happening.</div>
-        <p class="prompt-why"><span class="lever context">Context</span> <span class="lever task">Task</span> <span class="lever format">Format</span> + specific error</p>
+        <div class="prompt-text">My shopping cart adds the same item twice when I click Add to Cart once. Find the bug and fix it. Explain what was wrong.</div>
+        <p class="prompt-why"><span class="lever context">Context</span> <span class="lever task">Task</span> <span class="lever format">Format</span> + specific problem</p>
       </div>
     </div>
 
@@ -649,7 +594,7 @@
         <div class="prompt-panel bad">
           <div class="panel-label">&#x274C; Bad Prompt</div>
           <div class="prompt-text">Explain React.</div>
-          <p class="prompt-why">Way too broad — could get a 5-word answer or a 50-page textbook.</p>
+          <p class="prompt-why">Way too broad &mdash; could get a 5-word answer or a 50-page textbook.</p>
         </div>
         <div class="prompt-panel good">
           <div class="panel-label">&#x2705; Good Prompt</div>
@@ -661,6 +606,45 @@
 
     <div class="copyright">Bodhi AI Classes LLC</div>
     <div class="nav">
+      <button class="nav-btn" onclick="goTo(2)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-3"></div>
+      <button class="nav-btn" onclick="goTo(4)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 4: Practice Time ==================== -->
+<div class="slide" id="slide-4">
+  <div class="slide-inner">
+    <span class="slide-number">4 / 16</span>
+    <span class="time-badge">&#x23F1; 0:10 &ndash; 0:20</span>
+    <h2>&#x1F3AE; Practice Round &mdash; Your Turn!</h2>
+    <p>Each of you gets one bad prompt. Your challenge: <strong>rewrite it using all 4 levers</strong>. Then we'll submit yours to Claude and compare results!</p>
+
+    <div class="practice-box">
+      <h3>&#x1F4CB; Student 1 &mdash; Rewrite This Prompt:</h3>
+      <div class="prompt-text" style="background:#1a1a2e; color:#e0e0e0; border-radius:8px; padding:12px; margin:8px 0;">Make me a quiz.</div>
+      <p>&#x1F4A1; Hint: Who is the quiz for? What topic? How many questions? What format?</p>
+    </div>
+
+    <div class="practice-box">
+      <h3>&#x1F4CB; Student 2 &mdash; Rewrite This Prompt:</h3>
+      <div class="prompt-text" style="background:#1a1a2e; color:#e0e0e0; border-radius:8px; padding:12px; margin:8px 0;">Help me with my homework.</div>
+      <p>&#x1F4A1; Hint: What subject? What specifically do you need? What level of detail?</p>
+    </div>
+
+    <div class="practice-box">
+      <h3>&#x1F4CB; Student 3 &mdash; Rewrite This Prompt:</h3>
+      <div class="prompt-text" style="background:#1a1a2e; color:#e0e0e0; border-radius:8px; padding:12px; margin:8px 0;">Draw me something cool.</div>
+      <p>&#x1F4A1; Hint: What style? What subject? What mood? What should be in the scene?</p>
+    </div>
+
+    <div class="callout warning">
+      <p><strong>Prompt Battle Rules:</strong> Read your rewritten prompts out loud. Submit them all. We vote on whose output was best &mdash; and discuss <em>why</em> it won.</p>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
       <button class="nav-btn" onclick="goTo(3)">&#8592; Back</button>
       <div class="nav-dots" id="dots-4"></div>
       <button class="nav-btn" onclick="goTo(5)">Next &#8594;</button>
@@ -668,50 +652,11 @@
   </div>
 </div>
 
-<!-- ==================== SLIDE 5: Practice Time ==================== -->
+<!-- ==================== SLIDE 5: What is Vibe Coding ==================== -->
 <div class="slide" id="slide-5">
   <div class="slide-inner">
-    <span class="slide-number">5 / 19</span>
-    <span class="time-badge">&#x23F1; 0:10 – 0:20</span>
-    <h2>&#x1F3AE; Practice Round — Your Turn!</h2>
-    <p>Each of you gets one bad prompt. Your challenge: <strong>rewrite it using all 4 levers</strong>. Then we'll submit yours to Claude/ChatGPT and compare results!</p>
-
-    <div class="practice-box">
-      <h3>&#x1F4CB; Student 1 — Rewrite This Prompt:</h3>
-      <div class="prompt-text" style="background:#1a1a2e; color:#e0e0e0; border-radius:8px; padding:12px; margin:8px 0;">Make me a quiz.</div>
-      <p>&#x1F4A1; Hint: Who is the quiz for? What topic? How many questions? What format?</p>
-    </div>
-
-    <div class="practice-box">
-      <h3>&#x1F4CB; Student 2 — Rewrite This Prompt:</h3>
-      <div class="prompt-text" style="background:#1a1a2e; color:#e0e0e0; border-radius:8px; padding:12px; margin:8px 0;">Help me with my homework.</div>
-      <p>&#x1F4A1; Hint: What subject? What specifically do you need? What level of detail?</p>
-    </div>
-
-    <div class="practice-box">
-      <h3>&#x1F4CB; Student 3 — Rewrite This Prompt:</h3>
-      <div class="prompt-text" style="background:#1a1a2e; color:#e0e0e0; border-radius:8px; padding:12px; margin:8px 0;">Draw me something cool.</div>
-      <p>&#x1F4A1; Hint: What style? What subject? What mood? What should be in the scene?</p>
-    </div>
-
-    <div class="callout warning">
-      <p><strong>Prompt Battle Rules:</strong> Read your rewritten prompts out loud. Submit them all. We vote on whose output was best — and discuss <em>why</em> it won.</p>
-    </div>
-
-    <div class="copyright">Bodhi AI Classes LLC</div>
-    <div class="nav">
-      <button class="nav-btn" onclick="goTo(4)">&#8592; Back</button>
-      <div class="nav-dots" id="dots-5"></div>
-      <button class="nav-btn" onclick="goTo(6)">Next &#8594;</button>
-    </div>
-  </div>
-</div>
-
-<!-- ==================== SLIDE 6: What is Vibe Coding ==================== -->
-<div class="slide" id="slide-6">
-  <div class="slide-inner">
-    <span class="slide-number">6 / 19</span>
-    <span class="time-badge">&#x23F1; 0:20 – 0:30</span>
+    <span class="slide-number">5 / 16</span>
+    <span class="time-badge">&#x23F1; 0:20 &ndash; 0:30</span>
     <h2>&#x1F9E0; What Is Vibe Coding?</h2>
 
     <div class="callout vibe">
@@ -742,7 +687,69 @@
     </div>
 
     <div class="callout key">
-      <p><strong>What you DO need:</strong> Understanding of frontend/backend (Week 2) + great prompts (Weeks 4–5). That's it. That's your toolkit.</p>
+      <p><strong>What you DO need:</strong> Understanding of frontend/backend (Week 2) + great prompts (Weeks 4&ndash;5). That's it. That's your toolkit.</p>
+    </div>
+
+    <div class="copyright">Bodhi AI Classes LLC</div>
+    <div class="nav">
+      <button class="nav-btn" onclick="goTo(4)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-5"></div>
+      <button class="nav-btn" onclick="goTo(6)">Next &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 6: Meet Claude Code ==================== -->
+<div class="slide" id="slide-6">
+  <div class="slide-inner">
+    <span class="slide-number">6 / 16</span>
+    <span class="time-badge">&#x23F1; 0:20 &ndash; 0:30</span>
+    <h2>&#x1F6E0;&#xFE0F; Meet Your Teammate: Claude Code</h2>
+    <p>Claude Code is already installed on your laptop. It's an AI coding teammate that lives <em>inside your Terminal</em>.</p>
+
+    <div class="callout vibe" style="margin-top:16px;">
+      <p><strong>The big difference:</strong> Claude Code doesn't just <em>tell</em> you what code to write &mdash; it <strong>writes the files for you</strong>, <strong>runs the commands for you</strong>, and <strong>fixes bugs on its own</strong>. You just talk to it.</p>
+    </div>
+
+    <div class="grid-3" style="margin-top:20px;">
+      <div class="card" style="border-top: 4px solid #e74c3c;">
+        <div class="card-icon">&#x1F916;</div>
+        <h3>Claude Code</h3>
+        <p>Your AI teammate. Writes files, runs commands, fixes bugs. You talk to it like a friend.</p>
+        <p style="margin-top:8px; font-size:0.85em; color:#888;">Already installed</p>
+      </div>
+      <div class="card" style="border-top: 4px solid var(--good-color);">
+        <div class="card-icon">&#x1F4BB;</div>
+        <h3>Your Terminal</h3>
+        <p>The black window where you talk to Claude Code. Just type <code>claude</code> to start.</p>
+        <p style="margin-top:8px; font-size:0.85em; color:#888;">Already on your computer</p>
+      </div>
+      <div class="card" style="border-top: 4px solid #3498db;">
+        <div class="card-icon">&#x1F310;</div>
+        <h3>Your Browser</h3>
+        <p>Where your app appears. Usually at <code>localhost:3000</code>. Refresh to see changes.</p>
+        <p style="margin-top:8px; font-size:0.85em; color:#888;">Chrome, Safari, or Edge</p>
+      </div>
+    </div>
+
+    <div class="callout key" style="margin-top:16px;">
+      <p><strong>&#x1F680; How to start Claude Code:</strong></p>
+      <div class="grid-2" style="margin-top:12px; gap:12px;">
+        <div style="background:#1a1a2e; border-radius:10px; padding:14px; color:#e0e0e0; font-family:monospace; font-size:0.9em;">
+          <p style="color:#43E97B; font-weight:700; margin-bottom:6px;">Step 1: Open Terminal</p>
+          Mac: <strong style="color:#FF9900;">Cmd + Space</strong>, type "Terminal"<br>
+          Windows: Search <strong style="color:#FF9900;">"Terminal"</strong> in Start
+        </div>
+        <div style="background:#1a1a2e; border-radius:10px; padding:14px; color:#e0e0e0; font-family:monospace; font-size:0.9em;">
+          <p style="color:#43E97B; font-weight:700; margin-bottom:6px;">Step 2: Start Claude Code</p>
+          Type <strong style="color:#FF9900;">claude</strong> and press Enter.<br>
+          That's it! Now just start talking.
+        </div>
+      </div>
+    </div>
+
+    <div class="callout success" style="margin-top:12px;">
+      <p><strong>No copy-paste. No VS Code switching. No "save the file, then run it."</strong> Claude Code does all of that for you. Your job is to describe, look at the browser, and improve.</p>
     </div>
 
     <div class="copyright">Bodhi AI Classes LLC</div>
@@ -754,55 +761,55 @@
   </div>
 </div>
 
-<!-- ==================== SLIDE 7: Tools ==================== -->
+<!-- ==================== SLIDE 7: Mission Briefing ==================== -->
 <div class="slide" id="slide-7">
   <div class="slide-inner">
-    <span class="slide-number">7 / 19</span>
-    <span class="time-badge">&#x23F1; 0:20 – 0:30</span>
-    <h2>&#x1F6E0;&#xFE0F; Your Vibe Coding Toolkit</h2>
-    <p>Three tools installed on your computer. That's all you need.</p>
+    <span class="slide-number">7 / 16</span>
+    <span class="time-badge">&#x23F1; 0:30 onwards</span>
+    <h2>&#x1F6CD;&#xFE0F; Mission: Build Amazon Jr.</h2>
+    <p>We're building a simplified Amazon shopping app &mdash; 5 screens &mdash; together with Claude Code. Think of each screen as a different room in a store.</p>
 
-    <div class="grid-3" style="margin-top:20px;">
-      <div class="card" style="border-top: 4px solid #e74c3c;">
-        <div class="card-icon">&#x1F916;</div>
-        <h3>Claude / ChatGPT</h3>
-        <p>Your AI coding partner. You describe what to build, it writes the code. Also ask it to explain or fix anything.</p>
-        <p style="margin-top:8px; font-size:0.85em; color:#888;">claude.ai &nbsp;|&nbsp; chatgpt.com</p>
+    <div class="grid-2" style="margin-top:20px; gap:14px;">
+      <div class="step">
+        <div class="step-num">&#x1F3E0;</div>
+        <div class="step-content">
+          <h4>Homepage &mdash; The Storefront</h4>
+          <p>8 products in a grid. Photo, name, price, and an "Add to Cart" button. Filter by category.</p>
+        </div>
       </div>
-      <div class="card" style="border-top: 4px solid #3498db;">
-        <div class="card-icon">&#x1F4BB;</div>
-        <h3>VS Code</h3>
-        <p>A free code editor — where you'll paste AI's code, save files, and see your project folder.</p>
-        <p style="margin-top:8px; font-size:0.85em; color:#888;">code.visualstudio.com</p>
+      <div class="step">
+        <div class="step-num">&#x1F50D;</div>
+        <div class="step-content">
+          <h4>Product Page &mdash; The Detail View</h4>
+          <p>Click a product for a bigger photo, full description, star rating, and "Add to Cart."</p>
+        </div>
       </div>
-      <div class="card" style="border-top: 4px solid var(--good-color);">
-        <div class="card-icon">&#x1F5A5;&#xFE0F;</div>
-        <h3>Node.js</h3>
-        <p>The engine that runs your app on your own computer. Once installed, you never have to touch it again.</p>
-        <p style="margin-top:8px; font-size:0.85em; color:#888;">nodejs.org (LTS version)</p>
+      <div class="step">
+        <div class="step-num">&#x1F6D2;</div>
+        <div class="step-content">
+          <h4>Cart Page &mdash; Your Bag</h4>
+          <p>Everything you added. Change quantities, remove items, see the total.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">&#x1F4DD;</div>
+        <div class="step-content">
+          <h4>Checkout Page &mdash; The Form</h4>
+          <p>Name, email, address. No account needed. Hit "Place Order" to finish.</p>
+        </div>
+      </div>
+      <div class="step" style="grid-column: 1 / -1;">
+        <div class="step-num">&#x1F389;</div>
+        <div class="step-content">
+          <h4>Confirmation Page &mdash; You're Done!</h4>
+          <p>Big green checkmark, your order number, and a "Shop More" button. Cart empties automatically.</p>
+        </div>
       </div>
     </div>
 
-    <div class="callout key" style="margin-top:16px;">
-      <p><strong>&#x1F4BB; How to open the Terminal (the black command window):</strong></p>
-      <div class="grid-2" style="margin-top:12px; gap:12px;">
-        <div style="background:#1a1a2e; border-radius:10px; padding:14px; color:#e0e0e0; font-family:monospace; font-size:0.9em;">
-          <p style="color:#43E97B; font-weight:700; margin-bottom:6px;">&#xF8FF; Mac</p>
-          Press <strong style="color:#FF9900;">Cmd + Space</strong>, type "Terminal", hit Enter
-        </div>
-        <div style="background:#1a1a2e; border-radius:10px; padding:14px; color:#e0e0e0; font-family:monospace; font-size:0.9em;">
-          <p style="color:#43E97B; font-weight:700; margin-bottom:6px;">&#x229E; Windows</p>
-          Press <strong style="color:#FF9900;">Win + R</strong>, type "cmd", hit Enter &mdash; or search "Terminal" in Start
-        </div>
-      </div>
-    </div>
-
-    <div class="step" style="margin-top:12px;">
-      <div class="step-num">&#x1F3AF;</div>
-      <div class="step-content">
-        <h4>Today's workflow</h4>
-        <p>Claude → generates code → paste into VS Code → run in Terminal → open in browser → ask Claude to fix/improve → repeat</p>
-      </div>
+    <div class="callout mission" style="margin-top:12px;">
+      <p>&#x1F4E6; Tech stack: <strong>Next.js 14 + Material UI + in-memory state</strong> &mdash; no database, no logins, just build.</p>
+      <p style="margin-top:8px;">Tags: <span class="tag nextjs">Next.js</span> <span class="tag mui">Material UI</span> <span class="tag react">React</span> <span class="tag memory">In-Memory</span> <span class="tag guest">Guest Checkout</span></p>
     </div>
 
     <div class="copyright">Bodhi AI Classes LLC</div>
@@ -814,66 +821,48 @@
   </div>
 </div>
 
-<!-- ==================== SLIDE 8: Mission Briefing ==================== -->
+<!-- ==================== SLIDE 9: How Claude Code Works ==================== -->
 <div class="slide" id="slide-8">
   <div class="slide-inner">
-    <span class="slide-number">8 / 19</span>
-    <span class="time-badge">&#x23F1; 0:30 onwards</span>
-    <h2>&#x1F6CD;&#xFE0F; Mission: Build Amazon Jr.</h2>
-    <p>We're building a simplified Amazon-style shopping app — together, using AI. Here's what it will have:</p>
+    <span class="slide-number">8 / 16</span>
+    <h2>&#x1F504; How Building with Claude Code Actually Works</h2>
+    <p>Every screen we build will follow the same 4-step loop. You'll do it 5 times today.</p>
 
-    <div class="grid-2" style="margin-top:20px;">
-      <div>
-        <div class="step">
-          <div class="step-num">&#x1F5BC;&#xFE0F;</div>
-          <div class="step-content">
-            <h4>Product Gallery</h4>
-            <p>6–8 fun products with images, names, and random prices.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">&#x1F6D2;</div>
-          <div class="step-content">
-            <h4>Shopping Cart</h4>
-            <p>Add items, see totals, remove items — all without a database.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">&#x1F4B3;</div>
-          <div class="step-content">
-            <h4>Guest Checkout</h4>
-            <p>Kid-friendly: just name and address — no accounts, no passwords.</p>
-          </div>
-        </div>
+    <div class="step" style="margin-top:20px;">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>&#x1F4AC; You describe</h4>
+        <p>Type what you want in plain English into Claude Code. No code. No tech words you don't know. Just what the screen should look like and do.</p>
       </div>
-      <div>
-        <div class="step">
-          <div class="step-num">&#x1F4C1;</div>
-          <div class="step-content">
-            <h4>Clean Folder Structure</h4>
-            <p>Frontend and backend clearly separated — just like real apps.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">&#x1F3A8;</div>
-          <div class="step-content">
-            <h4>Material UI Design</h4>
-            <p>Looks like a real app — buttons, cards, navigation bar.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">&#x1F9E0;</div>
-          <div class="step-content">
-            <h4>Everything In Memory</h4>
-            <p>No database. Data lives in arrays — simple and fast to build.</p>
-          </div>
-        </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>&#x1F916; Claude Code builds</h4>
+        <p>It writes or edits the files, installs any packages it needs, and tells you what it did. You watch it happen &mdash; you don't type any code.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>&#x1F310; You look at your browser</h4>
+        <p>Open <code>localhost:3000</code> and refresh. Does it look right? Does it work? Click around and try it.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h4>&#x1F504; You describe what to change</h4>
+        <p>"Make the buttons bigger." "The cart icon should be orange, not blue." "Add a star rating." Claude Code updates the files. Repeat.</p>
       </div>
     </div>
 
-    <div class="callout mission" style="margin-top:16px;">
-      <p>&#x1F4E6; Tech stack: <strong>Next.js 14 + Material UI + in-memory state</strong></p>
-      <p style="margin-top:8px;">Tags: <span class="tag nextjs">Next.js</span> <span class="tag mui">Material UI</span> <span class="tag react">React</span> <span class="tag memory">In-Memory</span> <span class="tag guest">Guest Checkout</span></p>
+    <div class="callout success" style="margin-top:16px;">
+      <p><strong>&#x1F9E0; Claude Code remembers.</strong> Everything you've said in the same session stays in its memory. You don't need to re-explain what you're building every time &mdash; just keep the conversation going.</p>
+    </div>
+
+    <div class="callout key">
+      <p><strong>&#x1F6A8; One rule:</strong> After Claude Code makes a change, <em>always</em> check your browser before asking for the next change. If you skip testing, bugs pile up and get confusing.</p>
     </div>
 
     <div class="copyright">Bodhi AI Classes LLC</div>
@@ -885,53 +874,42 @@
   </div>
 </div>
 
-<!-- ==================== SLIDE 9: App Capabilities ==================== -->
+<!-- ==================== SLIDE 10: Meet the Tech Stack ==================== -->
 <div class="slide" id="slide-9">
   <div class="slide-inner">
-    <span class="slide-number">9 / 19</span>
-    <h2>&#x1F5A5;&#xFE0F; The 5 Screens of Amazon Jr.</h2>
-    <p>Before we build anything, let's walk through <em>what a user actually sees and does</em> in this app. Think of these as 5 different rooms in a store.</p>
+    <span class="slide-number">9 / 16</span>
+    <h2>&#x1F9F0; Meet the 4 Tools Claude Code Will Use</h2>
+    <p>In the next prompt you'll see 4 tech words. You won't type any of them. Just learn the <em>names</em> and what they do &mdash; so when Claude Code uses them, you know what's happening.</p>
 
-    <div class="grid-2" style="margin-top:20px; gap:14px;">
-      <div class="step">
-        <div class="step-num">&#x1F3E0;</div>
-        <div class="step-content">
-          <h4>Homepage — The Storefront</h4>
-          <p>Shows all 8 products in a grid. Each product has a photo, name, price, and an "Add to Cart" button. You can filter by category.</p>
-        </div>
+    <div class="grid-2" style="margin-top:20px;">
+      <div class="card" style="border-top: 4px solid #000;">
+        <div class="card-icon">&#x1F373;</div>
+        <h3>Next.js 14</h3>
+        <p><strong>The kitchen where modern web apps are cooked.</strong> It handles pages, clicking around, and everything "web-app-y" so you don't have to build that stuff yourself.</p>
       </div>
-      <div class="step">
-        <div class="step-num">&#x1F50D;</div>
-        <div class="step-content">
-          <h4>Product Page — The Detail View</h4>
-          <p>Click any product to see a bigger photo, full description, star rating, and an "Add to Cart" button. Back button to return to the store.</p>
-        </div>
+      <div class="card" style="border-top: 4px solid #3178c6;">
+        <div class="card-icon">&#x270F;&#xFE0F;</div>
+        <h3>TypeScript</h3>
+        <p><strong>JavaScript with spell-check.</strong> It catches your typos and mistakes before your app breaks &mdash; like autocorrect, but for code.</p>
       </div>
-      <div class="step">
-        <div class="step-num">&#x1F6D2;</div>
-        <div class="step-content">
-          <h4>Cart Page — Your Bag</h4>
-          <p>Everything you added. Change quantities, remove items, see the total. Button to go to checkout.</p>
-        </div>
+      <div class="card" style="border-top: 4px solid #27ae60;">
+        <div class="card-icon">&#x1F5FA;&#xFE0F;</div>
+        <h3>App Router</h3>
+        <p><strong>The map inside your app.</strong> It decides: "when someone visits /cart, show the cart page." You just name the pages &mdash; it figures out the rest.</p>
       </div>
-      <div class="step">
-        <div class="step-num">&#x1F4DD;</div>
-        <div class="step-content">
-          <h4>Checkout Page — The Form</h4>
-          <p>A simple form: your name, email, and delivery address. No account needed. Hit "Place Order" to finish.</p>
-        </div>
-      </div>
-      <div class="step" style="grid-column: 1 / -1;">
-        <div class="step-num">&#x1F389;</div>
-        <div class="step-content">
-          <h4>Confirmation Page — You're Done!</h4>
-          <p>Shows a big green checkmark, your order number, and a "Shop More" button. The cart empties automatically.</p>
-        </div>
+      <div class="card" style="border-top: 4px solid #1976d2;">
+        <div class="card-icon">&#x1F9F1;</div>
+        <h3>Material UI v5</h3>
+        <p><strong>A box of ready-made Lego pieces from Google.</strong> Buttons, cards, menus, forms &mdash; already styled and ready to use. No designing from scratch.</p>
       </div>
     </div>
 
-    <div class="callout vibe" style="margin-top:12px;">
-      <p><strong>Notice:</strong> We described the whole app in plain English — no code, no jargon. This is exactly what we'll give to AI to build. Next: we'll turn this into a proper <strong>spec document</strong>.</p>
+    <div class="callout success" style="margin-top:16px;">
+      <p><strong>&#x1F916; The good news:</strong> Claude Code knows all four tools by name. You just say "use Next.js 14, TypeScript, App Router, and Material UI" and it handles every detail &mdash; installing, configuring, wiring them together.</p>
+    </div>
+
+    <div class="callout key">
+      <p><strong>&#x1F3AF; Your job today:</strong> Don't memorize what these do under the hood. Just remember their <em>names</em>. When a friend asks "what did you build with?" you can answer &mdash; that's enough for a 7th grader's first web app.</p>
     </div>
 
     <div class="copyright">Bodhi AI Classes LLC</div>
@@ -943,42 +921,46 @@
   </div>
 </div>
 
-<!-- ==================== SLIDE 10: What Is a Spec? ==================== -->
+<!-- ==================== SLIDE 11: Build Prompt 1 - Setup ==================== -->
 <div class="slide" id="slide-10">
   <div class="slide-inner">
-    <span class="slide-number">10 / 19</span>
-    <h2>&#x1F4CB; What Is a Spec — and Why Write One First?</h2>
-    <p>Before any professional software team writes a single line of code, they write a <strong>spec</strong>.</p>
+    <span class="slide-number">10 / 16</span>
+    <span class="time-badge">&#x1F528; Build Prompt 1 of 5</span>
+    <div class="prompt-header">
+      <span class="prompt-badge">1</span>
+      <h3>Create the Project &mdash; Let Claude Code Set It All Up</h3>
+    </div>
+    <p>Open your Terminal. Make a new folder for your app. Then start Claude Code and send this one prompt.</p>
 
-    <div class="callout vibe" style="margin-top:20px;">
-      <p><strong>A spec</strong> (short for "specification") is a plain-English document that describes <em>what</em> an app does — who uses it, what screens it has, what you can do on each screen, and what it should NOT do.</p>
+    <div class="callout info" style="margin-top:12px;">
+      <p><strong>&#x1F4BB; Before you prompt:</strong></p>
+      <div style="background:#1a1a2e; border-radius:10px; padding:14px; margin-top:8px; color:#e0e0e0; font-family:monospace; font-size:0.9em;">
+        <span class="prompt-comment"># In your Terminal, type these lines one at a time:</span><br>
+        mkdir amazon-jr<br>
+        cd amazon-jr<br>
+        claude
+      </div>
+      <p style="margin-top:8px;">Now you're talking to Claude Code. Paste the prompt below.</p>
     </div>
 
-    <div class="grid-2" style="margin-top:20px;">
-      <div class="card" style="border-top: 4px solid var(--bad-color);">
-        <div class="card-icon">&#x274C;</div>
-        <h3>Without a spec</h3>
-        <p>You start building, AI makes assumptions, features creep in, you lose track of what you wanted, and the app gets messy fast.</p>
-      </div>
-      <div class="card" style="border-top: 4px solid var(--good-color);">
-        <div class="card-icon">&#x2705;</div>
-        <h3>With a spec</h3>
-        <p>Every prompt references the spec. AI always knows what you're building. No confusion. Every piece fits together.</p>
-      </div>
+    <div class="prompt-box build-prompt" style="margin-top:16px;">
+      <span class="label">&#x1F916; Send to Claude Code</span>
+      I am a 7th grade student building my first web app. I don't know any code. Please do everything for me and explain each step in simple language.<br><br>
+      Create a new <span class="prompt-highlight">Next.js 14</span> app in this folder called "Amazon Jr." with:<br>
+      - <span class="prompt-highlight">TypeScript</span><br>
+      - <span class="prompt-highlight">App Router</span><br>
+      - <span class="prompt-highlight">Material UI v5</span> installed and set up<br>
+      - A basic home page that just says "Welcome to Amazon Jr." so I can confirm it works<br><br>
+      After the files are ready, start the dev server for me. Tell me which URL to open in my browser to see my app.
     </div>
 
-    <div class="step" style="margin-top:16px;">
-      <div class="step-num">&#x1F4A1;</div>
-      <div class="step-content">
-        <h4>Today's plan — in order</h4>
-        <p><strong>Step 1:</strong> Prompt AI to write our spec (plain English, no code)<br>
-        <strong>Step 2:</strong> Read it together — does it describe what we want?<br>
-        <strong>Step 3:</strong> Use the spec as context for every build prompt that follows</p>
-      </div>
+    <div class="callout success" style="margin-top:12px;">
+      <p><strong>&#x2705; What you should see:</strong> Claude Code will create a bunch of files, install packages, and start a server. Open <strong>http://localhost:3000</strong> in your browser &mdash; you should see "Welcome to Amazon Jr."</p>
     </div>
 
-    <div class="callout key">
-      <p><strong>Real world connection:</strong> At companies like Apple, Google, and Meta — engineers, designers, and product managers all start with a spec document before any code is written. You're working like a real software team today.</p>
+    <button class="reveal-btn" onclick="toggleInfo('setup-tip')">&#x1F914; Something went wrong?</button>
+    <div class="hidden-content" id="setup-tip">
+      <p>Just tell Claude Code what happened in plain English: <em>"I got a red error. Can you look at it and fix it?"</em> It will read the error itself and sort it out.</p>
     </div>
 
     <div class="copyright">Bodhi AI Classes LLC</div>
@@ -990,42 +972,36 @@
   </div>
 </div>
 
-<!-- ==================== SLIDE 11: Spec Prompt ==================== -->
+<!-- ==================== SLIDE 12: Build Prompt 2 - Homepage ==================== -->
 <div class="slide" id="slide-11">
   <div class="slide-inner">
-    <span class="slide-number">11 / 19</span>
-    <span class="time-badge">&#x1F4AC; Spec Prompt</span>
+    <span class="slide-number">11 / 16</span>
+    <span class="time-badge">&#x1F528; Build Prompt 2 of 5</span>
     <div class="prompt-header">
-      <span class="prompt-badge" style="background:#9b59b6;">S</span>
-      <h3>Generate the App Spec — Send This to Claude First</h3>
+      <span class="prompt-badge">2</span>
+      <h3>Homepage &mdash; The Storefront</h3>
     </div>
-    <p>This is the very first thing we send to AI. No code yet — just a clear description of what we want to build.</p>
+    <p>Now describe the homepage. Claude Code still remembers the project setup from the last prompt &mdash; you don't need to re-explain.</p>
 
-    <div class="prompt-box build-prompt" style="margin-top:16px;">
-      <span class="label">&#x1F916; Send to Claude or ChatGPT</span>
-      You are helping 7th grade students plan their first web app.<br><br>
-      Write a SPEC.md document for an app called "Amazon Jr." — a simple online store for kids. Write everything in plain English. No code. No technical jargon. Imagine you're explaining it to a 12-year-old.<br><br>
-      The app must have exactly these 5 screens:<br>
-      1. <span class="prompt-highlight">Homepage</span> — a grid of 8 kid-friendly products (photo, name, price, "Add to Cart" button). Filter by category.<br>
-      2. <span class="prompt-highlight">Product Detail Page</span> — click a product to see a bigger photo, full description, star rating, and "Add to Cart" button.<br>
-      3. <span class="prompt-highlight">Shopping Cart</span> — shows everything added, quantities you can change, a remove button, and total price. Button to go to checkout.<br>
-      4. <span class="prompt-highlight">Checkout Page</span> — a simple form (first name, last name, email, address). No login, no password. Guest checkout only. Shows order summary.<br>
-      5. <span class="prompt-highlight">Order Confirmation</span> — big checkmark, order number, friendly message, button to go back to shopping.<br><br>
-      Rules for this app:<br>
-      - No login or accounts<br>
-      - No database — cart and orders reset when browser closes<br>
-      - 8 products with fun names, short descriptions, prices between $5–$60<br>
-      - Colorful, kid-friendly design using Material UI<br>
-      - Keep it simple — no wishlist, no reviews, no recommendations<br><br>
-      Format the spec with these sections: App Name &amp; Purpose, Who Uses It, The 5 Screens (one subsection each), What It Does NOT Do, Tech Stack.
+    <div class="prompt-box build-prompt">
+      <span class="label">&#x1F916; Send to Claude Code</span>
+      Build the <span class="prompt-highlight">Homepage</span> for Amazon Jr. Here's what I want:<br><br>
+      - An orange navigation bar at the top with "Amazon Jr. &#x1F6CD;&#xFE0F;" on the left and a shopping cart icon on the right that shows how many items are in the cart<br>
+      - A welcome banner below the nav that says "Welcome to Amazon Jr. &mdash; Shop awesome stuff!"<br>
+      - A row of filter buttons to show products by category (Toys, Books, Games, Art, Sports)<br>
+      - A grid of product cards (3 per row on a big screen). Each card shows a photo, name, price, star rating, and an "Add to Cart" button<br>
+      - Clicking a product card takes you to a detailed page for that product<br>
+      - The cart should remember what was added when you navigate around<br><br>
+      For product photos, use free images from picsum.photos. For example: <span class="prompt-highlight">https://picsum.photos/seed/lego/400/300</span> &mdash; change the word after "seed/" for each product.<br><br>
+      Make 8 fun kid-friendly products with names, descriptions, and prices between $5 and $60. Use Material UI components everywhere. Add comments in the code so I can learn.
     </div>
 
     <div class="callout success" style="margin-top:12px;">
-      <p><strong>After you get the spec:</strong> Read it out loud together. Ask: "Does this describe what we want to build?" If anything is wrong, fix the spec <em>before</em> writing any code.</p>
+      <p><strong>&#x2705; After Claude Code is done:</strong> Refresh <strong>localhost:3000</strong>. You should see the orange navbar and a grid of product cards. Click "Add to Cart" on a product &mdash; the number on the cart icon should go up!</p>
     </div>
 
     <div class="callout warning">
-      <p><strong>&#x1F4BE; Important — Save it as a file!</strong> Copy the spec Claude gave you. In VS Code, create a new file in your project folder, name it <strong>SPEC.md</strong>, paste the spec in, and save. Every build prompt from here will reference this file by name.</p>
+      <p><strong>&#x1F4A1; If something looks off:</strong> Tell Claude Code in plain English. "The cards are too small." "Make the orange brighter." "The Add to Cart button should be green." It'll fix it.</p>
     </div>
 
     <div class="copyright">Bodhi AI Classes LLC</div>
@@ -1037,34 +1013,31 @@
   </div>
 </div>
 
-<!-- ==================== SLIDE 12: Reading the Spec ==================== -->
+<!-- ==================== SLIDE 13: Build Prompt 3 - Product Detail ==================== -->
 <div class="slide" id="slide-12">
   <div class="slide-inner">
-    <span class="slide-number">12 / 19</span>
-    <h2>&#x1F4D6; Read the Spec Together</h2>
-    <p>Here's what a good spec looks like after AI generates it. Let's walk through each section.</p>
+    <span class="slide-number">12 / 16</span>
+    <span class="time-badge">&#x1F528; Build Prompt 3 of 5</span>
+    <div class="prompt-header">
+      <span class="prompt-badge">3</span>
+      <h3>Product Detail Page &mdash; The Full View</h3>
+    </div>
+    <p>When a customer clicks a product card, they land here. Describe the experience &mdash; Claude Code handles the rest.</p>
 
-    <div class="prompt-box" style="border-left: 4px solid #9b59b6; font-size:0.88em;">
-      <span class="label" style="background:#9b59b6;">SPEC.md — Amazon Jr.</span>
-      <br>
-      <span class="prompt-highlight">## App Name &amp; Purpose</span><br>
-      Amazon Jr. is a simple online store where kids can browse fun products, add them to a cart, and place a pretend order — no account needed.<br><br>
-      <span class="prompt-highlight">## Who Uses It</span><br>
-      Kids aged 10–14 who want to practice online shopping on a safe, simple website.<br><br>
-      <span class="prompt-highlight">## The 5 Screens</span><br>
-      <strong>Homepage:</strong> Shows 8 products as cards in a 3-column grid. Each card has a photo, name, price, category tag, and "Add to Cart" button. Filter buttons at the top let you show only Toys, Books, Games, Art, or Sports.<br><br>
-      <strong>Product Detail Page:</strong> When you click a product card, you see a full-page view with a larger photo, full description, star rating, stock count, and a big "Add to Cart" button. A "Back to Shop" link returns you to the homepage.<br><br>
-      <strong>Shopping Cart:</strong> A list of everything in the cart. Each row shows photo, name, price, + / - quantity buttons, subtotal, and a remove button. A summary box shows subtotal, shipping (free over $35), and total. "Proceed to Checkout" button at the bottom.<br><br>
-      <strong>Checkout Page:</strong> A simple form with 5 fields: First Name, Last Name, Email, Street Address, City &amp; Zip. Order summary on the right. "Place Order" button submits.<br><br>
-      <strong>Confirmation Page:</strong> Big green checkmark. "Order Placed!" heading. Your order number (like AJR-48291). "Your stuff is on the way! &#x1F4E6;" Shop More button.<br><br>
-      <span class="prompt-highlight">## What It Does NOT Do</span><br>
-      No user accounts, no payment processing, no real orders, no database, no product reviews, no search bar.<br><br>
-      <span class="prompt-highlight">## Tech Stack</span><br>
-      Next.js 14, TypeScript, Material UI v5, React Context for cart (in-memory only).
+    <div class="prompt-box build-prompt">
+      <span class="label">&#x1F916; Send to Claude Code</span>
+      Now build the <span class="prompt-highlight">Product Detail Page</span>. Here's what I want:<br><br>
+      - When someone clicks a product card on the homepage, open a full page just for that product<br>
+      - A large photo of the product on the left side<br>
+      - On the right side: product name in big text, a category label, the star rating, price in big bold green text, stock count (like "Only 8 left!"), the full description, and a big "Add to Cart &#x1F6D2;" button<br>
+      - At the very top, a "&#x2190; Back to Shop" button that returns to the homepage<br>
+      - If someone lands on a page for a product that doesn't exist, show a friendly error message and a button to go home<br>
+      - Use the same orange and white colors as the homepage<br><br>
+      Make sure the cart keeps everything from the homepage when a customer adds more items here.
     </div>
 
-    <div class="callout warning" style="margin-top:12px;">
-      <p><strong>&#x1F914; Class Discussion:</strong> Does this match what we described? What would you change? What did AI add that you didn't ask for? What did it miss?</p>
+    <div class="callout success" style="margin-top:12px;">
+      <p><strong>&#x2705; After Claude Code is done:</strong> Go to the homepage, click on any product card (not the "Add to Cart" button &mdash; the card itself). You should land on a full product detail page.</p>
     </div>
 
     <div class="copyright">Bodhi AI Classes LLC</div>
@@ -1076,53 +1049,31 @@
   </div>
 </div>
 
-<!-- ==================== SLIDE 13: Build Prompt 1 - Setup ==================== -->
+<!-- ==================== SLIDE 14: Build Prompt 4 - Cart ==================== -->
 <div class="slide" id="slide-13">
   <div class="slide-inner">
-    <span class="slide-number">13 / 19</span>
-    <span class="time-badge">&#x1F528; Build Prompt 1 of 5</span>
+    <span class="slide-number">13 / 16</span>
+    <span class="time-badge">&#x1F528; Build Prompt 4 of 5</span>
     <div class="prompt-header">
-      <span class="prompt-badge">1</span>
-      <h3>Project Setup — Get the App Running on Your Computer</h3>
+      <span class="prompt-badge">4</span>
+      <h3>Shopping Cart Page</h3>
     </div>
-    <p>Before we build anything, we need the right tools installed. Let AI figure out exactly what you need and walk you through it.</p>
+    <p>Describe the cart experience the way you'd explain it to a friend. No tech talk needed.</p>
 
-    <div class="prompt-box build-prompt" style="margin-top:16px;">
-      <span class="label">&#x1F916; Send to Claude or ChatGPT</span>
-      I am a 7th grade student and I want to build my first website. I have never coded before and I don't know what npm or Node.js are.<br><br>
-      My app spec is saved in a file called <span class="prompt-highlight">SPEC.md</span> in my project folder. Please read it.<br><br>
-      Please help me:<br>
-      1. Tell me what free tools I need to download on my Mac / Windows computer to build this app. Explain what each tool does in one simple sentence — like I'm 12 years old.<br>
-      2. Give me a link to download each tool and the exact version to pick.<br>
-      3. After I install the tools, give me step-by-step instructions to create my project and see it running in my browser. Show me exactly what to type and where to type it.<br>
-      4. Tell me what I should see on my screen when everything is working.<br><br>
-      Use the simplest possible language. No jargon. If you have to use a technical word, explain it right away.
-    </div>
-
-    <div class="callout key" style="margin-top:12px;">
-      <p><strong>&#x1F4A1; What Claude will tell you to install:</strong></p>
-      <div class="grid-3" style="margin-top:12px; gap:10px;">
-        <div style="background:#f8f9fa; border-radius:10px; padding:12px; text-align:center;">
-          <div style="font-size:2em;">&#x1F3CE;&#xFE0F;</div>
-          <p style="font-weight:700; color:var(--good-color); margin:4px 0;">Node.js</p>
-          <p style="font-size:0.85em;">The engine that makes web apps run on your computer</p>
-        </div>
-        <div style="background:#f8f9fa; border-radius:10px; padding:12px; text-align:center;">
-          <div style="font-size:2em;">&#x1F4BB;</div>
-          <p style="font-weight:700; color:var(--user-color); margin:4px 0;">VS Code</p>
-          <p style="font-size:0.85em;">A free code editor — like Google Docs, but for code</p>
-        </div>
-        <div style="background:#f8f9fa; border-radius:10px; padding:12px; text-align:center;">
-          <div style="font-size:2em;">&#x1F5A5;&#xFE0F;</div>
-          <p style="font-weight:700; color:var(--primary); margin:4px 0;">Terminal</p>
-          <p style="font-size:0.85em;">Already on your computer — a text window where you run commands</p>
-        </div>
-      </div>
+    <div class="prompt-box build-prompt">
+      <span class="label">&#x1F916; Send to Claude Code</span>
+      Now build the <span class="prompt-highlight">Shopping Cart</span> page. Here's what I want:<br><br>
+      - Show a list of everything the customer added to their cart<br>
+      - For each item: a small photo, product name, price, + / &minus; buttons to change quantity, and a button to remove it completely<br>
+      - On the right side, an order summary with the total price. If the total is over $35, shipping is free &mdash; otherwise it's $4.99<br>
+      - A big green "Proceed to Checkout" button at the bottom<br>
+      - If the cart is empty, show a fun message like "Your cart is empty! &#x1F6D2; Go find something awesome!" with a button back to the homepage<br>
+      - Keep the language friendly and fun &mdash; this is a store for kids<br><br>
+      The cart should already have the items added from the homepage and product pages. Don't reset it when navigating to this page.
     </div>
 
-    <button class="reveal-btn" onclick="toggleInfo('setup-tip')">&#x1F914; Something went wrong?</button>
-    <div class="hidden-content" id="setup-tip">
-      <p>Copy the exact error message you see (the red text) and paste it into Claude. Say: <em>"I got this error while trying to set up my project. I'm on a Mac/Windows. Can you fix it step by step?"</em></p>
+    <div class="callout info" style="margin-top:12px;">
+      <p><strong>&#x1F4DD; Why no database?</strong> The cart is like a sticky note &mdash; it lives in the browser's memory while the app is open. When you close the browser, it's gone. That's totally fine for our app &mdash; and it means we don't need to learn databases today!</p>
     </div>
 
     <div class="copyright">Bodhi AI Classes LLC</div>
@@ -1134,34 +1085,39 @@
   </div>
 </div>
 
-<!-- ==================== SLIDE 14: Build Prompt 2 - Homepage ==================== -->
+<!-- ==================== SLIDE 15: Build Prompt 5 - Checkout ==================== -->
 <div class="slide" id="slide-14">
   <div class="slide-inner">
-    <span class="slide-number">14 / 19</span>
-    <span class="time-badge">&#x1F528; Build Prompt 2 of 5</span>
+    <span class="slide-number">14 / 16</span>
+    <span class="time-badge">&#x1F528; Build Prompt 5 of 5</span>
     <div class="prompt-header">
-      <span class="prompt-badge">2</span>
-      <h3>Homepage — The Storefront</h3>
+      <span class="prompt-badge">5</span>
+      <h3>Checkout + Order Confirmation</h3>
     </div>
-    <p>Now describe the homepage in plain English. Paste the spec and let AI handle all the code decisions.</p>
+    <p>The final two screens &mdash; the form and the celebration. One prompt, both screens.</p>
 
     <div class="prompt-box build-prompt">
-      <span class="label">&#x1F916; Send to Claude or ChatGPT</span>
-      I'm building an app called Amazon Jr. My spec is saved in a file called <span class="prompt-highlight">SPEC.md</span> in my project folder. Please read it.<br><br>
-      Build the <span class="prompt-highlight">Homepage</span> screen described in the spec.<br><br>
-      Here is what I want it to look like and do:<br>
-      - An orange navigation bar at the top with "Amazon Jr. &#x1F6CD;&#xFE0F;" on the left and a shopping cart icon on the right that shows how many items are in the cart<br>
-      - A welcome banner below the nav that says "Welcome to Amazon Jr. — Shop awesome stuff!"<br>
-      - A row of filter buttons to show products by category<br>
-      - A grid of product cards — 3 cards per row on a big screen. Each card shows a photo, the product name, the price, a star rating, and an "Add to Cart" button<br>
-      - Clicking a product card takes you to a detailed page for that product<br>
-      - The cart should remember what was added and not reset when you switch pages<br><br>
-      For product photos, use free images from picsum.photos. For example: https://picsum.photos/seed/lego/400/300 — you can change the word after "seed/" to get a different photo for each product.<br><br>
-      Make 8 fun kid-friendly products with names, descriptions, and prices between $5 and $60. Add comments to the code explaining what each part does.
+      <span class="label">&#x1F916; Send to Claude Code</span>
+      Build the last two screens: <span class="prompt-highlight">Checkout</span> and <span class="prompt-highlight">Order Confirmation</span>.<br><br>
+      <strong style="color:#43E97B;">Checkout screen:</strong><br>
+      - No login or account &mdash; anyone can check out as a guest<br>
+      - A simple form: first name, last name, email address, delivery address (street, city, zip code). All fields are required.<br>
+      - Next to the form, a summary of what they're ordering: each item, total price, shipping cost<br>
+      - A progress bar at the top: "Cart &rarr; Your Info &rarr; Confirmed" &mdash; show they're on step 2 of 3<br>
+      - Fun message above the form: "Almost there! &#x1F929; Your stuff is almost ordered!"<br>
+      - A "Place Order &#x1F4E6;" button at the bottom. When clicked: check all fields are filled, create a random order number (like AJR-48291), clear the cart, and go to the Confirmation screen<br><br>
+      <strong style="color:#43E97B;">Order Confirmation screen:</strong><br>
+      - Make it feel like a celebration! &#x1F389;<br>
+      - Big green checkmark at the top<br>
+      - Heading: "Order Placed!"<br>
+      - Show the order number<br>
+      - Message: "Your awesome stuff is on its way! Expect it in 3&ndash;5 days &#x1F4E6;"<br>
+      - A "Shop More &#x1F6CD;&#xFE0F;" button that goes back to the homepage<br><br>
+      Make both screens colorful and fun. Match the orange and white theme from the rest of the app.
     </div>
 
     <div class="callout success" style="margin-top:12px;">
-      <p><strong>&#x2705; After it works:</strong> Open your browser at localhost:3000. You should see the orange navbar and a grid of product cards. Click "Add to Cart" on a product — the number on the cart icon should go up!</p>
+      <p><strong>&#x2705; End-to-end test:</strong> Add products to the cart &rarr; go to cart &rarr; click "Proceed to Checkout" &rarr; fill in the form &rarr; click "Place Order" &rarr; you should see the big green checkmark and your order number!</p>
     </div>
 
     <div class="copyright">Bodhi AI Classes LLC</div>
@@ -1173,34 +1129,44 @@
   </div>
 </div>
 
-<!-- ==================== SLIDE 15: Build Prompt 3 - Product Detail ==================== -->
+<!-- ==================== SLIDE 16: Debugging with Claude Code ==================== -->
 <div class="slide" id="slide-15">
   <div class="slide-inner">
-    <span class="slide-number">15 / 19</span>
-    <span class="time-badge">&#x1F528; Build Prompt 3 of 5</span>
-    <div class="prompt-header">
-      <span class="prompt-badge">3</span>
-      <h3>Product Detail Page — The Full View</h3>
-    </div>
-    <p>When a customer clicks on a product card, they land here. Describe the experience — let AI figure out the code.</p>
+    <span class="slide-number">15 / 16</span>
+    <h2>&#x1F41B; When Things Break: Just Tell Claude Code</h2>
+    <p>Things will break. That's normal. With Claude Code, debugging is just another conversation.</p>
 
-    <div class="prompt-box build-prompt">
-      <span class="label">&#x1F916; Send to Claude or ChatGPT</span>
-      I'm building Amazon Jr. My spec is in the file <span class="prompt-highlight">SPEC.md</span> in my project folder. Please read it.<br><br>
-      Build the <span class="prompt-highlight">Product Detail Page</span> described in the spec.<br><br>
-      Here is what I want it to look like and do:<br>
-      - When someone clicks on a product card on the homepage, they should see a full page just for that product<br>
-      - Show a large photo of the product on the left side<br>
-      - On the right side: the product name in big text, a category label, the star rating, the price in big bold green text, how many are left in stock (like "Only 8 left!"), the full description, and a big "Add to Cart &#x1F6D2;" button<br>
-      - At the very top, show a "← Back to Shop" button that takes them back to the homepage<br>
-      - If someone somehow lands on a page for a product that doesn't exist, show a friendly error message and a button to go home<br>
-      - Use the same orange and white colors as the rest of the app<br>
-      - Make it colorful and fun<br><br>
-      Make sure the cart still remembers everything from the homepage when the customer adds more items here.
+    <div class="step" style="margin-top:20px;">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>Describe what's wrong in plain English</h4>
+        <p>"The cart number doesn't change when I click Add to Cart." "The checkout button doesn't do anything." "The product images are broken." &mdash; that's enough. No error messages needed.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>Let Claude Code investigate</h4>
+        <p>Claude Code reads your files itself. It finds the bug. It tells you what was wrong and fixes it. You don't need to paste code or errors.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>Always ask "Why did this happen?"</h4>
+        <p>Don't just accept the fix &mdash; ask Claude Code to explain the bug in simple language. That's how you actually learn.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h4>Refresh your browser</h4>
+        <p>Next.js reloads on its own when files change. Just go back to <strong>localhost:3000</strong> and refresh (Cmd+R / Ctrl+R) to see the fix.</p>
+      </div>
     </div>
 
-    <div class="callout success" style="margin-top:12px;">
-      <p><strong>&#x2705; After it works:</strong> Go to the homepage, click on any product card (not the "Add to Cart" button — the card itself). You should land on a new page showing that product's full details.</p>
+    <div class="callout vibe" style="margin-top:16px;">
+      <p><strong>&#x1F9BE; The Vibe Coder Mindset:</strong> "I don't memorize how to fix every bug. I describe what I see, and let my AI teammate handle the rest &mdash; then ask it to teach me what went wrong."</p>
     </div>
 
     <div class="copyright">Bodhi AI Classes LLC</div>
@@ -1212,185 +1178,52 @@
   </div>
 </div>
 
-<!-- ==================== SLIDE 16: Build Prompt 4 - Cart ==================== -->
+<!-- ==================== SLIDE 17: Wrap-Up ==================== -->
 <div class="slide" id="slide-16">
   <div class="slide-inner">
-    <span class="slide-number">16 / 19</span>
-    <span class="time-badge">&#x1F528; Build Prompt 4 of 5</span>
-    <div class="prompt-header">
-      <span class="prompt-badge">4</span>
-      <h3>Shopping Cart Page</h3>
-    </div>
-    <p>Describe the cart experience the way you'd explain it to a friend. No tech talk needed.</p>
-
-    <div class="prompt-box build-prompt">
-      <span class="label">&#x1F916; Send to Claude or ChatGPT</span>
-      I'm building Amazon Jr. My spec is in the file <span class="prompt-highlight">SPEC.md</span> in my project folder. Please read it.<br><br>
-      Build the <span class="prompt-highlight">Shopping Cart</span> screen described in the spec.<br><br>
-      Here is what I want it to look like and do:<br>
-      - Show a list of everything the customer added to their cart<br>
-      - For each item in the cart, show: a small photo, the product name, the price, buttons to increase or decrease how many they want, and a button to remove it completely<br>
-      - On the right side, show an order summary with the total price. If the total is over $35, shipping is free — otherwise it's $4.99<br>
-      - A big green "Proceed to Checkout" button at the bottom<br>
-      - If the cart is empty, show a fun message like "Your cart is empty! &#x1F6D2; Go find something awesome!" with a button back to the homepage<br>
-      - Keep the language friendly and fun — this is a store for kids<br><br>
-      The cart should already have the items in it from the homepage and product pages. Don't reset it when the customer navigates to this page.
-    </div>
-
-    <div class="callout info" style="margin-top:12px;">
-      <p><strong>&#x1F4DD; Why no database?</strong> The cart is like a sticky note — it lives in the browser's memory while the app is open. When you close the browser, it's gone. That's totally fine for our app — and it means we don't need to learn databases today!</p>
-    </div>
-
-    <div class="copyright">Bodhi AI Classes LLC</div>
-    <div class="nav">
-      <button class="nav-btn" onclick="goTo(15)">&#8592; Back</button>
-      <div class="nav-dots" id="dots-16"></div>
-      <button class="nav-btn" onclick="goTo(17)">Next &#8594;</button>
-    </div>
-  </div>
-</div>
-
-<!-- ==================== SLIDE 17: Build Prompt 5 - Checkout ==================== -->
-<div class="slide" id="slide-17">
-  <div class="slide-inner">
-    <span class="slide-number">17 / 19</span>
-    <span class="time-badge">&#x1F528; Build Prompt 5 of 5</span>
-    <div class="prompt-header">
-      <span class="prompt-badge">5</span>
-      <h3>Checkout + Order Confirmation</h3>
-    </div>
-    <p>The final two screens — the form and the celebration. Describe the whole experience and let AI do the rest.</p>
-
-    <div class="prompt-box build-prompt">
-      <span class="label">&#x1F916; Send to Claude or ChatGPT</span>
-      I'm building Amazon Jr. My spec is in the file <span class="prompt-highlight">SPEC.md</span> in my project folder. Please read it.<br><br>
-      Build the <span class="prompt-highlight">Checkout</span> and <span class="prompt-highlight">Order Confirmation</span> screens described in the spec.<br><br>
-      <strong style="color:#43E97B;">Checkout screen:</strong><br>
-      - No login or account needed — anyone can check out as a guest<br>
-      - Show a simple form asking for: first name, last name, email address, and delivery address (street, city, zip code). All fields are required.<br>
-      - Next to the form, show a summary of what they're ordering — each item, the total price, and the shipping cost<br>
-      - Show a progress bar at the top so the customer can see they're on step 2 of 3: "Cart → Your Info → Confirmed"<br>
-      - Fun encouraging message above the form: "Almost there! &#x1F929; Your stuff is almost ordered!"<br>
-      - A "Place Order &#x1F4E6;" button at the bottom. When clicked, it should check that all fields are filled in, create a random order number (like AJR-48291), clear the cart, and take the customer to the confirmation screen<br>
-      - Don't use a database — just keep the order in memory<br><br>
-      <strong style="color:#43E97B;">Order Confirmation screen:</strong><br>
-      - Make it feel like a celebration! &#x1F389;<br>
-      - Show a big green checkmark at the top<br>
-      - Heading: "Order Placed!"<br>
-      - Show their order number<br>
-      - Message: "Your awesome stuff is on its way! Expect it in 3–5 days &#x1F4E6;"<br>
-      - A "Shop More &#x1F6CD;&#xFE0F;" button that goes back to the homepage<br><br>
-      Make both screens colorful and fun. Add comments explaining what each part does.
-    </div>
-
-    <div class="callout success" style="margin-top:12px;">
-      <p><strong>&#x2705; After it works:</strong> Add products to the cart → go to cart → click "Proceed to Checkout" → fill in the form → click "Place Order" → you should see the big green checkmark and your order number!</p>
-    </div>
-
-    <div class="copyright">Bodhi AI Classes LLC</div>
-    <div class="nav">
-      <button class="nav-btn" onclick="goTo(16)">&#8592; Back</button>
-      <div class="nav-dots" id="dots-17"></div>
-      <button class="nav-btn" onclick="goTo(18)">Next &#8594;</button>
-    </div>
-  </div>
-</div>
-
-<!-- ==================== SLIDE 18: Debugging with AI ==================== -->
-<div class="slide" id="slide-18">
-  <div class="slide-inner">
-    <span class="slide-number">18 / 19</span>
-    <h2>&#x1F41B; Debugging Is Part of the Vibe</h2>
-    <p>Things will break. That's normal. That's how every developer works. Here's your debugging toolkit:</p>
-
-    <div class="step" style="margin-top:20px;">
-      <div class="step-num">1</div>
-      <div class="step-content">
-        <h4>Read the Error Message First</h4>
-        <p>Don't panic! Look for the red text in your Terminal window. It usually tells you exactly which file and which line number has the problem.</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <div class="step-content">
-        <h4>Paste It Into Claude — With the Spec</h4>
-        <p>Copy the error text + the broken file. Also paste the spec so Claude understands what you're building. Say: <em>"Here's my spec, here's the error, here's the file — fix it and explain what went wrong."</em></p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <div class="step-content">
-        <h4>Ask "Why Did This Happen?"</h4>
-        <p>Don't just copy the fix — ask Claude to explain the bug in plain English. You'll never forget it.</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">4</div>
-      <div class="step-content">
-        <h4>Save → Terminal → Refresh</h4>
-        <p>After pasting fixed code into VS Code: save the file (Ctrl+S / Cmd+S), check the Terminal (Next.js auto-reloads), then refresh your browser.</p>
-      </div>
-    </div>
-
-    <div class="callout vibe" style="margin-top:16px;">
-      <p><strong>&#x1F9BE; The Vibe Coder Mindset:</strong> "I don't need to memorize how to fix every bug. I need to know how to describe it clearly to AI — and how to understand the answer." That's the real skill.</p>
-    </div>
-
-    <div class="copyright">Bodhi AI Classes LLC</div>
-    <div class="nav">
-      <button class="nav-btn" onclick="goTo(17)">&#8592; Back</button>
-      <div class="nav-dots" id="dots-18"></div>
-      <button class="nav-btn" onclick="goTo(19)">Next &#8594;</button>
-    </div>
-  </div>
-</div>
-
-<!-- ==================== SLIDE 19: Wrap-Up ==================== -->
-<div class="slide" id="slide-19">
-  <div class="slide-inner">
-    <span class="slide-number">19 / 19</span>
+    <span class="slide-number">16 / 16</span>
     <div class="big-icon">&#x1F389;</div>
     <h2>You Just Built a Web App!</h2>
-    <p style="text-align:center; font-size:1.2em; color:#555; margin-bottom:24px;">Let's recap what you did today — and where you're headed.</p>
+    <p style="text-align:center; font-size:1.2em; color:#555; margin-bottom:24px;">Let's recap what you did today &mdash; and where you're headed.</p>
 
     <div class="grid-3">
       <div class="card" style="border-top: 4px solid #9b59b6;">
-        <div class="card-icon">&#x1F4CB;</div>
-        <h3>You Wrote a Spec First</h3>
-        <p>You described the whole app in plain English before writing a single line of code. That's how real teams work.</p>
+        <div class="card-icon">&#x1F4AC;</div>
+        <h3>You Described, It Built</h3>
+        <p>You never wrote a line of code. You described each screen in plain English &mdash; Claude Code did the rest.</p>
       </div>
       <div class="card" style="border-top: 4px solid var(--primary);">
-        <div class="card-icon">&#x1F4AC;</div>
-        <h3>You Prompted Like a Pro</h3>
-        <p>Every build prompt referenced the spec. AI always knew exactly what you were building. No confusion.</p>
+        <div class="card-icon">&#x1F504;</div>
+        <h3>You Iterated</h3>
+        <p>Describe &rarr; look at browser &rarr; describe what to change. That's the loop every developer uses now.</p>
       </div>
       <div class="card" style="border-top: 4px solid var(--accent);">
         <div class="card-icon">&#x1F9E0;</div>
-        <h3>You Learned to Iterate</h3>
-        <p>Spec → Build → Test → Fix → Improve. That's the loop every developer uses — with or without AI.</p>
+        <h3>You Debugged Like a Pro</h3>
+        <p>When things broke, you just told Claude Code what you saw. No stress, no memorizing errors.</p>
       </div>
     </div>
 
     <div class="callout mission" style="margin-top:20px;">
       <p><strong>&#x1F3AF; Homework Challenge:</strong></p>
-      <p style="margin-top:8px;">Pick ONE thing to add to Amazon Jr. on your own. Write a spec for just that feature — then prompt AI to build it.</p>
+      <p style="margin-top:8px;">Pick ONE thing to add to Amazon Jr. on your own. Just open Claude Code in your project folder and tell it what you want.</p>
       <ul style="margin-top:8px; padding-left:0;">
         <li style="padding-left:0; padding:4px 0;">&#x2B50; Add a wishlist button to each product</li>
         <li style="padding-left:0; padding:4px 0;">&#x1F50D; Add a search bar to filter products by name</li>
         <li style="padding-left:0; padding:4px 0;">&#x1F4AC; Change the products to something YOU would actually sell</li>
         <li style="padding-left:0; padding:4px 0;">&#x1F3A8; Change the color theme to something that's your own style</li>
       </ul>
-      <p style="margin-top:8px;"><strong>Next week:</strong> Capstone project — pick your own idea, write your own spec, and build it from scratch!</p>
+      <p style="margin-top:8px;"><strong>Next week:</strong> Capstone project &mdash; pick your own idea and build it with Claude Code from scratch!</p>
     </div>
 
     <div class="callout key">
-      <p><strong>&#x1F4DD; Capstone Ideas:</strong> A quiz game, an interactive story, a personal homepage, a scoreboard for your friend group, a chatbot about your favorite show. Start thinking — and start with a spec!</p>
+      <p><strong>&#x1F4DD; Capstone Ideas:</strong> A quiz game, an interactive story, a personal homepage, a scoreboard for your friend group, a chatbot about your favorite show. Dream big &mdash; your teammate can build almost anything.</p>
     </div>
 
     <div class="copyright">Bodhi AI Classes LLC</div>
     <div class="nav">
-      <button class="nav-btn" onclick="goTo(18)">&#8592; Back</button>
-      <div class="nav-dots" id="dots-19"></div>
+      <button class="nav-btn" onclick="goTo(15)">&#8592; Back</button>
+      <div class="nav-dots" id="dots-16"></div>
       <button class="nav-btn" disabled>Done! &#x1F389;</button>
     </div>
   </div>
@@ -1398,7 +1231,7 @@
 
 <!-- ==================== JavaScript ==================== -->
 <script>
-  const TOTAL = 19;
+  const TOTAL = 16;
 
   function goTo(n) {
     document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
