@@ -6,7 +6,7 @@ real apps using vibe coding techniques — no prior coding experience required.
 
 ## Download
 
-[Download all lesson files (ZIP)](release/ai-for-middle-school-26Apr2026.zip)
+[Download all lesson files (ZIP)](https://raw.githubusercontent.com/maniselvaraj/ai-for-middle-school/main/release/ai-for-middle-school-26Apr2026.zip)
 
 ## Table of Contents
 
