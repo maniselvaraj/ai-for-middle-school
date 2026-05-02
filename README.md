@@ -4,6 +4,10 @@ A free, hands-on curriculum introducing middle school students to AI concepts an
 Lessons are delivered as interactive HTML slideshows covering topics from how AI works to building
 real apps using vibe coding techniques — no prior coding experience required.
 
+## Website
+
+[https://maniselvaraj.github.io/ai-for-middle-school/](https://maniselvaraj.github.io/ai-for-middle-school/)
+
 ## Download
 
 [Download all lesson files (ZIP)](https://raw.githubusercontent.com/maniselvaraj/ai-for-middle-school/main/release/ai-for-middle-school-26Apr2026.zip)
